@@ -1,0 +1,15 @@
+class tarefa01_java {
+    public static void main(String[] args) {
+        float salario;
+        int meses;
+
+        salario = 1000;
+        meses = 10;
+
+        salario *= meses;
+        salario /= 12;
+        salario += salario/3;
+
+        System.out.println("O bonus de férias é: " + salario);
+    }
+}
