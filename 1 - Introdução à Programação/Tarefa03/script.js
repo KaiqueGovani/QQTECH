@@ -1,3 +1,9 @@
+function IniciarLoop(){
+    var valor = document.getElementById("tipo_vinho").value;
+    document.getElementById("loop_btn").style.display = "none";
+    document.getElementById("campo").style.display = "block";
+}
+
 function CalcularPorcentagem(){
     const valor = document.getElementById("tipo_vinho").value;
     const p = document.getElementById("porcentagem");
@@ -18,7 +24,13 @@ function CalcularPorcentagem(){
         tipo_vinho = "Rose";
         porcentagem = 25;
     }
-
+    if (valor == "F")
+    {
+        document.getElementById("loop_btn").style.display = "inline-block";
+        document.getElementById("campo").style.display = "none";
+        p.innerHTML = "";
+        return;
+    }
     p.innerHTML = `A porcentagem de vinho ${tipo_vinho} é ${porcentagem}%`;
     
 }

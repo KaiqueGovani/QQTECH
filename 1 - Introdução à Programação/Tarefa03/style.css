@@ -21,3 +21,15 @@ body {
 .campo * {
     margin: 10px;
 }
+
+.campo {
+    display: none;
+}
+
+.button {
+    margin: 25px;
+    width: 70%;
+    height: auto;
+    min-height: 100px;
+    font-size: 50px;
+}

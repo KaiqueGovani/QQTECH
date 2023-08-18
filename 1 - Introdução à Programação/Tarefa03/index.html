@@ -12,19 +12,22 @@
 <body>
 <div class="conteudo">
     <h1>Levantamento do Estoque de Vinhos</h1>
-    <div class="campo">
-        <label for="tipo_vinho">Selecione o tipo de vinho: </label>
-        <select class="form-select" name="tipo_vinho" id="tipo_vinho">
-            <option value="T">Tinto</option>
-            <option value="B">Branco</option>
-            <option value="R">Rose</option>
-        </select>
+    <button id="loop_btn" class="btn btn-outline-primary button" onclick="IniciarLoop()">Checkar Estoque</button>
+    <div id="campo" class="campo">
+        <div class="form">
+            <label for="tipo_vinho">Selecione o tipo de vinho: </label>
+            <select style="margin: 0px;" class="form-select" name="tipo_vinho" id="tipo_vinho">
+                <option value="T">Tinto</option>
+                <option value="B">Branco</option>
+                <option value="R">Rose</option>
+                <option value="F">Cancelar</option>
+            </select>
+        </div>
 
-
-        <button class="btn btn-primary" onclick="CalcularPorcentagem()">Calcular</button>
-
+        <button class="btn btn-primary" onclick="CalcularPorcentagem()">Processar</button>
+        <p id="porcentagem"></p>
     </div>
-    <p id="porcentagem"></p>
+    
 </div>
 
 </body>
