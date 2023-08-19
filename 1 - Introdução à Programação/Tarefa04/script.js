@@ -45,10 +45,15 @@ function Finalizar(){
     const branco_p = (branco/total)*100;
     const rose_p = (rose/total)*100;
 
+    
+
     p.innerHTML = `<br> Porcentagens do Estoque: <br><br>
     Vinho Tinto: ${tinto_p.toFixed(2)}% <br>
     Vinho Branco: ${branco_p.toFixed(2)}% <br>
     Vinho Rose: ${rose_p.toFixed(2)}%`;
+
+    if (total == 0)
+        p.innerHTML = "";
 
     tinto = 0;
     branco = 0;
