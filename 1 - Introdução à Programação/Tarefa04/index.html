@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoque de Vinhos</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<div class="conteudo">
+    <h1>Levantamento do Estoque de Vinhos</h1>
+    <p id="porcentagem"></p>
+    <button id="loop_btn" class="btn btn-outline-primary button" onclick="IniciarLoop()">Levantar Estoque</button>
+    <div id="campo" class="campo">
+        <div class="form">
+            <div class="input-group margin-top-bottom">
+                <span class="input-group-text" for="tipo_vinho">Selecione o tipo de vinho: </span>
+                <select class="form-select" name="tipo_vinho" id="tipo_vinho">
+                    <option value="T">Tinto</option>
+                    <option value="B">Branco</option>
+                    <option value="R">Rose</option>
+                </select>
+            </div>
+            <div class="input-group margin-top-bottom">
+                <span class="input-group-text" for="quantidade">Digite a Quantidade do vinho: </span>
+                <input class="form-control" type="number"  name="quantidade" id="quantidade" min="0" value="1">
+            </div>
+        </div>
+        
+
+        <button class="btn btn-primary" onclick="Adicionar()">Adicionar</button>
+        <button class="btn btn-danger" onclick="Finalizar()">Finalizar</button>
+        <p class="margin-top-bottom" id="feedback"></p>
+        
+    </div>
+
+
+
+
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
