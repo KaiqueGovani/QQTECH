@@ -14,7 +14,7 @@ const origem = document.getElementById("origem");
 const score = document.getElementById("score");
 const feedback = document.getElementById("feedback");
 
-const notEmpty = [nome, nascimento, cpf, origem, score];
+const campos = [nome, nascimento, cpf, origem, score];
 
 
 class Cliente {
@@ -27,38 +27,34 @@ class Cliente {
     }
 }
 
-
-
 function Cadastrar()
 {
     //Get the values from the browser:
-    let clientes = JSON.parse(localStorage.getItem("clientes"));
-
-    if(clientes == null)
-    {
-        clientes = [];
-    }
+    let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
 
     try {
-        for (let i = 0; i < notEmpty.length; i++) {
-            if (notEmpty[i].value == "") {
+        for (let i = 0; i < campos.length; i++) {
+            if (campos[i].value == "") {
                 throw "Preencha todos os campos";
             }
         }
-            
-        console.log("Cadastrado com sucesso");
-        feedback.innerHTML = "Cadastrado com sucesso";
 
         let cliente = new Cliente(nome.value, nascimento.value, cpf.value, origem.value, score.value);
-        console.log(cliente);
-        console.log(clientes);
-
+        
         clientes.push(cliente);
 
 
          //Save the values on the browser:
         localStorage.setItem("clientes", JSON.stringify(clientes));
 
+        console.log(cliente);
+        console.log("Cadastrado com sucesso");
+        feedback.innerHTML = "Cadastrado com sucesso";
+
+        //Limpar os campos:
+        for (let i = 0; i < campos.length; i++) {
+            campos[i].value = "";
+        }
        
     }
     catch (error) {
@@ -68,16 +64,12 @@ function Cadastrar()
     }
     
 
-   
-    //
-
 }
 
 function VerClientes()
 {
     TelaVisualizar();
     
-
     //Get the values from the browser:
     let clientes = JSON.parse(localStorage.getItem("clientes"));
 
@@ -100,37 +92,11 @@ function VerClientes()
             tabela.appendChild(row);
         }
 
-
     } catch (error) {
-        console.log("Erro ao ver clientes");
+        console.log("Erro ao mostrar clientes");
         feedback.innerHTML = error;
         console.log(error);
     }
-
-
-    try {
-        //Show the values on the console:
-        for(let i = 0; i < clientes.length; i++)
-        {
-            Object.getOwnPropertyNames(clientes[i]).forEach((val, idx, array) => {
-                console.log(`${val} -> ${clientes[i][val]}`);
-            });
-        }   
-    } catch (error) {
-        console.log("Erro ao ver clientes");
-        feedback.innerHTML = error;
-        console.log(error);
-    }
-
-
-
-
-  /*   Object.getOwnPropertyNames().forEach((val, idx, array) => {
-        console.log(`${val} -> ${obj[val]}`);
-      });
-
-    console.log("Ver Clientes");
-    console.log(clientes); */
 }
 
 function TelaVisualizar()
