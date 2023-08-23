@@ -15,7 +15,6 @@
     <div style="margin-top: 50px;" class="conteudo">
         <h2>Cadastrar Clientes</h2>
        
-        <form action="POST">
 
             <div class="form-floating my-3">
                 <input type="text" class="form-control" name="nome" id="nome" placeholder="NomeCompleto">
@@ -33,7 +32,7 @@
             </div>
 
             <div class="form-floating my-3">
-                <select class="form-select">
+                <select class="form-select" id="origem">
                     <option value="Loja">Loja</option>
                     <option value="Site">Site</option>
                 </select>
@@ -47,10 +46,43 @@
 
             <div>
                 <button onclick="Retornar()" class="btn btn-danger">Voltar</button>
-                <button onclick="Cadastrar(); return false;" class="btn btn-success">Cadastrar</button>
+                <button onclick="VerClientes()" class="btn btn-secondary">Visualizar</button>
+                <button id="cadastrar" onclick="Cadastrar()" class="btn btn-success">Cadastrar</button>
             </div>
 
-        </form>
+            <div id="registros">
+                <div id="registro">
+                    <h2>Registros</h2>
+                    <table id="tabela" class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Data de Nascimento</th>
+                                <th>CPF</th>
+                                <th>Origem</th>
+                                <th>Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela">
+                            <!-- Conteudo exemplo -->
+                            <tr>
+                                <td>João</td>
+                                <td>01/01/2001</td>
+                                <td>123.456.789-10</td>
+                                <td>Loja</td>
+                                <td>100</td>
+                            </tr> 
+
+                            
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+            <button hidden id="voltarCadastrar" onclick="VoltarAoCadastro()" class="btn btn-danger">Voltar</button>
 
     </div>
     
