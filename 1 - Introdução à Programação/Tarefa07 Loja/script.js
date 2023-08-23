@@ -12,6 +12,7 @@ const nascimento = document.getElementById("datePicker");
 const cpf = document.getElementById("CPF");
 const origem = document.getElementById("origem");
 const score = document.getElementById("score");
+const feedback = document.getElementById("feedback");
 
 const notEmpty = [nome, nascimento, cpf, origem, score];
 
@@ -46,6 +47,7 @@ function Cadastrar()
         }
             
         console.log("Cadastrado com sucesso");
+        feedback.innerHTML = "Cadastrado com sucesso";
 
         let cliente = new Cliente(nome.value, nascimento.value, cpf.value, origem.value, score.value);
         console.log(cliente);
@@ -61,6 +63,7 @@ function Cadastrar()
     }
     catch (error) {
         console.log("Erro ao cadastrar");
+        feedback.innerHTML = error;
         console.log(error);
     }
     
@@ -72,7 +75,7 @@ function Cadastrar()
 
 function VerClientes()
 {
-    DesativarCampos();
+    TelaVisualizar();
     
 
     //Get the values from the browser:
@@ -80,13 +83,16 @@ function VerClientes()
 
     try {
         //Populating the table:
-        let tabela = document.getElementById("tabela");
+        let tabela = document.getElementById("tabelabody");
         
+        //Clearing the table:
+        tabela.innerHTML = "";
+
         for (const cliente of clientes){
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>${cliente.nome}</td>
-                <td>${cliente.nascimento.slice(0,4)}</td>
+                <td>${cliente.nascimento.slice(8,10)}/${cliente.nascimento.slice(5,7)}/${cliente.nascimento.slice(0,4)}</td>
                 <td>${cliente.cpf}</td>
                 <td>${cliente.origem}</td>
                 <td>${cliente.score}</td>
@@ -97,6 +103,7 @@ function VerClientes()
 
     } catch (error) {
         console.log("Erro ao ver clientes");
+        feedback.innerHTML = error;
         console.log(error);
     }
 
@@ -111,6 +118,7 @@ function VerClientes()
         }   
     } catch (error) {
         console.log("Erro ao ver clientes");
+        feedback.innerHTML = error;
         console.log(error);
     }
 
@@ -125,8 +133,9 @@ function VerClientes()
     console.log(clientes); */
 }
 
-function DesativarCampos()
+function TelaVisualizar()
 {
+    feedback.innerHTML = "";
     nome.parentElement.hidden = true;
     nascimento.parentElement.hidden = true;
     cpf.parentElement.hidden = true;
@@ -134,10 +143,12 @@ function DesativarCampos()
     score.parentElement.hidden = true;
     document.getElementById("cadastrar").parentElement.hidden = true;
     document.getElementById("voltarCadastrar").hidden = false;
+    document.getElementById("registros").hidden = false;
 } 
 
-function AtivarCampos()
+function TelaCadastro()
 {
+    feedback.innerHTML = "";
     nome.parentElement.hidden = false;
     nascimento.parentElement.hidden = false;
     cpf.parentElement.hidden = false;
@@ -145,11 +156,12 @@ function AtivarCampos()
     score.parentElement.hidden = false;
     document.getElementById("cadastrar").parentElement.hidden = false;
     document.getElementById("voltarCadastrar").hidden = true;
+    document.getElementById("registros").hidden = true;
 }
 
 function VoltarAoCadastro()
 {
-    AtivarCampos();
+    TelaCadastro();
 }
 
 function Retornar()
