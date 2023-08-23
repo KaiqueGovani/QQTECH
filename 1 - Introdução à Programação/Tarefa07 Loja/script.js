@@ -1,11 +1,3 @@
-try {document.getElementById("btnCadastrar").addEventListener("click", () => {
-    window.location.href = "cadastrar.html";
-    console.log("Cadastrar");
-})} catch (error) {
-    console.log("Erro ao Encontrar o botão Cadastrar");
-    console.log(error);
-}
-
 
 const nome = document.getElementById("nome");
 const nascimento = document.getElementById("datePicker");
