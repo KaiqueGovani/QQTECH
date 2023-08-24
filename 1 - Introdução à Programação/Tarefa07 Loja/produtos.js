@@ -6,6 +6,7 @@ function Retornar()
 const produtoDiv = document.getElementById("produto");
 const preco = document.getElementById("preco");
 const categoria = document.getElementById("categoria");
+const buscaCategoria = document.getElementById("buscaCategoria");
 
 const campos = [produto, preco, categoria];
 
@@ -70,6 +71,7 @@ function VerProdutos()
         let tabela = document.getElementById("tabelabody");
         tabela.innerHTML = "";
         for (const produto of produtos) {
+            if (produto.categoria != buscaCategoria.value && buscaCategoria.value != "") continue;
             tabela.innerHTML += `
             <tr>
                 <td>${produto.produto}</td>
@@ -83,8 +85,6 @@ function VerProdutos()
         feedback.innerHTML = error;
     }
 
-
-
 }
 
 function TelaVisualizar()
@@ -96,6 +96,7 @@ function TelaVisualizar()
     document.getElementById("cadastrar").parentElement.hidden = true;
     document.getElementById("voltarCadastrar").hidden = false;
     document.getElementById("registros").hidden = false;
+    document.getElementById("buscaDiv").hidden = false;
 } 
 
 function TelaCadastro()
@@ -107,6 +108,7 @@ function TelaCadastro()
     document.getElementById("cadastrar").parentElement.hidden = false;
     document.getElementById("voltarCadastrar").hidden = true;
     document.getElementById("registros").hidden = true;
+    document.getElementById("buscaDiv").hidden = true;
 }
 
 function VoltarAoCadastro()

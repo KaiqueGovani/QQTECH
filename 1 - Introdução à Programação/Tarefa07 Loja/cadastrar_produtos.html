@@ -40,28 +40,48 @@
             </div>
 
             <p id="feedback"></p>
+            <div id="telaRegistro">
 
-            <div hidden id="registros">
-                <div id="registro" class="m-4">
-                    <h2 class="mb-3">Registros</h2>
-                    <div class="bg-white border border-5 rounded-2">
-                        <table id="tabela" class="my-1 table table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Valor</th>
-                                    <th>Categoria</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tabelabody">
-                            </tbody>
-                        </table>
+                <div hidden id="registros">
+                    <div id="registro" class="m-4">
+                        <h2 class="mb-3">Registros</h2>
+                        <div class="bg-white border border-5 rounded-2">
+                            <table id="tabela" class="my-1 table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Valor</th>
+                                        <th>Categoria</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tabelabody">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+
+                <div hidden class="row g-3 align-items-center" id="buscaDiv">
+                    <div class="col-auto w-50">
+                        <div class="form-floating">
+                            <input type="text" name="buscaCategoria" id="buscaCategoria" class="form-control form-control-sm" placeholder="Categoria">
+                            <label for="buscaCategoria" class="form-label">Buscar por categoria:</label>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-auto"> <!-- Use "ms-auto" for margin-left:auto to push this element to the right -->
+                        <button onclick="VerProdutos()" class="btn btn-secondary btn-lg">Buscar</button>
+                    </div>
+                
+                    <div class="col-auto ms-auto">
+                        <button hidden id="voltarCadastrar" onclick="VoltarAoCadastro()" class="btn btn-danger btn-lg">Voltar</button>
+                    </div>
+                </div>
+                
+
+
+
             </div>
-
-
-            <button hidden id="voltarCadastrar" onclick="VoltarAoCadastro()" class="btn btn-danger">Voltar</button>
         </div>
     </div>
 
