@@ -1,4 +1,3 @@
-
 const nome = document.getElementById("nome");
 const nascimento = document.getElementById("datePicker");
 const cpf = document.getElementById("CPF");
@@ -63,7 +62,7 @@ function VerClientes()
     TelaVisualizar();
     
     //Get the values from the browser:
-    let clientes = JSON.parse(localStorage.getItem("clientes"));
+    let clientes = JSON.parse(localStorage.getItem("clientes")) || [];
 
     try {
         //Populating the table:
