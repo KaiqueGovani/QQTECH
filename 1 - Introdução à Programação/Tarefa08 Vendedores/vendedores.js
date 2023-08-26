@@ -32,7 +32,6 @@ function Cadastrar() {
 
         vendedores.push(vendedor);
 
-        //Save the values on the browser:
         localStorage.setItem("vendedores", JSON.stringify(vendedores));
 
         console.log(vendedor);
@@ -55,7 +54,10 @@ function Cadastrar() {
     localStorage.setItem("id_vendedor", id_vendedor);
 }
 
-function VerVendedores() {
+function VerVendedores(op = -1) {
+    //op = -1 -> Ver todos os vendedores
+    //op = id -> Editar o vendedor com o id = op
+
     TelaVisualizar();
 
 
@@ -64,22 +66,35 @@ function VerVendedores() {
     try {
         let tabela = document.getElementById("tabelabody");
         tabela.innerHTML = "";
-        let id = 0;
         for (const vendedor of vendedores) {
+
+            if (vendedor.id == op && op > -1) {
+                tabela.innerHTML += `
+                <tr id="${vendedor.id}">
+                    <td><input type="text" class="form-control" name="vendedor" id="vendedor_input${vendedor.id}" placeholder="${vendedor.nome}"  value="${vendedor.nome}"></td>
+                    <td><input type="number" class="form-control" name="matricula" id="matricula_input${vendedor.id}" placeholder="${vendedor.matricula}" minlength="4" maxlength="6" value="${vendedor.matricula}"></td>
+                    <td><div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <button type="button" onclick="ConfirmarAlterar(${vendedor.id})"class="btn btn-outline-success"><i class="bi bi-check-circle"></i></button>
+                        <button type="button" onclick="DeletarVendedor(${vendedor.id})" class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
+                    </div></td>      
+                </tr>
+                `;
+                continue;
+            }
+
 
             if (buscaMatricula.value != "" && vendedor.matricula != buscaMatricula.value) continue;
             tabela.innerHTML += `
-            <tr id="${vendedor.id}">
-                <td>${vendedor.nome}</td>
-                <td>${vendedor.matricula}</td>
-                <td><div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    <button type="button" onclick="AlterarVendedor(${vendedor.id})"class="btn btn-outline-warning"><i class="bi bi-pen"></i></button>
-                    <button type="button" onclick="DeletarVendedor(${vendedor.id})" class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
-                </div></td>      
-            </tr>
-            `;
-
-            id++;
+                <tr id="${vendedor.id}">
+                    <td>${vendedor.nome}</td>
+                    <td>${vendedor.matricula}</td>
+                    <td><div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <button type="button" onclick="VerVendedores(${vendedor.id})"class="btn btn-outline-warning"><i class="bi bi-pen"></i></button>
+                        <button type="button" onclick="DeletarVendedor(${vendedor.id})" class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
+                    </div></td>      
+                </tr>
+                `;
+        
         }
 
     } catch (error) {
@@ -109,61 +124,25 @@ function DeletarVendedor(id) {
     }
 }
 
-function AlterarVendedor(i) {
-    console.log("Alterando vendedor " + i);
-    let vendedores = JSON.parse(localStorage.getItem("vendedores")) || [];
-
-    try {
-        let tabela = document.getElementById("tabelabody");
-        tabela.innerHTML = "";
-        for (const vendedor of vendedores) {
-            if (vendedor.id == i) {
-                tabela.innerHTML += `
-                <tr id="${vendedor.id}">
-                    <td><input type="text" class="form-control" name="vendedor" id="vendedor_input${vendedor.id}" placeholder="${vendedor.nome}"  value="${vendedor.nome}"></td>
-                    <td><input type="number" class="form-control" name="matricula" id="matricula_input${vendedor.id}" placeholder="${vendedor.matricula}" minlength="4" maxlength="6" value="${vendedor.matricula}"></td>
-                    <td><div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                        <button type="button" onclick="ConfirmarAlterar(${vendedor.id})"class="btn btn-outline-success"><i class="bi bi-check-circle"></i></button>
-                        <button type="button" onclick="DeletarVendedor(${vendedor.id})" class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
-                    </div></td>      
-                </tr>
-                `;
-                continue;
-            }
-
-
-            if (buscaMatricula.value != "" && vendedor.matricula != buscaMatricula.value) continue;
-            tabela.innerHTML += `
-                <tr id="${vendedor.id}">
-                    <td>${vendedor.nome}</td>
-                    <td>${vendedor.matricula}</td>
-                    <td><div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                        <button type="button" onclick="AlterarVendedor(${vendedor.id})"class="btn btn-outline-warning"><i class="bi bi-pen"></i></button>
-                        <button type="button" onclick="DeletarVendedor(${vendedor.id})" class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
-                    </div></td>      
-                </tr>
-                `;
-        }
-
-    } catch (error) {
-        console.log("Erro ao editar");
-        console.log(error);
-        feedback.innerHTML = error;
-    }
-}
-
 function ConfirmarAlterar(id){
     let vendedores = JSON.parse(localStorage.getItem("vendedores")) || [];
 
-    for (let vendedor of vendedores){
-        if (vendedor.id == id){
-            vendedor.nome = document.getElementById("vendedor_input" + id).value;
-            vendedor.matricula = document.getElementById("matricula_input" + id).value;
-        }
-    }
+    try {
+        for (let vendedor of vendedores){
+            if (vendedor.id == id){
+                vendedor.nome = document.getElementById("vendedor_input" + id).value;
+                vendedor.matricula = document.getElementById("matricula_input" + id).value;
+            }
+        }    
+        
+        localStorage.setItem("vendedores", JSON.stringify(vendedores));
+        VerVendedores();
 
-    localStorage.setItem("vendedores", JSON.stringify(vendedores));
-    VerVendedores();
+    } catch (error) {
+        console.log("Erro ao alterar");
+        console.log(error);
+        feedback.innerHTML = error;
+    }    
 }
 
 function Retornar() { 
