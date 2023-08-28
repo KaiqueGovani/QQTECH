@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Vendedores</title>
+    <title>produtos</title>
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                     <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-shopping-cart"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>Quero Quero</span></div>
+                    <div class="sidebar-brand-text mx-3"><span>Quero-Quero</span></div>
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="navbar-nav text-light" id="accordionSidebar">
@@ -28,12 +28,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link inactive" href="produtos.html">
+                        <a class="nav-link active" href="produtos.html">
                             <i class="fas fa-project-diagram align-middle"></i><span class="fs-4 align-middle">Produtos</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="vendedores.html">
+                        <a class="nav-link inactive" href="vendedores.html">
                             <i class="fas fa-dollar-sign align-middle" style="width: 17px; text-align: center;"></i><span class="fs-4 align-middle">Vendedores</span>
                         </a>
                     </li>
@@ -44,7 +44,7 @@
             <div id="content">
                 <nav class="navbar navbar-expand bg-white shadow mb-4 topbar static-top navbar-light">
                     <div class="container-fluid">
-                        <h3 class="text-dark my-4 fw-bolder">Cadastro de Vendedores</h3>
+                        <h3 class="text-dark my-4 fw-bolder">Cadastro de Produtos</h3>
                         <ul class="navbar-nav flex-nowrap ms-auto">
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
@@ -61,23 +61,35 @@
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    
                     <div class="card shadow mb-5">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Cadastrar Vendedor</p>
+                            <p class="text-primary m-0 fw-bold">Cadastrar Produto</p>
                         </div>
                         <div class="card-body">
                             <div class="mx-5 my-3">
                                 <div id="cadastro">
+
                                     <div class="form-floating my-3">
-                                        <input type="text" class="form-control" name="vendedor" id="vendedor" placeholder="NomeCompleto">
-                                        <label for="vendedor">Nome do Vendedor</label>
+                                        <input type="text" class="form-control" name="produto" id="produto" placeholder="NomeCompleto">
+                                        <label for="produto">Nome do Produto</label>
                                     </div>
-                                    
+                        
                                     <div class="form-floating my-3">
-                                        <input type="number" class="form-control" name="matricula" id="matricula" placeholder="463463" minlength="4" maxlength="6">
-                                        <label for="matricula">Matricula</label>
+                                        <input type="number" class="form-control" name="preco" id="preco" placeholder="99.99R$">
+                                        <label for="preco">Preço</label>
                                     </div>
+                        
+                                    <div class="form-floating my-3">
+                                        <select class="form-select" id="categoria">
+                                            <option value="Eletrônicos">Eletrônicos</option>
+                                            <option value="Material de Construção">Material de Construção</option>
+                                            <option value="Roupas">Roupas</option>
+                                            <option value="Alimentos">Alimentos</option>
+                                            <option value="Móveis">Móveis</option>
+                                        </select>
+                                        <label for="categoria">Categoria</label>
+                                    </div>
+
                                 </div>
                                 <p class="fw-bold" id="feedback"></p>
 
@@ -89,16 +101,27 @@
                     </div>
                     <div class="card shadow">
                         <div class="card-header py-3">
-                            <p class="text-primary m-0 fw-bold">Lista de Vendedores</p>
+                            <p class="text-primary m-0 fw-bold">Lista de Produtos</p>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-nowrap"> </div>
                                 <div class="col-md-6">
-                                    <form id="procurarMatricula">
+                                    <form id="buscarPorCategoria">
                                         <div class="text-md-end dataTables_filter" id="dataTable_filter"><label
-                                            class="form-label"><input type="search" class="form-control form-control-sm"
-                                            aria-controls="dataTable" placeholder="Buscar por matrícula" id="buscaMatricula"></label>
+                                            class="form-label"><input type="search" list="datalistOptions" class="form-control form-control-sm"
+                                            aria-controls="dataTable" placeholder="Buscar por Categoria" id="buscaCategoria">
+                                            <datalist id="datalistOptions">
+                                                <option value="Eletrônicos">
+                                                <option value="Material de Construção">
+                                                <option value="Roupas">
+                                                <option value="Alimentos">
+                                                <option value="Móveis">
+                                            </datalist>
+                                            
+                                        </label>
+
+                                        
                                         </div>
                                     </form>
                                 </div>
@@ -109,7 +132,8 @@
                                     <thead>
                                         <tr>
                                             <th>Nome</th>
-                                            <th>Matricula</th>
+                                            <th>Valor</th>
+                                            <th>Categoria</th>
                                             <th class="text-end">Opções</th>
                                         </tr>
                                     </thead>
@@ -124,7 +148,7 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="vendedores.js"></script>
+    <script src="produtos.js"></script>
 </body>
 
 </html>

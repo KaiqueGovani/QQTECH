@@ -50,9 +50,7 @@ function Cadastrar() {
         console.log("Erro ao cadastrar");
         console.log(error);
         updateFeedback(error);
-    }
-
-    
+    } 
 }
 
 function VerVendedores(op = -1) {
@@ -73,7 +71,7 @@ function VerVendedores(op = -1) {
                     <td><input style="width: 90%" type="number" class="form-control" name="matricula" id="matricula_input${vendedor.id}" placeholder="${vendedor.matricula}" minlength="4" maxlength="6" value="${vendedor.matricula}"></td>
                     <td class="text-end"><div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                         <button type="button" onclick="ConfirmarAlterar(${vendedor.id})"class="btn btn-outline-success"><i class="fas fa-check-circle"></i></button>
-                        <button type="button" onclick="DeletarVendedor(${vendedor.id})" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
+                        <button type="button" onclick="VerVendedores()" class="btn btn-outline-danger"><i class="fas fa-trash"></i></button>
                     </div></td>      
                 </tr>
                 `;
