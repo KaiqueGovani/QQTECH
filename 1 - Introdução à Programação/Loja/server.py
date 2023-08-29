@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, redirect
 import pandas as pd
 from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
@@ -7,10 +7,15 @@ server = Flask(__name__)
 
 @server.route('/')
 def index():
-    return send_file('clientes.html');
+    # redirect to /clientes
+    return redirect('clientes.html')
+
+    
 
 @server.route('/<path:filename>')
 def static_files(filename):
+    if filename == 'favicon.ico':
+        return ''
     return send_file(filename)
 
 @server.route('/download_excel', methods=['POST'])
