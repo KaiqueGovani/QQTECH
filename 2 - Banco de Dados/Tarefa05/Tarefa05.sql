@@ -67,7 +67,11 @@ ORDER BY
 Borba e Isis Cirne Veleda. Deve constar nome do cliente, cpf, score, nome do
 produto e valor. Ordenar por nome de cliente */
 
-
+SELECT c.nome, c.cpf, c.score, p.nome AS Produto, p.valor AS Preco
+FROM cliente c
+CROSS JOIN produto p
+WHERE c.nome in ('Francis Ruas Borba', 'Isis Cirne Veleda')
+ORDER BY c.nome, 4;
 
 /* 6) Selecionar o código do pedido, data dele, se teve vendedor (sim ou não) e
 nome de seus produtos. Ordenar por código do pedido */
