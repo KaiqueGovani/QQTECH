@@ -1,0 +1,12 @@
+body {
+    background-color: var(--BBBlue);
+}
+
+.bg-body {
+    background-color: var(--Primaria)!important;
+}
+
+.vallidator-logo{
+    justify-content: center;
+    align-items: center;
+}
