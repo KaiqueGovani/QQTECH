@@ -90,6 +90,7 @@
 
 .card {
     font-family: 'Noto Sans Thai';
+    border: 1px solid var(--InativoVerde);
 }
 
 .card-header{
@@ -104,6 +105,9 @@
 }
 
 @media (max-width: 992px){
+    .coluna-responsiva{
+        flex-direction: column;
+    }
     .card-body {
         flex-direction: column;
     }
@@ -112,12 +116,20 @@
     }
 }
 
+@media (max-width: 400px){
+    .vallidator-logo{
+        padding-left: 0.5rem!important;
+        width: 75%;
+    }
+}
+
 .card-body .btn{
    padding-top: 12px;
    padding-bottom: 12px;
    padding-left: 16px;
    padding-right: 16px;
-   gap: 10px
+   gap: 10px;
+   align-items: center;
 }
 
 .card-title{
