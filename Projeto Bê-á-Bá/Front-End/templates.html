@@ -210,24 +210,27 @@
 
 
         document.getElementById("uploadButton").addEventListener("click", function () {
-            // Get the previous modal and close it
+            // Fecha o modal anterior
             const uploadModal = bootstrap.Modal.getInstance(document.getElementById("uploadModal"));
             uploadModal.hide();
 
-            // Get the file input element
+            // Pega o elemento de input do arquivo
             const fileInput = document.getElementById("templateFile");
 
             // Check if a file is selected
             if (fileInput.files.length > 0) {
-                // Perform file upload logic here (you can add your logic here)
-                // For demonstration, we'll show a confirmation modal on success
+                // !!! Fazer a lógica de upload aqui !!!
+                // Mostra o modal de confirmação do arquivo e upload
                 const confirmationModal = new bootstrap.Modal(document.getElementById("confirmationModal"));
                 confirmationModal.show();
             } else {
-                // Show a denied modal when no file is selected
+                // Mostra o modal de negação quando o arquivo for inválido
                 const deniedModal = new bootstrap.Modal(document.getElementById("deniedModal"));
                 deniedModal.show();
             }
+
+            // Independente do resultado, limpa o formulário de upload
+            document.getElementById('fileUploadForm').reset()
         });
     </script>
 
