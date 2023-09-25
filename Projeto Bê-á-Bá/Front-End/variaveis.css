@@ -7,10 +7,24 @@
     --InativoVerde: #4D9C6E;
 }
 
+.ff-ubuntu{
+    font-family: Ubuntu;
+    letter-spacing: -0.32px;
+}
+
+.ff-ubuntu-700{
+    font-family: Ubuntu;
+    font-weight: 700;
+    letter-spacing: -0.32px;
+}
+
+.color-AtivoVerde{
+    color: var(--AtivoVerde);
+}
 
 .vallidator {
     font-family: Koulen;
-    color: #133420;
+    color: var(--AtivoVerde);
     font-weight: 400;
     word-wrap: break-word
 }
@@ -25,7 +39,7 @@
 
 .nav-link {
     text-align: center;
-    color: #4D9C6E;
+    color: var(--InativoVerde);
     font-size: 24px;
     font-family: Ubuntu;
     font-weight: 700;

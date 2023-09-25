@@ -6,23 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Koulen|Inter|Inter:600|Ubuntu|Ubuntu:700|Noto+Sans+Thai:500|Noto+Sans+Thai:400|Open+Sans:600">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Koulen|Inter|Inter:600|Ubuntu|Ubuntu:700|Noto+Sans+Thai:500|Noto+Sans+Thai:400|Open+Sans:600">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" 
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="variaveis.css">
     <link rel="stylesheet" href="usuario.css">
+    <script src="frontend.js"></script>
 
     <title>Templates Ativos</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-body mb-4" >
+    <nav class="navbar navbar-expand-lg bg-body mb-4">
         <div class="container-fluid">
             <div class="vallidator-logo d-flex">
                 <img style="width: 62px;" src="logo-icon.png" />
                 <a class="navbar-brand vallidator align-bottom" style="font-size: 56px; line-height: 42px; padding: 0;"
-                    href="#">VALLIDATOR</a>
+                    href="./templates.html">VALLIDATOR</a>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,9 +31,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link active" aria-current="page" href="#">Templates</a>
-                    <a class="nav-link" href="#">Minha Conta</a>
-                    <a class="nav-link" href="#">Sair</a>
+                    <a class="nav-link active" aria-current="page" href="./templates.html">Templates</a>
+                    <a class="nav-link" href="./minha-conta.html">Minha Conta</a>
+                    <a class="nav-link" href="./login.html">Sair</a>
                 </div>
             </div>
         </div>
@@ -42,9 +43,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         <div class="page-title mb-4">
             Templates Ativos
         </div>
-
-
-
 
         <div class="page-body mx-5">
             <div class="card">
@@ -62,52 +60,53 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
                         <p class="card-text">Criado por José Roberto - ID: 2798.<br>Criado em 02/07/1971.</p>
                     </div>
                     <div class="card-options d-flex gap-4">
-                            <a href="#" class="btn btn-secondary d-flex coluna-responsiva">
-                                <span>Download</span>
-                                <i style="font-size: 20px;" class="fa-solid fa-download"></i>
-                            </a>
-                            <a href="#" class="btn btn-light d-flex coluna-responsiva">
-                                <span>Utilizar Template</span>
-                                <i style="font-size: 20px;" class="fa-solid fa-folder"></i>
-                            </a>
+                        <a onclick="downloadEmptyCSV()" href="#" class="btn btn-secondary d-flex coluna-responsiva">
+                            <span>Download</span>
+                            <i style="font-size: 20px;" class="fa-solid fa-download"></i>
+                        </a>
+                        <a href="#" class="btn btn-light d-flex coluna-responsiva" data-bs-toggle="modal"
+                            data-bs-target="#uploadModal">
+                            <span>Utilizar Template</span>
+                            <i style="font-size: 20px;" class="fa-solid fa-folder"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div class="card-text">
-                        <h5 class="card-title"># 1 Clientes - CSV</h5>
-                        <p class="card-text">Criado por José Roberto - ID: 2798.<br>Criado em 02/07/1971.</p>
+                        <h5 class="card-title"># 3 TodoList - XLSX</h5>
+                        <p class="card-text">Criado por Michael Douglas - ID: 4846. <br> Criado em 12/08/1994.</p>
                     </div>
                     <div class="card-options d-flex gap-4">
-                            <a href="#" class="btn btn-secondary d-flex coluna-responsiva">
-                                <span>Download</span>
-                                <i style="font-size: 20px;" class="fa-solid fa-download"></i>
-                            </a>
-                            <a href="#" class="btn btn-light d-flex coluna-responsiva">
-                                <span>Utilizar Template</span>
-                                <i style="font-size: 20px;" class="fa-solid fa-folder"></i>
-                            </a>
+                        <a onclick="downloadEmptyCSV()" href="#" class="btn btn-secondary d-flex coluna-resp    onsiva">
+                            <span>Download</span>
+                            <i style="font-size: 20px;" class="fa-solid fa-download"></i>
+                        </a>
+                        <a href="#" class="btn btn-light d-flex coluna-responsiva" data-bs-toggle="modal"
+                            data-bs-target="#uploadModal">
+                            <span>Utilizar Template</span>
+                            <i style="font-size: 20px;" class="fa-solid fa-folder"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div class="card-text">
-                        <h5 class="card-title"># 1 Clientes - CSV</h5>
-                        <p class="card-text">Criado por José Roberto - ID: 2798.<br>Criado em 02/07/1971.</p>
+                        <h5 class="card-title"># 4 Móveis - CSV</h5>
+                        <p class="card-text"> Criado por Guilherme Vasques - ID: 9151. <br> Criado em 06/09/2023.</p>
                     </div>
                     <div class="card-options d-flex gap-4">
-                            <a href="#" class="btn btn-secondary d-flex coluna-responsiva">
-                                <span>Download</span>
-                                <i style="font-size: 20px;" class="fa-solid fa-download"></i>
-                            </a>
-                            <a href="#" class="btn btn-light d-flex  coluna-responsiva">
-                                <span>Utilizar Template</span>
-                                <i style="font-size: 20px;" class="fa-solid fa-folder"></i>
-                            </a>
+                        <a onclick="downloadEmptyCSV()" href="#" class="btn btn-secondary d-flex coluna-responsiva">
+                            <span>Download</span>
+                            <i style="font-size: 20px;" class="fa-solid fa-download"></i>
+                        </a>
+                        <a href="#" class="btn btn-light d-flex coluna-responsiva" data-bs-toggle="modal"
+                            data-bs-target="#uploadModal">
+                            <span>Utilizar Template</span>
+                            <i style="font-size: 20px;" class="fa-solid fa-folder"></i>
+                        </a>
                     </div>
                 </div>
-
-
                 <div class="card-footer d-flex align-content-center justify-content-between">
-                    <div style="text-align: left;">
+                    <div class="text-start opacity-50">
                         Visualizando 3 templates. Total 8.
                     </div>
                     <div class="d-flex align-items-center">
@@ -123,39 +122,115 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         </div>
     </div>
 
-    <!-- <div class="Card" style="width: 1075px; height: 385px; background: white; border-radius: 10px; overflow: hidden; border: 2px #4D9C6E solid; flex-direction: column; justify-content: flex-start; align-items: flex-start; display: inline-flex">
-        <div class="CardHeader" style="align-self: stretch; padding-left: 16px; padding-right: 16px; padding-top: 8px; padding-bottom: 8px; background: #B4EFCC; border: 1px #4D9C6E solid; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex">
-          <div class="TemplatesAtivos" style="flex: 1 1 0; align-self: stretch; color: #133420; font-size: 14.55px; font-family: Noto Sans Thai UI; font-weight: 300; line-height: 20.01px; word-wrap: break-word">Templates Ativos</div>
-          <div class="Button" style="width: 228px; padding-left: 16px; padding-right: 16px; background: #36965E; border-radius: 7px; overflow: hidden; justify-content: center; align-items: center; display: flex">
-            <div class="Label" style="text-align: center; color: white; font-size: 16px; font-family: Open Sans; font-weight: 600; line-height: 16px; word-wrap: break-word">Adicionar Novo Template</div>
-          </div>
-        </div>
-        <div class="CardBody" style="align-self: stretch; flex: 1 1 0; padding: 16px; background: white; border: 2px #4D9C6E solid; flex-direction: column; justify-content: space-between; align-items: flex-start; display: flex">
-          <div class="1ClientesCsv" style="align-self: stretch; height: 28px; color: black; font-size: 20px; font-family: Noto Sans Thai UI; font-weight: 600; line-height: 20.01px; word-wrap: break-word"># 1   Clientes - CSV</div>
-          <div class="CriadoPorJosRobertoId2798CriadoEm02071971" style="align-self: stretch; flex: 1 1 0; color: black; font-size: 14.55px; font-family: Noto Sans Thai UI; font-weight: 300; line-height: 20.01px; word-wrap: break-word">Criado por José Roberto - ID: 2798.<br/>Criado em 02/07/1971.</div>
-        </div>
-        <div class="CardBody" style="align-self: stretch; flex: 1 1 0; padding: 16px; background: white; border: 2px #4D9C6E solid; flex-direction: column; justify-content: space-between; align-items: flex-start; display: flex">
-          <div class="3TodolistXlsx" style="align-self: stretch; height: 28px; color: black; font-size: 20px; font-family: Noto Sans Thai UI; font-weight: 600; line-height: 20.01px; word-wrap: break-word"># 3   TodoList - XLSX</div>
-          <div class="CriadoPorWillianAlmeidaId4846CriadoEm12081994" style="align-self: stretch; flex: 1 1 0; color: black; font-size: 14.55px; font-family: Noto Sans Thai UI; font-weight: 300; line-height: 20.01px; word-wrap: break-word">Criado por Willian Almeida - ID: 4846.<br/>Criado em 12/08/1994.</div>
-        </div>
-        <div class="CardBody" style="align-self: stretch; flex: 1 1 0; padding: 16px; background: white; border: 2px #4D9C6E solid; flex-direction: column; justify-content: space-between; align-items: flex-start; display: flex">
-          <div class="4MVeisCsv" style="align-self: stretch; height: 28px; color: black; font-size: 20px; font-family: Noto Sans Thai UI; font-weight: 600; line-height: 20.01px; word-wrap: break-word"># 4   Móveis - CSV</div>
-          <div class="CriadoPorGuilhermeVasquesId9151CriadoEm06092023" style="align-self: stretch; flex: 1 1 0; color: black; font-size: 14.55px; font-family: Noto Sans Thai UI; font-weight: 300; line-height: 20.01px; word-wrap: break-word">Criado por Guilherme Vasques - ID: 9151.<br/>Criado em 06/09/2023.</div>
-        </div>
-        <div class="CardHeader" style="align-self: stretch; padding-left: 16px; padding-right: 16px; padding-top: 8px; padding-bottom: 8px; background: #B4EFCC; border: 1px #4D9C6E solid; justify-content: flex-start; align-items: flex-start; gap: 10px; display: inline-flex">
-          <div class="PaginationPageSelector" style="flex: 1 1 0; height: 32px; justify-content: flex-end; align-items: center; gap: 10px; display: flex">
-            <div class="PGina" style="text-align: right; color: #333333; font-size: 16px; font-family: Open Sans; font-weight: 400; line-height: 24px; word-wrap: break-word">Página</div>
-            <div class="PageSelector" style="width: 62px; height: 32px; position: relative; background: white; border-radius: 4px; overflow: hidden; border: 2px #4D9C6E solid">
-              <div style="left: 8px; top: 4px; position: absolute; color: #1B1D1F; font-size: 16px; font-family: Open Sans; font-weight: 400; line-height: 24px; word-wrap: break-word">1</div>
-              <div class="ChevronDown" style="width: 24px; height: 24px; left: 30px; top: 4px; position: absolute">
-                <div class="Path" style="width: 12px; height: 5.59px; left: 6px; top: 10px; position: absolute; border-radius: 1px; border: 2px #1B1D1F solid"></div>
-              </div>
+    <!-- Modal de Arquivo Compatível -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Validação Completa!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column text-center align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="106" height="106" viewBox="0 0 106 106" fill="none">
+                        <path
+                            d="M39.75 53L48.5833 61.8333L66.25 44.1666M34.6034 20.7453C37.7725 20.4924 40.7811 19.2462 43.2008 17.1841C48.8475 12.3721 57.1525 12.3721 62.7992 17.1841C65.2189 19.2462 68.2275 20.4924 71.3966 20.7453C78.792 21.3354 84.6646 27.208 85.2547 34.6034C85.5076 37.7725 86.7538 40.7811 88.8159 43.2008C93.6279 48.8474 93.6279 57.1525 88.8159 62.7991C86.7538 65.2189 85.5076 68.2274 85.2547 71.3965C84.6645 78.792 78.792 84.6645 71.3966 85.2547C68.2275 85.5076 65.2189 86.7538 62.7992 88.8158C57.1525 93.6279 48.8475 93.6279 43.2008 88.8158C40.7811 86.7538 37.7725 85.5076 34.6034 85.2547C27.208 84.6645 21.3354 78.792 20.7453 71.3965C20.4924 68.2274 19.2462 65.2189 17.1841 62.7991C12.3721 57.1525 12.3721 48.8474 17.1841 43.2008C19.2462 40.7811 20.4924 37.7725 20.7453 34.6034C21.3354 27.208 27.208 21.3354 34.6034 20.7453Z"
+                            stroke="#36965E" stroke-width="8.83333" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <div class="color-AtivoVerde ff-ubuntu-700 pb-2">Arquivo dentro dos padrões!</div>
+                    <div class="opacity-75">Enviando para o repositório.</div>
+                </div>
             </div>
-            <div class="De1" style="color: #333333; font-size: 16px; font-family: Open Sans; font-weight: 400; line-height: 24px; word-wrap: break-word">de 1</div>
-          </div>
         </div>
-      </div> -->
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </div>
+
+    <!-- Modal de Arquivo Incompatível -->
+    <div class="modal fade" id="deniedModal" tabindex="-1" aria-labelledby="deniedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deniedModalLabel">Falha na Validação!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex flex-column text-center align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="106" height="106" viewBox="0 0 106 106" fill="none">
+                        <path
+                            d="M81.1075 81.1075C96.6308 65.5842 96.6308 40.4158 81.1075 24.8925C65.5842 9.36916 40.4158 9.36916 24.8925 24.8925M81.1075 81.1075C65.5842 96.6308 40.4158 96.6308 24.8925 81.1075C9.36916 65.5842 9.36916 40.4158 24.8925 24.8925M81.1075 81.1075L24.8925 24.8925"
+                            stroke="#F55050" stroke-width="8.83333" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <div class="color-AtivoVerde ff-ubuntu-700 pb-2">Arquivo fora dos padrões!</div>
+                    <div class="opacity-75">Verifique os campos esperados pelo Template.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estrutura do Modal de arquivo -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Upload de Arquivo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body mx-5">
+                    <form enctype="multipart/form-data" id="fileUploadForm">
+                        <div class="mb-3">
+                            <label for="templateFile" class="form-label">Selecione um arquivo:</label>
+                            <input type="file" class="form-control" id="templateFile" name="templateFile">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer align-content-center" style="justify-content: space-between;">
+                    <p id="templateUsado" class="opacity-50">Utilizando o template: #1 Clientes - CSV</p>
+                    <div>
+                        <button type="button" class="btn btn-secondary upload-btn"
+                            data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary upload-btn" id="uploadButton">Upload</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+
+    <script>
+        //Pega o nome do template que será utilizado
+        document.getElementById("uploadModal").addEventListener("show.bs.modal", event => {
+            const button = event.relatedTarget;
+            const templateName = button.closest('.card-body').querySelector('.card-title').textContent;
+
+            // Coloca o nome no modal
+            document.getElementById("templateUsado").textContent = "Utilizando o template: " + templateName;
+        });
+
+
+        document.getElementById("uploadButton").addEventListener("click", function () {
+            // Get the previous modal and close it
+            const uploadModal = bootstrap.Modal.getInstance(document.getElementById("uploadModal"));
+            uploadModal.hide();
+
+            // Get the file input element
+            const fileInput = document.getElementById("templateFile");
+
+            // Check if a file is selected
+            if (fileInput.files.length > 0) {
+                // Perform file upload logic here (you can add your logic here)
+                // For demonstration, we'll show a confirmation modal on success
+                const confirmationModal = new bootstrap.Modal(document.getElementById("confirmationModal"));
+                confirmationModal.show();
+            } else {
+                // Show a denied modal when no file is selected
+                const deniedModal = new bootstrap.Modal(document.getElementById("deniedModal"));
+                deniedModal.show();
+            }
+        });
+    </script>
+
 </body>
 
 </html>

@@ -3,10 +3,36 @@ body {
 }
 
 .bg-body {
-    background-color: var(--Primaria)!important;
+    background-color: var(--Primaria) !important;
 }
 
-.vallidator-logo{
+.vallidator-logo {
     justify-content: center;
     align-items: center;
+}
+
+.upload-btn {
+    font-family: Inter;
+    height: 100%;
+}
+
+.modal h5 {
+    padding-left: 5px;
+    margin: 10px;
+    color: var(--AtivoVerde);
+    text-align: center;
+    font-family: Ubuntu;
+    font-size: 29.169px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 12.647px;
+    letter-spacing: -0.583px;
+}
+
+.modal-body svg {
+    margin: 15px;
+}
+
+.btn-close {
+    margin-right: 0px !important;
 }
