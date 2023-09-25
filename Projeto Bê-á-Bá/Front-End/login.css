@@ -1,10 +1,3 @@
-:root{
-    --Primaria: #8AF496;
-    --Terciaria: #36965E;
-    --BBBlue: #EAFEFD;
-    
-}
-
 body {
     background: var(--Primaria);
     display: flex;
