@@ -11,9 +11,13 @@ body {
     align-items: center;
 }
 
-.upload-btn {
+.modal label + input{
     font-family: Inter;
-    height: 100%;
+}
+
+.modal button {
+    font-family: Inter;
+    height: 40px;
 }
 
 .modal h5 {
@@ -27,10 +31,6 @@ body {
     font-weight: 700;
     line-height: 12.647px;
     letter-spacing: -0.583px;
-}
-
-.modal-body svg {
-    margin: 15px;
 }
 
 .btn-close {
