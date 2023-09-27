@@ -143,7 +143,8 @@
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="inputNCampos" class="form-label">Número de Campos no Arquivo:*</label>
-                                    <select type="dropdown" class="form-control form-select" id="inputNCampos"
+                                    <select oninput="atualizarInputs(parseInt(value));" type="dropdown"
+                                        class="form-control form-select" id="inputNCampos"
                                         placeholder="Escolha o número de campos" required>
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -190,8 +191,23 @@
                                         </label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row" id="areaInputsCampos">
                                 <div class="col-md-6 mb-3">
-
+                                    <label for="inputNomeCampo1">Nome do Campo # 1:*</label>
+                                    <input type="text" class="form-control" id="inputNomeCampo1"
+                                        placeholder="Em branco para nenhum">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="inputTipoCampo1">Tipo do Campo # 1:*</label>
+                                    <select type="text" class="form-control form-select" id="inputTipoCampo1" required>
+                                        <option value="1">Texto</option>
+                                        <option value="2">Inteiro</option>
+                                        <option value="3">Real</option>
+                                        <option value="4">Date</option>
+                                        <option value="5">Timestamp</option>
+                                        <option value="6">Booleano</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -307,6 +323,38 @@
     </script>
 
     <script>
+        //Função para Atualizar os inputs de campos
+        function atualizarInputs(n) {
+            //console.log(`Atualizando a área de inputs para ${n} inputs`);
+
+            const areaInputsCampos = document.getElementById("areaInputsCampos");
+
+            //Limpar a area de inputs de campos
+            areaInputsCampos.innerHTML = '';
+
+            //Adicionar os campos
+            for (let i = 1; i < n+1; i++) {
+                areaInputsCampos.innerHTML += `
+                <div class="col-md-6 mb-3">
+                    <label for="inputNomeCampo${i}">Nome do Campo # ${i}:*</label>
+                    <input type="text" class="form-control" id="inputNomeCampo${i}"
+                        placeholder="Em branco para nenhum">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="inputTipoCampo${i}">Tipo do Campo # ${i}:*</label>
+                    <select type="text" class="form-control form-select" id="inputTipoCampo${i}" required>
+                        <option value="1">Texto</option>
+                        <option value="2">Inteiro</option>
+                        <option value="3">Real</option>
+                        <option value="4">Date</option>
+                        <option value="5">Timestamp</option>
+                        <option value="6">Booleano</option>
+                    </select>
+                </div>
+                `
+            }
+        }
+
         //Função de mostrar um Modal de Feedback
         function showFeedbackModal(title, response, additionalInfo, iconURL) {
             const feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
@@ -331,7 +379,8 @@
             feedbackModal.show();
         }
 
-        showFeedbackModal("Feedback Title", "This is the response.", "Additional information goes here.", "icons/badge-check````~.png");
+        showFeedbackModal("Feedback Title", "This is the response.", "Additional information goes here.",
+            "icons/badge-check.png");
 
         //Pega o nome do template que será utilizado
         document.getElementById("uploadModal").addEventListener("show.bs.modal", event => {
