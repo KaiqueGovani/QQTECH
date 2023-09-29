@@ -203,3 +203,8 @@
     --bs-pagination-active-bg: #64d468;
     --bs-pagination-active-border-color: #243e2c56;
 }
+
+.form-check-input {
+    float: none !important;
+    margin-left: 8px !important;
+}
