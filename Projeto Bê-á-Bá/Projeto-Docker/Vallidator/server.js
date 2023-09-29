@@ -12,9 +12,9 @@ app.use(express.json());
 app.use('/usuarios', usuariosRoutes);
 
 app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
+    console.log(`Servidor rodando na porta ${port}`);
 });
 
 app.get('/', (req, res) => {
-  res.send('Hello, World!');
+    res.send('Hello, World!');
 });

@@ -15,7 +15,7 @@ services:
       - -c
       - |
         npm install
-        npm start 
+        npm start
     depends_on:
       - postgres
       - pgadmin
