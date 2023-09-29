@@ -18,6 +18,8 @@ services:
         npm start 
     depends_on:
       - postgres
+      - pgadmin
+    restart: always
     
 
   # Banco de Dados PostgreSQL
