@@ -1,11 +1,9 @@
 const express = require('express');
-const app = express();
-const conectarBanco = require('./config/database');
+const pool = require('./config/database');
 const usuariosRoutes = require('./routes/usuarios');
-const port = process.env.PORT || 3000;
 
-// Conectar ao banco de dados
-conectarBanco();
+const app = express();
+const port = process.env.PORT || 3000;
 
 // Middleware para processar JSON
 app.use(express.json());
