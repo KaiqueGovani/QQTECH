@@ -9,7 +9,7 @@ services:
       - ./Vallidator:/app #
     ports:
       - "3000:3000" # Mapeia a porta do contêiner para a porta local
-    working_dir: /app
+    working_dir: /app/backend
     command: # Comando para iniciar servidor Node.js
       - sh
       - -c
