@@ -10,9 +10,9 @@
         href="https://fonts.googleapis.com/css?family=Koulen|Inter|Inter:600|Ubuntu|Ubuntu:700|Noto+Sans+Thai:500|Noto+Sans+Thai:400|Open+Sans:600">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="variaveis.css">
-    <link rel="stylesheet" href="usuario.css">
-    <script src="frontend.js"></script>
+    <link rel="stylesheet" href="../styles/variaveis.css">
+    <link rel="stylesheet" href="../styles/usuario.css">
+    <script src="../scripts/frontend.js"></script>
 
     <title>Templates Ativos</title>
 </head>
@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-lg bg-body mb-4">
         <div class="container-fluid">
             <div class="vallidator-logo d-flex">
-                <img style="width: 62px;" src="icons/logo-icon.png" />
+                <img style="width: 62px;" src="../icons/logo-icon.png" />
                 <a class="navbar-brand vallidator align-bottom" style="font-size: 56px; line-height: 42px; padding: 0;"
                     href="./templates.html">VALLIDATOR</a>
             </div>
@@ -168,19 +168,19 @@
                                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
                                             autocomplete="off" checked>
                                         <label class="btn btn-outline-primary" for="btnradio1">
-                                            <img src="icons/csv-icon.png" alt="">
+                                            <img src="../icons/csv-icon.png" alt="">
                                         </label>
 
                                         <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
                                             autocomplete="off">
                                         <label class="btn btn-outline-primary" for="btnradio2">
-                                            <img src="icons/xls-icon.png" alt="">
+                                            <img src="../icons/xls-icon.png" alt="">
                                         </label>
 
                                         <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
                                             autocomplete="off">
                                         <label class="btn btn-outline-primary" for="btnradio3">
-                                            <img src="icons/xlsx-icon.png" alt="">
+                                            <img src="../icons/xlsx-icon.png" alt="">
                                         </label>
                                     </div>
                                 </div>
@@ -208,7 +208,7 @@
                 </div>
                 <div class="modal-footer align-content-center">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button data-bs-dismiss="modal" onclick='showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "icons/clock.png");' type="button" class="btn btn-primary" id="sendTemplate">Enviar para Verificação!</button>
+                    <button data-bs-dismiss="modal" onclick='showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");' type="button" class="btn btn-primary" id="sendTemplate">Enviar para Verificação!</button>
                 </div>
             </div>
         </div>
@@ -370,7 +370,7 @@
             feedbackModal.show();
         }
 
-        //showFeedbackModal("Feedback Title", "This is the response.", "Additional information goes here.", "icons/badge-check.png");
+        //showFeedbackModal("Feedback Title", "This is the response.", "Additional information goes here.", "../icons/badge-check.png");
 
         //Pega o nome do template que será utilizado
         document.getElementById("uploadModal").addEventListener("show.bs.modal", event => {

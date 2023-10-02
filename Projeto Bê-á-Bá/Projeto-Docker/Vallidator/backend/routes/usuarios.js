@@ -1,6 +1,7 @@
-// Em /routes/usuarios.js
 const express = require('express');
 const bcrypt = require('bcrypt');
+const path = require('path');
+const gerarToken = require('../middlewares/gerarToken');
 const pool = require('../config/database');
 
 const router = express.Router();
@@ -26,6 +27,52 @@ router.post('/criar', async (req, res) => {
         res.status(500).json({ mensagem: 'Erro ao criar usuário' });
     }
 });
+
+router.post('/login', async (req, res) => {
+    try {
+        const { email, senha } = req.body;
+
+        const query = 'SELECT * FROM usuario WHERE email = $1';
+        const values = [email];
+
+        const result = await pool.query(query, values);
+        const usuario = result.rows[0];
+
+        if (usuario) {
+            const match = await bcrypt.compare(senha, usuario.senha);
+
+            if (match) {
+                const token = gerarToken(usuario.id, usuario.permissao);
+
+                // Salva o token em um cookie
+                // Configuração do cookie
+                const cookieConfig = {
+                    httpOnly: true,
+                    maxAge: 24 * 60 * 60 * 1000, // 1 dia em milissegundos
+                };
+
+                // Define o cookie
+                res.cookie('token', token, cookieConfig);
+
+                if (usuario.permissao === 'admin') {
+                    res.redirect('../admin/templates.html')
+                } else {
+                    res.redirect('../common/templates.html')
+                }
+        
+                //res.status(200).json({ mensagem: 'Login realizado com sucesso!', token: token, redirect: redirect, status: 200 });
+            } else {
+                res.status(401).json({ mensagem: 'Senha incorreta' });
+            }
+        } else {
+            res.status(404).json({ mensagem: 'Email não encontrado' });
+        }
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ mensagem: 'Erro ao realizar o login' })
+    }
+})
 
 router.get('/listar', async (req, res) => {
     try {
