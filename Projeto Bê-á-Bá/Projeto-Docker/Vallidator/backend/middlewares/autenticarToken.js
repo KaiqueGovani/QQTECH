@@ -17,7 +17,8 @@ module.exports = (req, res, next) => {
             // Chama o próximo middleware
             next();
         } catch(error){
-            res.status(403).json({ mensagem: 'Token inválido' });
+            res.clearCookie('token');
+            res.status(403).redirect('/login');
         }
         
     } else {

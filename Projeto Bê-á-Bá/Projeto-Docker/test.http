@@ -3,6 +3,14 @@ POST http://localhost:3000/usuarios/login
 Content-Type: application/json
 
 {
+    "email": "kaique.govani@hotmail.com",
+    "senha": "senha_segura"
+}
+###
+POST http://localhost:3000/usuarios/login
+Content-Type: application/json
+
+{
     "email": "ricardo.milos@gmail.com",
     "senha": "senha_segura"
 }

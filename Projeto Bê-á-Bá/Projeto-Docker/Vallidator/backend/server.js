@@ -2,7 +2,9 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const usuariosRoutes = require('./routes/usuarios');
+const adminRoutes = require('./routes/admin');
 const autenticarToken = require('./middlewares/autenticarToken');
+const verificarPermissao = require('./middlewares/verificarPermissao');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -21,7 +23,7 @@ app.use('/icons', express.static(path.join(__dirname, '../frontend/icons')));
 app.get('/', autenticarToken, (req, res) => {
     console.log("Logado como " + req.id + " com permissão " + req.permissao);
     if (req.permissao === 'admin') {
-        res.redirect('../admin/templates.html')
+        res.redirect('../admin/dashboard.html')
     } else {
         res.redirect('../common/templates.html')
     }
@@ -32,6 +34,9 @@ app.get('/login', (req, res) => {
 })
 
 app.use('/common', autenticarToken, express.static(path.join(__dirname, '../frontend/common')));
+
+//app.use('/admin', autenticarToken, verificarPermissao, express.static(path.join(__dirname, '../frontend/admin')));
+app.use('/admin', autenticarToken, verificarPermissao, adminRoutes);
 
 app.use('/usuarios', usuariosRoutes);
 

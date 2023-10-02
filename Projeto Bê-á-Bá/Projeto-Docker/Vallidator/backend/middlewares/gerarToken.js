@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const segredo = 'segredo';
 
 function gerarToken(id, permissao) {
-    const token = jwt.sign({ id, permissao }, segredo, { expiresIn: '10s' });
+    const token = jwt.sign({ id, permissao }, segredo, { expiresIn: '1h' });
 
     return token;
 }

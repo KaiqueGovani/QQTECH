@@ -55,7 +55,7 @@ router.post('/login', async (req, res) => {
                 res.cookie('token', token, cookieConfig);
 
                 if (usuario.permissao === 'admin') {
-                    res.redirect('../admin/templates.html')
+                    res.redirect('../admin/dashboard.html')
                 } else {
                     res.redirect('../common/templates.html')
                 }
