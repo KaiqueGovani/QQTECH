@@ -23,15 +23,18 @@ app.use('/icons', express.static(path.join(__dirname, '../frontend/icons')));
 app.get('/', autenticarToken, (req, res) => {
     console.log("Logado como " + req.id + " com permissão " + req.permissao);
     if (req.permissao === 'admin') {
-        res.redirect('../admin/dashboard.html')
+        res.redirect('../admin/dashboard')
     } else {
-        res.redirect('../common/templates.html')
+        res.redirect('../templates')
     }
 });
 
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/login.html'));
 })
+
+app.use('/templates', autenticarToken, express.static(path.join(__dirname, '../frontend/common/templates.html')));
+app.use('/minha-conta', autenticarToken, express.static(path.join(__dirname, '../frontend/common/minha-conta.html')));
 
 app.use('/common', autenticarToken, express.static(path.join(__dirname, '../frontend/common')));
 

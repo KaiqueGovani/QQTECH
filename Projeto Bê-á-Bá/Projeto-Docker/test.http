@@ -67,6 +67,18 @@ Content-Type: application/json
     "senha": "senha_segura",
     "permissao": "upload:criar"
 }
+###
+POST http://localhost:3000/usuarios/criar
+Content-Type: application/json
+
+{
+    "nome": "Mateus",
+    "sobrenome": "Nauhan",
+    "telefone": "+55 15 940028922",
+    "email": "nauhan.cs2@hotmail.com",
+    "senha": "euamojava",
+    "permissao": "admin"
+}
 
 ###
 DELETE http://localhost:3000/usuarios/deletar-todos
