@@ -1,4 +1,8 @@
-POST localhost:3000/templates/criar
+GET http://localhost:3000/templates
+###
+POST http://localhost:3000/templates/criar
+###
+POST http://localhost:3000/templates/criar
 Content-Type: application/json
 
 {
@@ -6,8 +10,7 @@ Content-Type: application/json
     "nome": "ExemploTemplate",
     "nome_arquivo": "ExemploArquivo",
     "id_criador": 1,  // Substitua pelo ID do usuário criador
-    "data_criacao": "2023-10-04T12:00:00",  // Substitua pela data de criação desejada
-    "extensao": "txt",
+    "extensao": "csv",
     "status": true,
     "campos": [
       {

@@ -16,7 +16,6 @@ CREATE TABLE public.Tipos (
 CREATE TABLE public.Template (
     id serial PRIMARY KEY,
     nome varchar UNIQUE NOT NULL,
-    nome_arquivo varchar NOT NULL,
     id_criador integer REFERENCES public.Usuario(id) NOT NULL,
     data_criacao TIMESTAMP NOT NULL,
     extensao varchar NOT NULL,

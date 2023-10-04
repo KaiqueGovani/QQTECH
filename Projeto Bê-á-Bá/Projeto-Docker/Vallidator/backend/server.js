@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const usuariosRoutes = require('./routes/usuarios');
+const templatesRoutes = require('./routes/templates');
 const adminRoutes = require('./routes/admin');
 const autenticarToken = require('./middlewares/autenticarToken');
 const verificarPermissao = require('./middlewares/verificarPermissao');
@@ -33,7 +34,7 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/public/login.html'));
 })
 
-app.use('/templates', autenticarToken, express.static(path.join(__dirname, '../frontend/common/templates.html')));
+
 app.use('/minha-conta', autenticarToken, express.static(path.join(__dirname, '../frontend/common/minha-conta.html')));
 
 app.use('/common', autenticarToken, express.static(path.join(__dirname, '../frontend/common')));
@@ -42,6 +43,7 @@ app.use('/common', autenticarToken, express.static(path.join(__dirname, '../fron
 app.use('/admin', autenticarToken, verificarPermissao, adminRoutes);
 
 app.use('/usuarios', usuariosRoutes);
+app.use('/templates', templatesRoutes);
 
 // Inicia o Servidor
 app.listen(port, () => {
