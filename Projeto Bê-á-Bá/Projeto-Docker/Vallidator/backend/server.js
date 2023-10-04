@@ -41,7 +41,7 @@ app.use('/common', autenticarToken, express.static(path.join(__dirname, '../fron
 //app.use('/admin', autenticarToken, verificarPermissao, express.static(path.join(__dirname, '../frontend/admin')));
 app.use('/admin', autenticarToken, verificarPermissao, adminRoutes);
 
-app.use('/usuarios', usuariosRoutes);
+app.use('/usuarios', autenticarToken, usuariosRoutes);
 
 // Inicia o Servidor
 app.listen(port, () => {
