@@ -26,8 +26,10 @@ CREATE TABLE public.Template (
 CREATE TABLE public.TemplatesCampos (
     id_template integer REFERENCES public.Template(id) NOT NULL,
     id_tipo integer REFERENCES public.Tipos(id) NOT NULL,
+    ordem integer NOT NULL,
     nome_campo varchar NOT NULL,
-    anulavel BOOLEAN DEFAULT FALSE NOT NULL
+    anulavel BOOLEAN DEFAULT FALSE NOT NULL,
+    PRIMARY KEY (id_template, ordem)
 );
 
 CREATE TABLE public.Upload (

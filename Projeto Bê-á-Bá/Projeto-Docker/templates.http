@@ -1,0 +1,36 @@
+POST localhost:3000/templates/criar
+Content-Type: application/json
+
+{
+  "template": {
+    "nome": "ExemploTemplate",
+    "nome_arquivo": "ExemploArquivo",
+    "id_criador": 1,  // Substitua pelo ID do usuário criador
+    "data_criacao": "2023-10-04T12:00:00",  // Substitua pela data de criação desejada
+    "extensao": "txt",
+    "status": true,
+    "campos": [
+      {
+        "nome_campo": "Campo1",
+        "tipo_campo": "Texto",
+        "anulavel": false
+      },
+      {
+        "nome_campo": "Campo2",
+        "tipo_campo": "Texto",
+        "anulavel": false
+      },
+      {
+        "nome_campo": "Campo3",
+        "tipo_campo": "Texto",
+        "anulavel": false
+      },
+      {
+        "nome_campo": "Campo4",
+        "tipo_campo": "Texto",
+        "anulavel": false
+      }
+    ]
+  }
+}
+###
