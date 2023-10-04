@@ -55,9 +55,9 @@ router.post('/login', async (req, res) => {
                 res.cookie('token', token, cookieConfig);
 
                 if (usuario.permissao === 'admin') {
-                    res.redirect('../admin/dashboard.html')
+                    res.redirect('../admin/dashboard')
                 } else {
-                    res.redirect('../common/templates.html')
+                    res.redirect('../templates')
                 }
         
                 //res.status(200).json({ mensagem: 'Login realizado com sucesso!', token: token, redirect: redirect, status: 200 });
@@ -72,7 +72,11 @@ router.post('/login', async (req, res) => {
         console.log(error);
         res.status(500).json({ mensagem: 'Erro ao realizar o login' })
     }
-})
+});
+
+router.post('/logout', async (req, res) => {
+    res.clearCookie('token').json({ mensagem: 'Logout realizado com sucesso!' });
+});
 
 router.get('/listar', async (req, res) => {
     try {
