@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
 
   # Servidor Node.js
@@ -37,8 +37,11 @@ services:
   pgadmin:
     container_name: my-pgadmin
     image: dpage/pgadmin4
+    command: ["tail", "-f", "/dev/null"]
     ports:
       - "8080:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: kaique.govani@hotmail.com 
       PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin

@@ -5,7 +5,7 @@ const autenticarToken = require('../middlewares/autenticarToken');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', autenticarToken, async (req, res) => {
     res.sendFile(path.join(__dirname, '../../frontend/common/templates.html'));
 });
 
@@ -20,8 +20,10 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
         const temp = await pool.query(query, values);
 
         //Adiciona os campos:
-        for (const campo of campos) {
-            const query = 'INSERT INTO templateCampos (id'
+        for (let i = 0; i < campos.length; i++) {
+            const query = `INSERT INTO templateCampos (id_template, id_tipo, ordem, nome_campo, anulavel)
+                           VALUES ($1, $2, $3, $4, $5);`
+            const values = [temp.rows[0].id, campos[i-1]]
         }
 
 
@@ -32,6 +34,18 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
         res.status(500).json({ mensagem: 'Erro ao criar template'});
     }
 });
+
+router.get('/listar', async (req, res) => {
+    try{
+        const query = 'SELECT * FROM template;'
+        const templates = await pool.query(query);
+
+        res.status(200).json(templates.rows);
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao listar templates'});
+    }
+})
 
 //app.use('/templates', autenticarToken, express.static(path.join(__dirname, '../frontend/common/templates.html')));
 

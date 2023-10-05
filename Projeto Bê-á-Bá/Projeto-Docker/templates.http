@@ -1,3 +1,4 @@
+GET http://localhost:3000/templates/listar
 ###
 GET http://localhost:3000/templates
 ###
