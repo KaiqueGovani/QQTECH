@@ -3,6 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const usuariosRoutes = require('./routes/usuarios');
 const templatesRoutes = require('./routes/templates');
+const tiposRoutes = require('./routes/tipos');
 const dbRoutes = require('./routes/db');
 const adminRoutes = require('./routes/admin');
 const autenticarToken = require('./middlewares/autenticarToken');
@@ -49,6 +50,7 @@ app.use('/admin', autenticarToken, verificarPermissao, adminRoutes);
 
 app.use('/usuarios', usuariosRoutes);
 app.use('/templates', templatesRoutes);
+app.use('/tipos', tiposRoutes);
 
 // Inicia o Servidor
 app.listen(port, () => {

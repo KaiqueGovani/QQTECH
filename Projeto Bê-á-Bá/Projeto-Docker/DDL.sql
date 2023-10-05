@@ -23,7 +23,7 @@ CREATE TABLE public.Template (
 );
 
 CREATE TABLE public.TemplatesCampos (
-    id_template integer REFERENCES public.Template(id) NOT NULL,
+    id_template integer REFERENCES public.Template(id) ON DELETE CASCADE NOT NULL,
     id_tipo integer REFERENCES public.Tipos(id) NOT NULL,
     ordem integer NOT NULL,
     nome_campo varchar NOT NULL,

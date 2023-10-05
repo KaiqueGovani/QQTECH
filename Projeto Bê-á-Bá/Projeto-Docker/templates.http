@@ -3,37 +3,37 @@ GET http://localhost:3000/templates/listar
 GET http://localhost:3000/templates
 ###
 POST http://localhost:3000/templates/criar
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY0ODgyMDMsImV4cCI6MTY5NjQ5MTgwM30.klyxJqOWB7ir_O9dSwaVA_2gaX3l4gaGd54smEe6o0A
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY1Njg2NjksImV4cCI6MTY5NjU3MjI2OX0.jBkHVnrBcFow954Lo1MJVydi5vXug5pAjAFBQTBBT4I
 
 ###
 POST http://localhost:3000/templates/criar
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY0ODgyMDMsImV4cCI6MTY5NjQ5MTgwM30.klyxJqOWB7ir_O9dSwaVA_2gaX3l4gaGd54smEe6o0A
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY1Njg2NjksImV4cCI6MTY5NjU3MjI2OX0.jBkHVnrBcFow954Lo1MJVydi5vXug5pAjAFBQTBBT4I
 
 {
-    "nome": "ExemploTemplate0",
+    "nome": "ExemploTemplate1",
     "id_criador": 1,
     "extensao": "csv",
     "status": true,
     "campos": [
       {
         "nome_campo": "Campo1",
-        "tipo_campo": "Texto",
+        "id_tipo": 1,
         "anulavel": false
       },
       {
         "nome_campo": "Campo2",
-        "tipo_campo": "Texto",
+        "id_tipo": 1,
         "anulavel": false
       },
       {
         "nome_campo": "Campo3",
-        "tipo_campo": "Texto",
+        "id_tipo": 1,
         "anulavel": false
       },
       {
         "nome_campo": "Campo4",
-        "tipo_campo": "Texto",
+        "id_tipo": 1,
         "anulavel": false
       }
     ]

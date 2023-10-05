@@ -13,7 +13,7 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
     try{
         const { nome, id_criador, extensao, campos} = req.body;
 
-        const query = 'INSERT INTO template (nome, id_criador, data_criacao, extensao, status) VALUES ($1, $2, current_timestamp, $3, $4);'
+        const query = "INSERT INTO template (nome, id_criador, data_criacao, extensao, status) VALUES ($1, $2, timezone(\'America/Sao_Paulo\', current_timestamp), $3, $4) RETURNING *;"
         const values = [nome, id_criador, extensao, (req.permissao === 'admin') ? 0 : null];
 
         //Adiciona o template:
@@ -21,13 +21,15 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
 
         //Adiciona os campos:
         for (let i = 0; i < campos.length; i++) {
-            const query = `INSERT INTO templateCampos (id_template, id_tipo, ordem, nome_campo, anulavel)
+            const query = `INSERT INTO templatesCampos (id_template, id_tipo, ordem, nome_campo, anulavel)
                            VALUES ($1, $2, $3, $4, $5);`
-            const values = [temp.rows[0].id, campos[i-1]]
+            const values = [temp.rows[0].id, campos[i].id_tipo, i+1, campos[i].nome_campo, campos[i].anulavel];
+
+            await pool.query(query, values);
         }
 
 
-        res.status(201).json({ mensagem: 'Template criado com sucesso' });
+        res.status(201).json({ mensagem: 'Template criado com sucesso', result: temp.rows[0] });
 
     } catch(error) {
         console.error(error);

@@ -30,7 +30,7 @@ router.get('/setup', (req, res) => {
     );
     
     CREATE TABLE public.TemplatesCampos (
-        id_template integer REFERENCES public.Template(id) NOT NULL,
+        id_template integer REFERENCES public.Template(id) ON DELETE CASCADE NOT NULL,
         id_tipo integer REFERENCES public.Tipos(id) NOT NULL,
         ordem integer NOT NULL,
         nome_campo varchar NOT NULL,
@@ -45,7 +45,7 @@ router.get('/setup', (req, res) => {
         nome varchar NOT NULL,
         data TIMESTAMP NOT NULL,
         path integer NOT NULL
-    );
+    );    
 
     INSERT INTO tipos (tipo) 
     VALUES 
