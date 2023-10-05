@@ -1,15 +1,17 @@
+###
 GET http://localhost:3000/templates
 ###
 POST http://localhost:3000/templates/criar
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY0ODgyMDMsImV4cCI6MTY5NjQ5MTgwM30.klyxJqOWB7ir_O9dSwaVA_2gaX3l4gaGd54smEe6o0A
+
 ###
 POST http://localhost:3000/templates/criar
 Content-Type: application/json
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY0ODgyMDMsImV4cCI6MTY5NjQ5MTgwM30.klyxJqOWB7ir_O9dSwaVA_2gaX3l4gaGd54smEe6o0A
 
 {
-  "template": {
-    "nome": "ExemploTemplate",
-    "nome_arquivo": "ExemploArquivo",
-    "id_criador": 1,  // Substitua pelo ID do usuário criador
+    "nome": "ExemploTemplate0",
+    "id_criador": 1,
     "extensao": "csv",
     "status": true,
     "campos": [
@@ -34,6 +36,5 @@ Content-Type: application/json
         "anulavel": false
       }
     ]
-  }
 }
 ###

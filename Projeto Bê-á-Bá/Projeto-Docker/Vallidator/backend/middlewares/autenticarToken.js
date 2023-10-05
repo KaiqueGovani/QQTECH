@@ -22,6 +22,10 @@ module.exports = (req, res, next) => {
         }
         
     } else {
-        res.redirect('/login');
+        if (req.method === 'POST') {
+            res.status(403).json({ mensagem: 'Você não está logado' });
+        } else {
+            res.redirect('/login');
+        }
     }
 }

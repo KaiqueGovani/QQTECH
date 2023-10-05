@@ -3,6 +3,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const usuariosRoutes = require('./routes/usuarios');
 const templatesRoutes = require('./routes/templates');
+const dbRoutes = require('./routes/db');
 const adminRoutes = require('./routes/admin');
 const autenticarToken = require('./middlewares/autenticarToken');
 const verificarPermissao = require('./middlewares/verificarPermissao');
@@ -20,6 +21,10 @@ app.use(cookieParser());
 app.use('/styles', express.static(path.join(__dirname, '../frontend/styles')));
 app.use('/scripts', express.static(path.join(__dirname, '../frontend/scripts')));
 app.use('/icons', express.static(path.join(__dirname, '../frontend/icons')));
+
+app.use('/db', dbRoutes);
+
+
 
 app.get('/', autenticarToken, (req, res) => {
     console.log("Logado como " + req.id + " com permissão " + req.permissao);
