@@ -11,7 +11,7 @@ class Usuario {
 
 document.addEventListener('DOMContentLoaded', async () => {
     //Fazer a requisição de todos os usuários
-    const response = await fetch('/usuarios/listar')
+    const response = await fetch('/usuarios/listar');
     const usuarios = await response.json();
 
     for (const usuario of usuarios) {

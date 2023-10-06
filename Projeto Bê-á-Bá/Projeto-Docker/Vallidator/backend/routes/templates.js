@@ -14,7 +14,7 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
         const { nome, id_criador, extensao, campos} = req.body;
 
         const query = "INSERT INTO template (nome, id_criador, data_criacao, extensao, status) VALUES ($1, $2, timezone(\'America/Sao_Paulo\', current_timestamp), $3, $4) RETURNING *;"
-        const values = [nome, id_criador, extensao, (req.permissao === 'admin') ? 0 : null];
+        const values = [nome, req.id, extensao, (req.permissao === 'admin') ? 0 : null];
 
         //Adiciona o template:
         const temp = await pool.query(query, values);
@@ -39,7 +39,18 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
 
 router.get('/listar', async (req, res) => {
     try{
-        const query = 'SELECT * FROM template;'
+        const query = `SELECT 
+                            t.id,
+                            t.nome,
+                            t.id_criador,
+                            t.data_criacao,
+                            t.extensao,
+                            t.status,
+                            u.nome AS nome_criador
+                       FROM template t 
+                       JOIN usuario u 
+                       ON t.id_criador = u.id
+                       ORDER BY t.id;`
         const templates = await pool.query(query);
 
         res.status(200).json(templates.rows);
@@ -48,6 +59,24 @@ router.get('/listar', async (req, res) => {
         res.status(500).json({ mensagem: 'Erro ao listar templates'});
     }
 })
+
+router.get('/buscar', async (req, res) => {
+    try {
+        const busca = req.query.busca;
+        console.log(busca);
+        const query = `SELECT * FROM template 
+                       WHERE nome ILIKE \'%${busca}%\'
+                       OR id::text ILIKE \'%${busca}%\';`
+
+        const templates = await pool.query(query);
+
+        res.status(200).json(templates.rows);
+                       
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar templates'});
+    }
+});
 
 //app.use('/templates', autenticarToken, express.static(path.join(__dirname, '../frontend/common/templates.html')));
 

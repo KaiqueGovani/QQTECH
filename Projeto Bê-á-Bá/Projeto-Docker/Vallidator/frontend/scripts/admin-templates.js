@@ -1,51 +1,29 @@
 class Template { 
     constructor(data){
-        const {id, nome, nome_arquivo, id_criador, data_criacao, extensao, status} = data;
+        const {id, nome, id_criador, data_criacao, extensao, status, campos} = data;
         this.id = id;
         this.nome = nome;
-        this.nome_arquivo = nome_arquivo;
-        this.id_criador = id_criador;
+        this.id_criador = id_criador; //-> Join usuario = nome_criador
         this.data_criacao = data_criacao;
         this.extensao = extensao;
         this.status = status;
+        this.campos = campos; //Array de campos
     }
 }
 
-const clientesData = {
-    id: 1,
-    nome: 'Clientes',
-    nome_arquivo: 'Clientes.csv',
-    id_criador: 2798,
-    data_criacao: '02/07/1971',
-    extensao: 'CSV',
-    status: 1
-};
 
-const todoListData = {
-    id: 3,
-    nome: 'TodoList',
-    nome_arquivo: 'TodoList.xlsx',
-    id_criador: 4846,
-    data_criacao: '12/08/1994',
-    extensao: 'XLSX',
-    status: 0
-};
+document.addEventListener('DOMContentLoaded', async () => {
+    const response = await fetch('/templates/listar');
+    const templates = await response.json();
+    console.log(typeof(templates));
 
-const moveisData = {
-    id: 4,
-    nome: 'Móveis',
-    nome_arquivo: 'Moveis.csv',
-    id_criador: 9151,
-    data_criacao: '06/09/2023',
-    extensao: 'CSV',
-    status: 1
-};
+    for (const template of templates) {
+        console.log(template);
+    }
 
-const clientesTemplate = new Template(clientesData);
-const todoListTemplate = new Template(todoListData);
-const moveisTemplate = new Template(moveisData);
-
-let templates = [clientesTemplate, todoListTemplate, moveisTemplate] 
+    popularTemplates(templates);
+    updateFooter();
+});
 
 const campoTemplates = document.getElementById("cb-templates");
 
@@ -57,12 +35,12 @@ function popularTemplates(templates){
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div class="card-text">
                     <h5 class="card-title"># ${template.id} ${template.nome} - ${template.extensao}</h5>
-                    <p class="card-text">Criado por Nome-Usuário - ID: ${template.id_criador}.<br>Criado em ${template.data_criacao}.</p>
+                    <p class="card-text">Criado por ${template.nome_criador} - ID: ${template.id_criador}.<br>Criado em ${new Date(template.data_criacao).toLocaleDateString("pt-BR")}.</p>
                 </div>
                 <div class="card-options d-flex justify-content-between gap-4">
                     <div class="form-check form-switch form-control-lg d-flex align-items-center">
                         <label class="form-check-label" style="line-height: 20px" for="statusSwitch${template.id}">Status: </label>
-                        <input class="form-check-input mx-4 mt-0" type="checkbox" role="switch" id="statusSwitch${template.id}" ${template.status == 1 ? 'checked' : ''}>
+                        <input ${(template.status === true) ? 'checked' : ''} class="form-check-input mx-4 mt-0" type="checkbox" role="switch" id="statusSwitch${template.id}" ${template.status == 1 ? 'checked' : ''}>
                         <div class="statusText" style="width: 60px">
                             <label class="form-check-label">${template.status == 1 ? 'Ativo' : 'Inativo'}</label>
                         </div>
@@ -89,4 +67,9 @@ function popularTemplates(templates){
     }
 }
 
-popularTemplates(templates);
+function updateFooter(){
+    const footer = document.querySelector('.card-footer');
+    const texto = footer.querySelector('div');
+
+    texto.innerHTML = `Visualizando ${campoTemplates.childElementCount} Templates de ${campoTemplates.childElementCount} `;
+}
