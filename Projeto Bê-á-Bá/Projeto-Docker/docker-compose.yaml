@@ -19,7 +19,6 @@ services:
     depends_on:
       - postgres
       - pgadmin
-    restart: always
     
 
   # Banco de Dados PostgreSQL
