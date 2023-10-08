@@ -6,12 +6,12 @@ GET http://localhost:3000/templates/buscar?busca=E
 GET http://localhost:3000/templates
 ###
 POST http://localhost:3000/templates/criar
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY1Njg2NjksImV4cCI6MTY5NjU3MjI2OX0.jBkHVnrBcFow954Lo1MJVydi5vXug5pAjAFBQTBBT4I
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY3NDYyMDMsImV4cCI6MTY5Njc0OTgwM30.4I9430bViFdFMXsCo2ZO89Hya_SCh_EER_xhTjCXXf8
 
 ###
 POST http://localhost:3000/templates/criar
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY2MjM0MTksImV4cCI6MTY5NjYyNzAxOX0.aP7s8yxw0vk-XuzdndVm2bHj76sNcXbwYkHgs-XBskU
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY3NDYyMDMsImV4cCI6MTY5Njc0OTgwM30.4I9430bViFdFMXsCo2ZO89Hya_SCh_EER_xhTjCXXf8
 
 {
     "nome": "ExemploTemplate1",
@@ -43,7 +43,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiY
 ###
 POST http://localhost:3000/templates/criar
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY2MjM0MTksImV4cCI6MTY5NjYyNzAxOX0.aP7s8yxw0vk-XuzdndVm2bHj76sNcXbwYkHgs-XBskU
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY3NDYyMDMsImV4cCI6MTY5Njc0OTgwM30.4I9430bViFdFMXsCo2ZO89Hya_SCh_EER_xhTjCXXf8
 
 {
   "nome": "Clientes",
@@ -76,7 +76,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiY
 ###
 POST http://localhost:3000/templates/criar
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY2MjM0MTksImV4cCI6MTY5NjYyNzAxOX0.aP7s8yxw0vk-XuzdndVm2bHj76sNcXbwYkHgs-XBskU
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY3NDYyMDMsImV4cCI6MTY5Njc0OTgwM30.4I9430bViFdFMXsCo2ZO89Hya_SCh_EER_xhTjCXXf8
 
 {
 "nome": "TodoList",
@@ -103,7 +103,7 @@ Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiY
 ###
 POST http://localhost:3000/templates/criar
 Content-Type: application/json
-Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY2MjM0MTksImV4cCI6MTY5NjYyNzAxOX0.aP7s8yxw0vk-XuzdndVm2bHj76sNcXbwYkHgs-XBskU
+Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2FvIjoiYWRtaW4iLCJpYXQiOjE2OTY3NDYyMDMsImV4cCI6MTY5Njc0OTgwM30.4I9430bViFdFMXsCo2ZO89Hya_SCh_EER_xhTjCXXf8
 
 {
 "nome": "Móveis",

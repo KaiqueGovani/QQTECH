@@ -82,7 +82,7 @@
         </div>
     </div>
 
-    <!-- Modal de Visualização de template -->
+    <!-- Modal de Criação de template -->
     <div class="modal fade" id="templateModal" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -157,13 +157,13 @@
                             </div>
                         </div>
 
+                        <div class="modal-footer align-content-center">
+                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="() => {}">Cancelar</button>
+                            <button data-bs-dismiss="modal"
+                                onclick='criarTemplate();showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");'
+                                type="button" class="btn btn-primary" id="sendTemplate">Criar Template</button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer align-content-center">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button data-bs-dismiss="modal"
-                        onclick='criarTemplate();showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");'
-                        type="button" class="btn btn-primary" id="sendTemplate">Criar Template!</button>
                 </div>
             </div>
         </div>
@@ -179,81 +179,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-5">
-                    <form enctype="multipart/form-data" id="templateUploadForm">
-
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="inputNomeTemplate" class="form-label">Nome do Template:*</label>
-                                    <input type="text" class="form-control" id="inputNomeTemplate"
-                                        placeholder="Escreva o nome do template" required value="${template.nome}">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="inputNCampos" class="form-label">Número de Campos no Arquivo:*</label>
-                                    <select oninput="atualizarInputs(parseInt(value));" type="dropdown"
-                                        class="form-control form-select" id="inputNCampos"
-                                        placeholder="Escolha o número de campos" required>
-                                        <option value="${template.campos.length}" selected>${template.campos.length}</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="btnradio1" class="form-label">Tipo do arquivo:*</label>
-                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradiocsv"
-                                            autocomplete="off" checked>
-                                        <label class="btn btn-outline-primary" for="btnradiocsv">
-                                            <img src="../icons/csv-icon.png" alt="">
-                                        </label>
-
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradioxls"
-                                            autocomplete="off">
-                                        <label class="btn btn-outline-primary" for="btnradioxls">
-                                            <img src="../icons/xls-icon.png" alt="">
-                                        </label>
-
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradioxlsx"
-                                            autocomplete="off">
-                                        <label class="btn btn-outline-primary" for="btnradioxlsx">
-                                            <img src="../icons/xlsx-icon.png" alt="">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" id="areaInputsCampos">
-                                <div class="col-md-6 mb-3">
-                                    <label for="inputNomeCampo1" class="form-label">Nome do Campo # 1:*</label>
-                                    <input type="text" class="form-control" id="inputNomeCampo1" value="${template.campo[0].nome_campo}">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="inputTipoCampo1" class="form-label">Tipo do Campo # 1:*</label>
-                                    <select type="text" class="form-control form-select" id="inputTipoCampo1" required>
-                                        <option value="${}" selected>${}</option>
-                                        <option value="1">Texto</option>
-                                        <option value="2">Inteiro</option>
-                                        <option value="3">Real</option>
-                                        <option value="4">Timestamp</option>
-                                        <option value="5">Booleano</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
+                    <form enctype="multipart/form-data" id="templateEditForm">
+                        <!-- Atualizado Dinamicamente -->  
                     </form>
                 </div>
                 <div class="modal-footer align-content-center">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                     <button data-bs-dismiss="modal"
                         onclick='criarTemplate();showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");'
-                        type="button" class="btn btn-primary" id="sendTemplate">Alterar Template!</button>
+                        type="button" class="btn btn-primary" id="sendTemplate">Alterar Template</button>
                 </div>
             </div>
         </div>

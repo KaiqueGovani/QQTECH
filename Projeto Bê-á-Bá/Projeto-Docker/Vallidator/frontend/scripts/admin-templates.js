@@ -148,7 +148,7 @@ function popularTemplates(templates){
                         </div>
                         <div class="d-flex gap-4 card-buttons"> 
                             <a style="width: 300px; justify-content: center; background-color: #fffaaa" class="btn btn-warning d-flex coluna-responsiva" data-bs-toggle="modal"
-                            data-bs-target="#uploadModal">
+                            data-bs-target="#templateEditarModal" id="editarTemplateBtn" data-template-id="${template.id}">
                             <span>Verificar Template</span>
                             <i style="font-size: 20px;" class="fa-solid fa-square-pen"></i>
                             </a>
@@ -204,90 +204,69 @@ function verEditarTemplate(id, templates){ //Função para ver o template que se
     console.log(template);
 
     // Pega o modal
-    const templateEditarModal = document.getElementById("templateEditarModal");
+    const templateEditForm = document.getElementById("templateEditForm");
 
     // Altera o modal com os dados do template selecionado
-    templateEditarModal.innerHTML = `
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Alterar Template</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    templateEditForm.innerHTML = `
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="inputNomeTemplate" class="form-label">Nome do Template:*</label>
+                    <input type="text" class="form-control" id="inputNomeTemplate"
+                        placeholder="Escreva o nome do template" required value="${template.nome}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="inputNCampos" class="form-label">Número de Campos no Arquivo:*</label>
+                    <select oninput="atualizarInputs(parseInt(value));" type="dropdown"
+                        class="form-control form-select" id="inputNCampos"
+                        placeholder="Escolha o número de campos" required>
+                        ${Array.from({ length: 7 }, (_, index) => `
+                            <option value="${index+1}" ${index === template.campos.length-1 ? 'selected' : ''}>${index+1}</option>`)
+                        .join('')}
+                    </select>
+                </div>
             </div>
-            <div class="modal-body mx-5">
-                <form enctype="multipart/form-data" id="templateUploadForm">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="btnradio1" class="form-label">Tipo do arquivo:*</label>
+                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradiocsv"
+                            autocomplete="off" ${(template.extensao == "csv") ? "checked" : ""}>
+                        <label class="btn btn-outline-primary" for="btnradiocsv">
+                            <img src="../icons/csv-icon.png" alt="">
+                        </label>
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="inputNomeTemplate" class="form-label">Nome do Template:*</label>
-                                <input type="text" class="form-control" id="inputNomeTemplate"
-                                    placeholder="Escreva o nome do template" required value="${template.nome}">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="inputNCampos" class="form-label">Número de Campos no Arquivo:*</label>
-                                <select oninput="atualizarInputs(parseInt(value));" type="dropdown"
-                                    class="form-control form-select" id="inputNCampos"
-                                    placeholder="Escolha o número de campos" required>
-                                    ${Array.from({ length: 7 }, (_, index) => `
-                                        <option value="${index+1}" ${index === template.campos.length-1 ? 'selected' : ''}>${index+1}</option>
-                                    `).join('')}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="btnradio1" class="form-label">Tipo do arquivo:*</label>
-                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradiocsv"
-                                        autocomplete="off" checked>
-                                    <label class="btn btn-outline-primary" for="btnradiocsv">
-                                        <img src="../icons/csv-icon.png" alt="">
-                                    </label>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradioxls"
+                            autocomplete="off" ${(template.extensao == "xls") ? "checked" : ""}>
+                        <label class="btn btn-outline-primary" for="btnradioxls">
+                            <img src="../icons/xls-icon.png" alt="">
+                        </label>
 
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradioxls"
-                                        autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradioxls">
-                                        <img src="../icons/xls-icon.png" alt="">
-                                    </label>
-
-                                    <input type="radio" class="btn-check" name="btnradio" id="btnradioxlsx"
-                                        autocomplete="off">
-                                    <label class="btn btn-outline-primary" for="btnradioxlsx">
-                                        <img src="../icons/xlsx-icon.png" alt="">
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" id="areaInputsCampos">
-                            ${Array.from({ length: template.campos.length }, (_, index) => `
-
-                            <div class="col-md-6 mb-3">
-                                <label for="inputNomeCampo${index+1}" class="form-label">Nome do Campo # ${index+1}:*</label>
-                                <input type="text" class="form-control" id="inputNomeCampo${index+1}" value="${template.campos[index].nome_campo}">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="inputTipoCampo${index+1}" class="form-label">Tipo do Campo # ${index+1}:*</label>
-                                <select type="text" class="form-control form-select" id="inputTipoCampo${index+1}" required>
-                                    ${Array.from({ length: Object.keys(typeMapping).length }, (_, jndex) => `
-                                        <option value="${jndex+1}" ${(template.campos[index].tipo == jndex+1 ? 'selected' : '')}>${typeMapping[jndex+1]}</option>
-                                    `).join('')}
-                                </select>
-                            </div>
-                            `).join('')}
-                        </div>
+                        <input type="radio" class="btn-check" name="btnradio" id="btnradioxlsx"
+                            autocomplete="off" ${(template.extensao == "xlsx") ? "checked" : ""}>
+                        <label class="btn btn-outline-primary" for="btnradioxlsx">
+                            <img src="../icons/xlsx-icon.png" alt="">
+                        </label>
                     </div>
-
-                </form>
+                </div>
             </div>
-            <div class="modal-footer align-content-center">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button data-bs-dismiss="modal"
-                    onclick='criarTemplate();showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");'
-                    type="button" class="btn btn-primary" id="sendTemplate">Alterar Template!</button>
+            <div class="row" id="areaInputsCampos">
+                ${Array.from({ length: template.campos.length }, (_, index) => `
+
+                <div class="col-md-6 mb-3">
+                    <label for="inputNomeCampo${index+1}" class="form-label">Nome do Campo # ${index+1}:*</label>
+                    <input type="text" class="form-control" id="inputNomeCampo${index+1}" value="${template.campos[index].nome_campo}">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="inputTipoCampo${index+1}" class="form-label">Tipo do Campo # ${index+1}:*</label>
+                    <select type="text" class="form-control form-select" id="inputTipoCampo${index+1}" required>
+                        ${Array.from({ length: Object.keys(typeMapping).length }, (_, jndex) => `
+                            <option value="${jndex+1}" ${(template.campos[index].tipo == jndex+1 ? 'selected' : '')}>${typeMapping[jndex+1]}</option>`)
+                        .join('')}
+                    </select>
+                </div>`)
+                .join('')}
             </div>
         </div>
-    </div>
-    
     `   
 }
