@@ -22,7 +22,8 @@ SELECT
 	END,
 	json_agg(json_build_object(
         'ordem', tc.ordem,
-		'tipo', tp.tipo,
+		'tipo', tp.id,
+		'nome_tipo', tp.tipo,
         'nome_campo', tc.nome_campo,
         'anulavel', tc.anulavel
     )) AS campos

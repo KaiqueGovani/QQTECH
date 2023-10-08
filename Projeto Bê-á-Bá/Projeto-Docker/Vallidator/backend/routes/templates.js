@@ -39,18 +39,35 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
 
 router.get('/listar', async (req, res) => {
     try{
-        const query = `SELECT 
-                            t.id,
-                            t.nome,
-                            t.id_criador,
-                            t.data_criacao,
-                            t.extensao,
-                            t.status,
-                            u.nome AS nome_criador
-                       FROM template t 
-                       JOIN usuario u 
-                       ON t.id_criador = u.id
-                       ORDER BY t.id;`
+        const query = `
+                    SELECT
+                        t.id,
+                        t.nome,
+                        t.id_criador,
+                        t.data_criacao,
+                        t.extensao,
+                        t.status,
+                        json_agg(json_build_object(
+                            'ordem', tc.ordem,
+                            'tipo', tp.id,
+                            'nome_tipo', tp.tipo,
+                            'nome_campo', tc.nome_campo,
+                            'anulavel', tc.anulavel
+                        )) AS campos,
+                        u.nome AS nome_criador
+                    FROM
+                        template t
+                    JOIN
+                        templatescampos tc ON t.id = tc.id_template
+                    JOIN
+                        tipos tp ON tc.id_tipo = tp.id
+                    JOIN
+                        usuario u ON t.id_criador = u.id
+                    GROUP BY
+                        t.id, t.nome, t.id_criador, t.data_criacao, t.extensao, t.status, u.nome
+                    ORDER BY
+                        t.id;
+                    `
         const templates = await pool.query(query);
 
         res.status(200).json(templates.rows);
