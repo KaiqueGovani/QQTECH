@@ -12,7 +12,7 @@ class Template { //Classe para representar um template
     }
 }
 
-const typeMapping = {
+const typeMapping = { //Mapeamento de tipos de campos // Posteriormente conectar ao banco
     1: "Texto",
     2: "Inteiro",
     3: "Real",
@@ -252,7 +252,7 @@ function verEditarTemplate(id, templates){ //Função para ver o template que se
             </div>
             <div class="row" id="areaInputsCampos">
                 ${Array.from({ length: template.campos.length }, (_, index) => `
-
+                
                 <div class="col-md-6 mb-3">
                     <label for="inputNomeCampo${index+1}" class="form-label">Nome do Campo # ${index+1}:*</label>
                     <input type="text" class="form-control" id="inputNomeCampo${index+1}" value="${template.campos[index].nome_campo}">

@@ -158,9 +158,8 @@
                         </div>
 
                         <div class="modal-footer align-content-center">
-                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal" onclick="() => {}">Cancelar</button>
-                            <button data-bs-dismiss="modal"
-                                onclick='criarTemplate();showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");'
+                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button data-bs-dismiss="modal" onclick='criarTemplate();'
                                 type="button" class="btn btn-primary" id="sendTemplate">Criar Template</button>
                         </div>
                     </form>
@@ -186,8 +185,8 @@
                 <div class="modal-footer align-content-center">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                     <button data-bs-dismiss="modal"
-                        onclick='criarTemplate();showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");'
-                        type="button" class="btn btn-primary" id="sendTemplate">Alterar Template</button>
+                        onclick='alterarTemplate();'
+                        type="button" class="btn btn-primary" id="sendTemplate">Confirmar Template</button>
                 </div>
             </div>
         </div>
