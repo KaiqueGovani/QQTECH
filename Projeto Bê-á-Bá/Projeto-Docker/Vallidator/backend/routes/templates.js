@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const pool = require('../config/database');
 const autenticarToken = require('../middlewares/autenticarToken');
+const verficarPermissao = require('../middlewares/verificarPermissao');
+const verificarPermissao = require('../middlewares/verificarPermissao');
 
 const router = express.Router();
 
@@ -37,37 +39,37 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
     }
 });
 
-router.get('/listar', async (req, res) => {
+router.get('/listar', autenticarToken, verficarPermissao, async (req, res) => {
     try{
         const query = `
-                    SELECT
-                        t.id,
-                        t.nome,
-                        t.id_criador,
-                        t.data_criacao,
-                        t.extensao,
-                        t.status,
-                        json_agg(json_build_object(
-                            'ordem', tc.ordem,
-                            'tipo', tp.id,
-                            'nome_tipo', tp.tipo,
-                            'nome_campo', tc.nome_campo,
-                            'anulavel', tc.anulavel
-                        )) AS campos,
-                        u.nome AS nome_criador
-                    FROM
-                        template t
-                    JOIN
-                        templatescampos tc ON t.id = tc.id_template
-                    JOIN
-                        tipos tp ON tc.id_tipo = tp.id
-                    JOIN
-                        usuario u ON t.id_criador = u.id
-                    GROUP BY
-                        t.id, t.nome, t.id_criador, t.data_criacao, t.extensao, t.status, u.nome
-                    ORDER BY
-                        t.id;
-                    `
+            SELECT
+                t.id,
+                t.nome,
+                t.id_criador,
+                t.data_criacao,
+                t.extensao,
+                t.status,
+                json_agg(json_build_object(
+                    'ordem', tc.ordem,
+                    'tipo', tp.id,
+                    'nome_tipo', tp.tipo,
+                    'nome_campo', tc.nome_campo,
+                    'anulavel', tc.anulavel
+                )) AS campos,
+                u.nome AS nome_criador
+            FROM
+                template t
+            JOIN
+                templatescampos tc ON t.id = tc.id_template
+            JOIN
+                tipos tp ON tc.id_tipo = tp.id
+            JOIN
+                usuario u ON t.id_criador = u.id
+            GROUP BY
+                t.id, t.nome, t.id_criador, t.data_criacao, t.extensao, t.status, u.nome
+            ORDER BY
+                t.id;
+        `
         const templates = await pool.query(query);
 
         res.status(200).json(templates.rows);
@@ -76,6 +78,48 @@ router.get('/listar', async (req, res) => {
         res.status(500).json({ mensagem: 'Erro ao listar templates'});
     }
 })
+
+router.get('/ativos', autenticarToken, async (req, res) => {
+    try {
+        const query = `
+            SELECT
+                t.id,
+                t.nome,
+                t.id_criador,
+                t.data_criacao,
+                t.extensao,
+                t.status,
+                json_agg(json_build_object(
+                    'ordem', tc.ordem,
+                    'tipo', tp.id,
+                    'nome_tipo', tp.tipo,
+                    'nome_campo', tc.nome_campo,
+                    'anulavel', tc.anulavel
+                )) AS campos,
+                u.nome AS nome_criador
+            FROM
+                template t
+            JOIN
+                templatescampos tc ON t.id = tc.id_template
+            JOIN
+                tipos tp ON tc.id_tipo = tp.id
+            JOIN
+                usuario u ON t.id_criador = u.id
+            WHERE
+                t.status = true
+            GROUP BY
+                t.id, t.nome, t.id_criador, t.data_criacao, t.extensao, t.status, u.nome
+            ORDER BY
+                t.id;
+        `
+                
+        const templates = await pool.query(query);
+        res.status(200).json(templates.rows);
+    } catch(error) {
+        console.log(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar templates ativos'});
+    }
+});
 
 router.get('/buscar', async (req, res) => {
     try {
@@ -94,7 +138,5 @@ router.get('/buscar', async (req, res) => {
         res.status(500).json({ mensagem: 'Erro ao buscar templates'});
     }
 });
-
-//app.use('/templates', autenticarToken, express.static(path.join(__dirname, '../frontend/common/templates.html')));
 
 module.exports = router;
