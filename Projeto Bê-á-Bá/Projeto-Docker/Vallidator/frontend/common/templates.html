@@ -99,7 +99,7 @@
                                     <label for="inputNCampos" class="form-label">Número de Campos no Arquivo:*</label>
                                     <select oninput="atualizarInputs(parseInt(value));" type="dropdown"
                                         class="form-control form-select" id="inputNCampos"
-                                        placeholder="Escolha o número de campos" required>
+                                        placeholder="Escolha o número de campos" required> 
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -112,28 +112,23 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="inputNomeArquivo" class="form-label">Nome do Arquivo Esperado:</label>
-                                    <input type="text" class="form-control" id="inputNomeArquivo"
-                                        placeholder="Em branco para nenhum">
-                                </div>
-                                <div class="col-md-6 mb-3">
                                     <label for="btnradio1" class="form-label">Tipo do arquivo:*</label>
                                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
+                                        <input type="radio" class="btn-check" name="btnradio" id="csv"
                                             autocomplete="off" checked>
-                                        <label class="btn btn-outline-primary" for="btnradio1">
+                                        <label class="btn btn-outline-primary" for="csv">
                                             <img src="../icons/csv-icon.png" alt="">
                                         </label>
 
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
+                                        <input type="radio" class="btn-check" name="btnradio" id="xls"
                                             autocomplete="off">
-                                        <label class="btn btn-outline-primary" for="btnradio2">
+                                        <label class="btn btn-outline-primary" for="xls">
                                             <img src="../icons/xls-icon.png" alt="">
                                         </label>
 
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
+                                        <input type="radio" class="btn-check" name="btnradio" id="xlsx"
                                             autocomplete="off">
-                                        <label class="btn btn-outline-primary" for="btnradio3">
+                                        <label class="btn btn-outline-primary" for="xlsx">
                                             <img src="../icons/xlsx-icon.png" alt="">
                                         </label>
                                     </div>
@@ -147,22 +142,22 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="inputTipoCampo1" class="form-label">Tipo do Campo # 1:*</label>
                                     <select type="text" class="form-control form-select" id="inputTipoCampo1" required>
+                                        <!-- ! Atualizar esses valores dinamicamente com o banco-->
                                         <option value="1">Texto</option>
                                         <option value="2">Inteiro</option>
                                         <option value="3">Real</option>
                                         <option value="4">Date</option>
-                                        <option value="5">Timestamp</option>
-                                        <option value="6">Booleano</option>
+                                        <option value="5">Booleano</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="modal-footer align-content-center">
+                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button data-bs-dismiss="modal" onclick='criarTemplate();' type="button" class="btn btn-primary" id="sendTemplate">Enviar para Verificação!</button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer align-content-center">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button data-bs-dismiss="modal" onclick='showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");' type="button" class="btn btn-primary" id="sendTemplate">Enviar para Verificação!</button>
                 </div>
             </div>
         </div>

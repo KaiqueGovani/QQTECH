@@ -15,16 +15,16 @@ class Template { //Classe para representar um template
 
 class Campo { //Classe para representar um campo
     constructor(data){
-        const {ordem, nome_campo, tipo, anulavel, id_template} = data;
+        const {ordem, nome_campo, id_tipo, anulavel, id_template} = data;
         this.ordem = ordem;
         this.nome_campo = nome_campo;
-        this.nome_tipo = typeMapping[tipo];
-        this.tipo = tipo;
+        this.nome_tipo = typeMapping[id_tipo];
+        this.id_tipo = id_tipo;
         this.anulavel = anulavel;
     }
 }
 
-const typeMapping = { //Mapeamento de tipos de campos // Posteriormente conectar ao banco
+const typeMapping = { // !Mapeamento de tipos de campos // Posteriormente conectar ao banco
     1: "Texto",
     2: "Inteiro",
     3: "Real",
@@ -43,6 +43,7 @@ function atualizarInputs(n) {
 
     //Adicionar os campos
     for (let i = 1; i < n+1; i++) {
+        // ! Atualizar os tipos dinamicamente
         areaInputsCampos.innerHTML += `
         <div class="col-md-6 mb-3">
             <label for="inputNomeCampo${i}" class="form-label">Nome do Campo # ${i}:<span>*</span></label>
@@ -55,7 +56,6 @@ function atualizarInputs(n) {
                 <option value="2">Inteiro</option>
                 <option value="3">Real</option>
                 <option value="4">Date</option>
-                <option value="5">Timestamp</option>
                 <option value="6">Booleano</option>
             </select>
         </div>
@@ -189,4 +189,64 @@ function popularTemplates(templates){
 
 function updateFooter(){
     console.log("Atualizando o footer");
+}
+
+function getFormData() {
+    const templateNome = document.getElementById("inputNomeTemplate").value;
+    const extensao = getSelectedFileExtension();
+    const nCampos = parseInt(document.getElementById("inputNCampos").value, 10);
+
+    const campos = [];
+    for (let i = 1; i <= nCampos; i++) {
+        const nome_campo = document.getElementById(`inputNomeCampo${i}`).value;
+        const id_tipo = document.getElementById(`inputTipoCampo${i}`).value;
+
+        campos.push({
+            ordem: i,
+            nome_campo: nome_campo,
+            id_tipo: id_tipo,
+            anulavel: false // TODO: Implementar
+        });
+    }
+
+    return {
+        nome: templateNome,
+        extensao: extensao,
+        campos: campos
+    };
+}
+
+function getSelectedFileExtension() {
+    const radios = document.getElementsByName("btnradio");
+    for (let radio of radios) {
+        if (radio.checked) {
+            return radio.id;
+        }
+    }
+    return null; // No radio button selected
+}
+
+function criarTemplate(){
+    // ! Tratar melhor as exeções de erro!
+    const formData = getFormData();
+    const template = new Template(formData);
+
+    console.log("Criando template:\n", template);
+
+    // Utilizando o fetch com promises para fazer o POST
+    fetch('/templates/criar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(template)
+    })
+    .then(response => response.json()) // Funciona como um middleware
+    .then(data => {
+        showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");
+        console.log("Resposta do servidor:", data.mensagem);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }

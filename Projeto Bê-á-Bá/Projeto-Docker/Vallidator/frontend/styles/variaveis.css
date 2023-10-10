@@ -126,6 +126,7 @@
 .card {
     font-family: 'Noto Sans Thai';
     border: 1px solid var(--InativoVerde);
+    margin-bottom: 50px;
 }
 
 .card-header{

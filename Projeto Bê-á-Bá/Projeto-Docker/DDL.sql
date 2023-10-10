@@ -37,5 +37,5 @@ CREATE TABLE public.Upload (
     id_usuario integer REFERENCES public.Usuario(id) NOT NULL,
     nome varchar NOT NULL,
     data TIMESTAMP NOT NULL,
-    path integer NOT NULL
+    path VARCHAR NOT NULL
 );

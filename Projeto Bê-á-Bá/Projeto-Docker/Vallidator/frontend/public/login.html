@@ -1,3 +1,7 @@
+<!-- ! Tratar as situações de erro com feedback apropriado -->
+<!-- TODO Fazer a lógica de recuperação de senha e usuário por email -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,8 +62,9 @@
         <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <button type="submit" style="text-align: center; width: 310px; height: 55px;"
                 class="btn btn-success btn-entrar px-6">Entrar</button>
+            <!-- ! Tratar as situações de erro com feedback apropriado -->
 
-            <!-- Fazer a lógica de recuperação de senha e usuário por email -->
+            <!-- TODO Fazer a lógica de recuperação de senha e usuário por email -->
             <a class="forgot-links" href="#">Esqueci a Senha</a>
             <a class="forgot-links" href="#">Esqueci o meu Usuário</a>
         </div>
@@ -67,41 +72,6 @@
 
     <script>
         document.getElementById("email").focus();
-
-        /* document.getElementById("loginForm").addEventListener("submit", async function (event) {
-            event.preventDefault();
-            const email = document.getElementById("email").value;
-            const senha = document.getElementById("senha").value;
-            const response = await fetch("/usuarios/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    email,
-                    senha
-                })
-            });
-            const data = await response.json();
-            console.log("Resposta de Login", data);
-            alert(data.mensagem);
-            if (data.status == 200) {
-
-                // Configurações do cookie
-                const cookieConfig = {
-                    expires: 24, // Expira em 24h
-                    path: '/', // O cookie está disponível em todo o site
-                    sameSite: 'strict', // Garante que o cookie só seja enviado em uma solicitação se a solicitação estiver vindo do mesmo site
-                    secure: true, // O cookie só será enviado em conexões HTTPS
-                };
-
-                // Define o cookie
-                document.cookie =
-                    `token=${data.token}; expires=${new Date(Date.now() + cookieConfig.expires * 60 * 60 * 1000)}; path=${cookieConfig.path}; sameSite=${cookieConfig.sameSite};${cookieConfig.secure ? ' secure' : ''}`;
-
-                window.location.href = data.redirect;
-            }
-        }) */
 
         function mostrarSenha() {
             var inputSenha = document.getElementById("senha");

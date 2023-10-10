@@ -1,3 +1,6 @@
+// ! Alterar tipo para id_tipo
+// ! Seguir padrão de objetos conforme templates.js
+
 class Template { //Classe para representar um template
     constructor(data){
         const {id, nome, id_criador, data_criacao, extensao, status, campos, nome_criador} = data;
