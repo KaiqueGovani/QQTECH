@@ -1,3 +1,7 @@
+// ! Melhorar o feedback do usuário em todas as rotas
+// ! Validar e Sanitizar inputs em todas as rotas
+// ! Analizar a necessidade de transação nas rotas
+// ! Autenticar Token de rotas ??
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');

@@ -54,16 +54,13 @@
                     </div>
                     <div>
                         <a href="#" class="btn btn-primary card-header-btn" data-bs-toggle="modal"
-                            data-bs-target="#templateModal">Adicionar Novo Template</a>
+                            data-bs-target="#templateModal" onclick="modalTemplate(0); resetarForm();">Adicionar Novo Template</a>
                     </div>
-                </div>
-
-                
+                </div>                
 
                 <div id="cb-templates">
-                    
+                    <!-- ? Atualizado Dinamicamente -->
                 </div>
-                
 
                 <div class="card-footer d-flex align-content-center justify-content-between">
                     <div class="card-text text-start opacity-50">
@@ -82,111 +79,18 @@
         </div>
     </div>
 
-    <!-- Modal de Criação de template -->
+    <!-- Modal de Upload de template -->
     <div class="modal fade" id="templateModal" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Adicionar um Template</h5>
+                    <h5 class="modal-title">Informações do Template</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-5">
                     <form enctype="multipart/form-data" id="templateUploadForm">
-
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="inputNomeTemplate" class="form-label">Nome do Template:*</label>
-                                    <input type="text" class="form-control" id="inputNomeTemplate"
-                                        placeholder="Escreva o nome do template" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="inputNCampos" class="form-label">Número de Campos no Arquivo:*</label>
-                                    <select oninput="atualizarInputs(parseInt(value));" type="dropdown"
-                                        class="form-control form-select" id="inputNCampos"
-                                        placeholder="Escolha o número de campos" required>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="btnradio1" class="form-label">Tipo do arquivo:*</label>
-                                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1"
-                                            autocomplete="off" checked>
-                                        <label class="btn btn-outline-primary" for="btnradio1">
-                                            <img src="../icons/csv-icon.png" alt="">
-                                        </label>
-
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2"
-                                            autocomplete="off">
-                                        <label class="btn btn-outline-primary" for="btnradio2">
-                                            <img src="../icons/xls-icon.png" alt="">
-                                        </label>
-
-                                        <input type="radio" class="btn-check" name="btnradio" id="btnradio3"
-                                            autocomplete="off">
-                                        <label class="btn btn-outline-primary" for="btnradio3">
-                                            <img src="../icons/xlsx-icon.png" alt="">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row" id="areaInputsCampos">
-                                <div class="col-md-6 mb-3">
-                                    <label for="inputNomeCampo1" class="form-label">Nome do Campo # 1:*</label>
-                                    <input type="text" class="form-control" id="inputNomeCampo1">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label for="inputTipoCampo1" class="form-label">Tipo do Campo # 1:*</label>
-                                    <select type="text" class="form-control form-select" id="inputTipoCampo1" required>
-                                        <option value="1">Texto</option>
-                                        <option value="2">Inteiro</option>
-                                        <option value="3">Real</option>
-                                        <option value="4">Data</option>
-                                        <option value="5">Booleano</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal-footer align-content-center">
-                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                            <button data-bs-dismiss="modal" onclick='criarTemplate();'
-                                type="button" class="btn btn-primary" id="sendTemplate">Criar Template</button>
-                        </div>
+                        <!-- ? Atualizado Dinamicamente -->
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Edição de template -->
-    <div class="modal fade" id="templateEditarModal" tabindex="-1" data-bs-backdrop="static">
-        <!-- Atualizar dinamicamente-->
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Alterar Template</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body mx-5">
-                    <form enctype="multipart/form-data" id="templateEditForm">
-                        <!-- Atualizado Dinamicamente -->  
-                    </form>
-                </div>
-                <div class="modal-footer align-content-center">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <button data-bs-dismiss="modal"
-                        onclick='alterarTemplate();'
-                        type="button" class="btn btn-primary" id="sendTemplate">Confirmar Template</button>
                 </div>
             </div>
         </div>
@@ -220,7 +124,7 @@
     </div>
 
     <!-- Modal de Feedback -->
-    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModal" aria-hidden="true">
+    <div class="modal fade" id="feedbackModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="feedbackModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -245,6 +149,8 @@
         </div>
     </div>
 
+
+    <!-- ! Utilizar o Modal de Feedback p Tudo!, ver usuarios.js primeiro-->
     <!-- Modal de Arquivo Compatível -->
     <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
         aria-hidden="true">

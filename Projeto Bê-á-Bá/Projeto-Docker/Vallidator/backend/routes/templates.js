@@ -15,7 +15,22 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
     try{
         const { nome, id_criador, extensao, campos} = req.body;
 
-        const query = "INSERT INTO template (nome, id_criador, data_criacao, extensao, status) VALUES ($1, $2, timezone(\'America/Sao_Paulo\', current_timestamp), $3, $4) RETURNING *;"
+        const query = `
+            INSERT INTO template (
+                nome, 
+                id_criador, 
+                data_criacao, 
+                extensao, 
+                status
+            ) VALUES (
+                $1, 
+                $2, 
+                timezone(\'America/Sao_Paulo\', current_timestamp), 
+                $3, 
+                $4
+            ) RETURNING *;
+        `
+            
         const values = [nome, req.id, extensao, (req.permissao === 'admin') ? 0 : null];
 
         //Adiciona o template:
@@ -51,7 +66,7 @@ router.get('/listar', autenticarToken, verficarPermissao, async (req, res) => {
                 t.status,
                 json_agg(json_build_object(
                     'ordem', tc.ordem,
-                    'tipo', tp.id,
+                    'id_tipo', tp.id,
                     'nome_tipo', tp.tipo,
                     'nome_campo', tc.nome_campo,
                     'anulavel', tc.anulavel
@@ -91,7 +106,7 @@ router.get('/ativos', autenticarToken, async (req, res) => {
                 t.status,
                 json_agg(json_build_object(
                     'ordem', tc.ordem,
-                    'tipo', tp.id,
+                    'id_tipo', tp.id,
                     'nome_tipo', tp.tipo,
                     'nome_campo', tc.nome_campo,
                     'anulavel', tc.anulavel
@@ -136,6 +151,68 @@ router.get('/buscar', async (req, res) => {
     } catch(error) {
         console.log(error);
         res.status(500).json({ mensagem: 'Erro ao buscar templates'});
+    }
+});
+
+router.put("/alterar", autenticarToken, verificarPermissao, async (req, res) => {
+    try {
+        const {id, nome, extensao, status, campos} = req.body;
+
+        // Inicia a transação:
+        pool.query('BEGIN');
+
+        const query = `
+            UPDATE template 
+            SET 
+                nome = $1,  
+                extensao = $2, 
+                status = $3
+            WHERE
+                id = $4
+        `
+
+        const values = [nome, extensao, (status == null) ? 0 : status, id];
+
+        //Atualiza o template:
+        const temp = await pool.query(query, values); 
+        console.log(`Template ${id} atualizado com sucesso`);
+
+        //Deleta os campos antigos:
+        const queryDelete = `DELETE FROM templatesCampos WHERE id_template = $1`;
+        await pool.query(queryDelete, [id]);
+        console.log(`Campos do template ${id} deletados com sucesso`);
+
+        //Adiciona os campos:
+        for (let i = 0; i < campos.length; i++) {
+            const query = `INSERT INTO templatesCampos (id_template, id_tipo, ordem, nome_campo, anulavel)
+                           VALUES ($1, $2, $3, $4, $5);`
+            const values = [id, campos[i].id_tipo, i+1, campos[i].nome_campo, campos[i].anulavel];
+
+            await pool.query(query, values);
+        }
+
+        // Finaliza a transação:
+        pool.query('COMMIT');
+
+        res.status(201).json({ mensagem: 'Template atualizado com sucesso', result: temp.rows[0] });
+    } catch(error) {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao atualizar template'});
+    }
+});
+
+router.patch('/status', autenticarToken, verificarPermissao, async (req, res) => {
+    try {
+        const query = "UPDATE template SET status = $1 WHERE id = $2";
+        const {id, status} = req.body;
+        const values = [status, id];
+
+        pool.query(query, values);
+
+        res.status(201).json({ mensagem: 'Status do template atualizado com sucesso'});
+    }   catch(error) {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao atualizar status do template'});
     }
 });
 

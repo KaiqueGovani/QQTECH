@@ -226,7 +226,7 @@ function getSelectedFileExtension() {
     return null; // No radio button selected
 }
 
-function criarTemplate(){
+function enviarTemplate(){
     // ! Tratar melhor as exeções de erro!
     const formData = getFormData();
     const template = new Template(formData);
