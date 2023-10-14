@@ -19,7 +19,18 @@ services:
     depends_on:
       - postgres
       - pgadmin
+      - flask
     
+ # Serviço Python (Flask)
+  flask:
+    build: ./python
+    container_name: vallidator-flask
+    environment:
+      FLASK_APP: app.py
+    volumes:
+      - ./python/src:/app
+    ports:
+      - "5000:5000"
 
   # Banco de Dados PostgreSQL
   postgres:
