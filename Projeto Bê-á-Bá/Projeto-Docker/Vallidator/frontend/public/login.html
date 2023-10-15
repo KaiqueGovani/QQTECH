@@ -1,0 +1,103 @@
+<!-- ! Tratar as situações de erro com feedback apropriado -->
+<!-- TODO Fazer a lógica de recuperação de senha e usuário por email -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Koulen|Inter|Ubuntu|Ubuntu:700">
+    <link rel="stylesheet" href="../styles/variaveis.css">
+    <link rel="stylesheet" href="../styles/login.css">
+    <script src="../scripts/frontend.js"></script>
+
+    <title>Login</title>
+</head>
+
+<body>
+    <!-- Logo -->
+    <div class="gap-3 mb-3" style="justify-content: center; align-items: center; display: inline-flex">
+        <div><img style="height: 100px;" src="icons/logo-icon.png" /></div>
+        <div
+            style=" padding-top: 25px; line-height: 75px; color: #133420; font-size: 91.17px; font-family: Koulen; font-weight: 400; word-wrap: break-word">
+            VALLIDATOR</div>
+    </div>
+
+    <!-- Subtítulo -->
+    <div class="mb-5" style="height: 62px;">
+        <p style="font-size: 22px; letter-spacing: -0.456px; font-family: Ubuntu; color: #297348;">Sistema de
+            Gerenciamento Eletrônico de Templates</p>
+    </div>
+
+    <!-- Formulário -->
+    <form id="loginForm" action="/usuarios/login" method="POST">
+
+        <div class="mb-3" style="width: 420px;">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control p-12" id="email" name="email" placeholder="admin@gmail.com"
+                required>
+        </div>
+
+        <div class="mb-5" style="width: 420px;">
+            <label for="senha" class="form-label">Senha</label>
+            <div class="input-group">
+                <input type="password" class="form-control p-12" id="senha" name="senha" placeholder="● ● ● ● ● ●"
+                    required>
+                <span id="icone-senha" onclick="mostrarSenha()" class="input-group-text" style="cursor: pointer;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                        <path
+                            d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
+                        <path
+                            d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <button type="submit" style="text-align: center; width: 310px; height: 55px;"
+                class="btn btn-success btn-entrar px-6">Entrar</button>
+            <!-- ! Tratar as situações de erro com feedback apropriado -->
+
+            <!-- TODO Fazer a lógica de recuperação de senha e usuário por email -->
+            <a class="forgot-links" href="#">Esqueci a Senha</a>
+            <a class="forgot-links" href="#">Esqueci o meu Usuário</a>
+        </div>
+    </form>
+
+    <script>
+        document.getElementById("email").focus();
+
+        function mostrarSenha() {
+            var inputSenha = document.getElementById("senha");
+            var icone = document.getElementById("icone-senha");
+            if (inputSenha.type == "password") {
+                inputSenha.type = "text";
+                icone.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+                </svg>`
+
+            } else {
+                inputSenha.type = "password";
+                icone.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                    <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" />
+                    <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" />
+                </svg>`
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

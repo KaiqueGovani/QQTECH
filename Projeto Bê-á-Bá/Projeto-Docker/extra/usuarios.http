@@ -1,0 +1,87 @@
+GET http://localhost:3000/db/setup
+
+###
+POST http://localhost:3000/usuarios/login
+Content-Type: application/json
+
+{
+    "email": "kaique.govani@hotmail.com",
+    "senha": "senha_segura"
+}
+###
+POST http://localhost:3000/usuarios/login
+Content-Type: application/json
+
+{
+    "email": "ricardo.milos@gmail.com",
+    "senha": "senha_segura"
+}
+###
+GET http://localhost:3000/usuarios/listar
+###
+POST http://localhost:3000/usuarios/criar
+Content-Type: application/json
+
+{
+    "nome": "Kaique",
+    "sobrenome": "Medeiros Govani",
+    "telefone": "+55 15 998492994",
+    "email": "kaique.govani@hotmail.com",
+    "senha": "senha_segura",
+    "permissao": "admin"
+}
+
+###
+POST http://localhost:3000/usuarios/criar
+Content-Type: application/json
+
+{
+    "nome": "Ricardo",
+    "sobrenome": "Milos",
+    "telefone": "+55 51 997478274",
+    "email": "ricardo.milos@gmail.com",
+    "senha": "senha_segura",
+    "permissao": "criar"
+}
+
+###
+POST http://localhost:3000/usuarios/criar
+Content-Type: application/json
+
+{
+    "nome": "Caetano",
+    "sobrenome": "Passos",
+    "telefone": "+55 11 888334674",
+    "email": "caetano.passos@hotmail.com",
+    "senha": "senha_segura",
+    "permissao": "upload"
+}
+
+###
+POST http://localhost:3000/usuarios/criar
+Content-Type: application/json
+
+{
+    "nome": "Kaua",
+    "sobrenome": "Tezoto",
+    "telefone": "+55 15 998456723",
+    "email": "kaua.tezoto@hotmail.com",
+    "senha": "senha_segura",
+    "permissao": "upload:criar"
+}
+###
+POST http://localhost:3000/usuarios/criar
+Content-Type: application/json
+
+{
+    "nome": "Mateus",
+    "sobrenome": "Nauhan",
+    "telefone": "+55 15 940028922",
+    "email": "nauhan.cs2@hotmail.com",
+    "senha": "euamojava",
+    "permissao": "admin"
+}
+
+###
+DELETE http://localhost:3000/usuarios/deletar-todos
+
