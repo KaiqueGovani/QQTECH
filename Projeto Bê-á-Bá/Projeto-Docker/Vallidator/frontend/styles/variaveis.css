@@ -223,6 +223,8 @@
 .form-check-input {
     float: none !important;
     margin-left: 8px !important;
+    width: 1.3em; 
+    height:1.3em;
 }
 
 .form-check-input:checked {
