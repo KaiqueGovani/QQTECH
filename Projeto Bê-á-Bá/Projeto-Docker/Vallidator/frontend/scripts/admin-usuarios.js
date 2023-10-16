@@ -54,21 +54,24 @@ async function renderizarUsuarios() {
                             Fazer Upload:
                         </label>
                         <input ${(usuario.permissao.includes('upload')) ? 'checked' : ''} 
-                            class="form-check-input m-0" type="checkbox" id="uploadCheck${usuario.id}">
+                            class="form-check-input m-0" type="checkbox" id="uploadCheck${usuario.id}"
+                            onclick="gerarPermissao(${usuario.id})">
                     </div>
                     <div class="form-check form-control-lg mb-0 px-2">
                         <label class="form-check-label" for="criarCheck${usuario.id}">
                             Criar Templates:
                         </label>
                         <input ${(usuario.permissao.includes('criar')) ? 'checked' : ''} 
-                            class="form-check-input m-0" type="checkbox" id="criarCheck${usuario.id}">
+                            class="form-check-input m-0" type="checkbox" id="criarCheck${usuario.id}"
+                            onclick="gerarPermissao(${usuario.id})">
                     </div>
                     <div class="form-check form-control-lg mb-0 px-2 pe-4">
                         <label class="form-check-label" for="adminCheck${usuario.id}">
                             Administrador:
                         </label>
                         <input ${(usuario.permissao.includes('admin')) ? 'checked' : ''} 
-                            class="form-check-input m-0" type="checkbox" id="adminCheck${usuario.id} ">
+                            class="form-check-input m-0" type="checkbox" id="adminCheck${usuario.id}"
+                            onclick="gerarPermissao(${usuario.id})">
                     </div>
                     <button class="btn btn-outline-secondary"
                         data-bs-toggle="modal" data-bs-target="#uploadModal">
@@ -81,3 +84,49 @@ async function renderizarUsuarios() {
     }
 }
 
+async function atualizarPermissao(id, permissao) {
+    console.log("alterando permissão de", id, "para", permissao);
+    try {
+        const response = await fetch(`/usuarios/permissao`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id, permissao })
+        });
+
+        const data = await response.json();
+        console.log(data.mensagem); //? Alterar esse tipo de feedback para um toast?
+
+    } catch(error) {
+        console.error('Error:', error);
+    }
+}
+
+async function gerarPermissao(id){
+    const uploadCheck = document.getElementById(`uploadCheck${id}`);
+    const criarCheck = document.getElementById(`criarCheck${id}`);
+    const adminCheck = document.getElementById(`adminCheck${id}`);
+
+    const permissao = [];
+
+    if (adminCheck.checked) {
+        permissao.push('admin');
+        criarCheck.checked = false;
+        uploadCheck.checked = false;
+
+    } else {
+        if (uploadCheck.checked) {
+            permissao.push('upload');
+        }
+        if (criarCheck.checked) {
+            permissao.push('criar');
+        }
+    }
+
+    if (permissao.length === 0) {
+        permissao.push('ver');
+    }
+
+    await atualizarPermissao(id, permissao.join(':'));
+}

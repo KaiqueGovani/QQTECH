@@ -1,3 +1,6 @@
+###
+GET http://localhost:3000/usuarios/listar
+###
 GET http://localhost:3000/db/setup
 
 ###
@@ -16,8 +19,6 @@ Content-Type: application/json
     "email": "ricardo.milos@gmail.com",
     "senha": "senha_segura"
 }
-###
-GET http://localhost:3000/usuarios/listar
 ###
 POST http://localhost:3000/usuarios/criar
 Content-Type: application/json

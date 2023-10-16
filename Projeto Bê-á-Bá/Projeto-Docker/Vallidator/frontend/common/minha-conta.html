@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="../styles/variaveis.css">
     <link rel="stylesheet" href="../styles/usuario.css">
-    <script src="../scripts/frontend.js"></script>
+    <script src="../scripts/navbar.js"></script>
+    <script src="../scripts/minha-conta.js"></script>
 
     <title>Templates Ativos</title>
 </head>
@@ -49,42 +50,42 @@
 
         <div class="page-body mx-md-5 d-flex mb-5">
             <div class="card w-100 mx-md-5 mx-3 px-5 py-4 pt-5">
-                <form class="px-lg-5" action="templates">
+                <form class="px-lg-5">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Nome</label>
-                            <input type="text" class="form-control" placeholder="Kaique">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" id="nome">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Sobrenome</label>
-                            <input type="text" class="form-control" placeholder="Govani1">
+                            <label for="sobrenome">Sobrenome</label>
+                            <input type="text" class="form-control" id="sobrenome">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Telefone</label>
-                            <input type="text" class="form-control" placeholder="15998492994">
+                            <label for="telefone">Telefone</label>
+                            <input type="text" class="form-control" id="telefone">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Email</label>
-                            <input type="text" class="form-control" disabled placeholder="kaique.govani@hotmail.com">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" disabled id="email">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Permissão</label>
-                            <input type="text" class="form-control" disabled placeholder="Criação de Templates e Upload">
+                            <label for="permissao">Permissão</label>
+                            <input type="text" class="form-control" disabled id="permissao">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">ID de Usuário</label>
-                            <input type="text" class="form-control" disabled placeholder="8452">
+                            <label for="idUsuario">ID de Usuário</label>
+                            <input type="text" class="form-control" disabled id="idUsuario">
                         </div>
-                    </div>
-                    <div class="d-flex gap-3 flex-row justify-content-center mt-3 mt-md-5">
-                        <button class="btn btn-danger" style="font-family: Open Sans; font-weight: 600; font-size: 22px;"> Cancelar</button>
-                        <button class="btn btn-primary" style="font-family: Open Sans; font-weight: 600; font-size: 22px;""> Salvar Alterações</button>
                     </div>
                 </form>
+                <div class="d-flex gap-3 flex-row justify-content-center mt-3 mt-md-5">
+                    <button class="btn btn-danger" style="font-family: Open Sans; font-weight: 600; font-size: 22px;"> Cancelar</button>
+                    <button onclick="atualizarDadosUsuario();" class="btn btn-primary" style="font-family: Open Sans; font-weight: 600; font-size: 22px;""> Salvar Alterações</button>
+                </div>
             </div>
         </div>
     </div>
