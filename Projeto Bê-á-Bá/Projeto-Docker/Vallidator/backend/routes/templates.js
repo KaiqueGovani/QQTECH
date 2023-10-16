@@ -174,7 +174,7 @@ router.put("/alterar", autenticarToken, verificarPermissao, async (req, res) => 
         const values = [nome, extensao, (status == null) ? 0 : status, id];
 
         //Atualiza o template:
-        const temp = await pool.query(query, values); 
+        await pool.query(query, values); 
         console.log(`Template ${id} atualizado com sucesso`);
 
         //Deleta os campos antigos:
@@ -192,9 +192,9 @@ router.put("/alterar", autenticarToken, verificarPermissao, async (req, res) => 
         }
 
         // Finaliza a transação:
-        pool.query('COMMIT');
+        await pool.query('COMMIT');
 
-        res.status(201).json({ mensagem: 'Template atualizado com sucesso', result: temp.rows[0] });
+        res.status(201).json({ mensagem: 'Template atualizado com sucesso'});
     } catch(error) {
         console.error(error);
         res.status(500).json({ mensagem: 'Erro ao atualizar template'});

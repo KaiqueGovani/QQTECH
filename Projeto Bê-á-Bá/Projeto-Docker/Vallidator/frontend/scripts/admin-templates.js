@@ -90,8 +90,6 @@ function showFeedbackModal(title, response, additionalInfo, iconURL) {
     feedbackModal.show();
 }
 
-//showFeedbackModal("Feedback Title", "This is the response.", "Additional information goes here.", "icons/badge-check.png");
-
 //Pega o nome do template que será utilizado
 document.getElementById("uploadModal").addEventListener("show.bs.modal", event => {
     // ! Modificar Esse código, também no usuario.js
@@ -389,13 +387,13 @@ async function alterarTemplate(id){
             body: JSON.stringify(template)
         });
         const data = await response.json();
+        await popularTemplates();
         showFeedbackModal("Template Atualizado!", "Mudanças Registradas.", "Template está disponível para uso.", "../icons/badge-check.png");
         console.log("Resposta do servidor:", data.mensagem);
     
     } catch(error) {
         console.error('Error:', error);
     } finally {
-        await popularTemplates();
     }
 }
 
