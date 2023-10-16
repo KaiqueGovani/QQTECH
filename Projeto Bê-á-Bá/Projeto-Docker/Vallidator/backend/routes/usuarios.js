@@ -3,8 +3,38 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const gerarToken = require('../middlewares/gerarToken');
 const pool = require('../config/database');
+const verificarPermissao = require('../middlewares/verificarPermissao');
+const autenticarToken = require('../middlewares/autenticarToken');
 
 const router = express.Router();
+
+router.get('/dados', autenticarToken, async (req, res) => { // Pega os dados do usuario que está logado
+    try {
+        const query = 'SELECT * FROM usuario WHERE id = $1';
+        const values = [req.id];
+
+        const result = await pool.query(query, values);
+
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao obter informações de usuário' });
+    }
+});
+
+router.patch('/dados', autenticarToken, async (req, res) => { // Atualiza os dados do usuario que está logado
+    try {
+        const query = 'UPDATE usuario SET nome = $1, sobrenome = $2, telefone = $3 WHERE id = $4';
+        const values = [req.body.nome, req.body.sobrenome, req.body.telefone, req.id];
+
+        await pool.query(query, values);
+
+        res.status(201).json({ mensagem: 'Dados atualizados com sucesso' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({mensagem: 'Erro ao atualizar dados de usuário'});
+    }
+});
 
 router.post('/criar', async (req, res) => {
     try {
@@ -80,7 +110,7 @@ router.post('/logout', async (req, res) => {
 
 router.get('/listar', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM usuario');
+        const result = await pool.query('SELECT * FROM usuario ORDER BY id');
         res.status(200).json(result.rows);
     } catch (error) {
         console.error(error);
@@ -96,6 +126,21 @@ router.delete('/deletar-todos', async (req, res) => {
         console.error(error);
         res.status(500).json({ mensagem: 'Erro ao apagar todos os usuários' })
     }
-})
+});
+
+router.patch('/permissao', autenticarToken, verificarPermissao, async(req, res) => {
+    try {
+        const query = "UPDATE usuario SET permissao = $1 WHERE id = $2";
+        const {id, permissao} = req.body;
+        const values = [permissao, id];
+
+        await pool.query(query, values);
+
+        res.status(201).json({mensagem: 'Permissão alterada com sucesso'});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({mensagem: 'Erro ao alterar permissão'});
+    }
+});
 
 module.exports = router;
