@@ -1,7 +1,7 @@
-const express = require('express');
-const pool = require('../config/database');
+import { Router } from 'express';
+import pool from '../config/database.js';
 
-const router = express.Router();
+const router = Router();
 
 // Route for initializing the database with a query
 router.get('/setup', (req, res) => {
@@ -67,4 +67,4 @@ router.get('/setup', (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

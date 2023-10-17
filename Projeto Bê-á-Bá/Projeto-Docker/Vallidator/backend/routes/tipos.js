@@ -1,7 +1,7 @@
-const express = require('express');
-const pool = require('../config/database');
+import { Router } from 'express';
+import pool from '../config/database.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/listar', async (req, res) => {
     try{
@@ -15,4 +15,4 @@ router.get('/listar', async (req, res) => {
     }
 })
 
-module.exports = router;
+export default router;

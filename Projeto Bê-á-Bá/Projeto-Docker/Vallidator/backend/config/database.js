@@ -1,7 +1,7 @@
 // Em /config/database.js
-const { Pool } = require('pg');
+import pg from 'pg';
 
-const pool = new Pool({
+const pool = new pg.Pool({
     user: 'kapouser',
     host: 'postgres',
     database: 'vallidatordb',
@@ -9,4 +9,4 @@ const pool = new Pool({
     port: 5432,
 });
 
-module.exports = pool;
+export default pool;

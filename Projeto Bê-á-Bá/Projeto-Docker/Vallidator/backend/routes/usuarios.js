@@ -1,12 +1,12 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const path = require('path');
-const gerarToken = require('../middlewares/gerarToken');
-const pool = require('../config/database');
-const verificarPermissao = require('../middlewares/verificarPermissao');
-const autenticarToken = require('../middlewares/autenticarToken');
+import { Router } from 'express';
+import { hash, compare } from 'bcrypt';
+import path from 'path';
+import gerarToken from '../middlewares/gerarToken.js';
+import pool from '../config/database.js';
+import verificarPermissao from '../middlewares/verificarPermissao.js';
+import autenticarToken from '../middlewares/autenticarToken.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/dados', autenticarToken, async (req, res) => { // Pega os dados do usuario que está logado
     try {
@@ -44,7 +44,7 @@ router.post('/criar', async (req, res) => {
 
         //Hash da senha
         const saltRounds = 10;
-        const hashSenha = await bcrypt.hash(senha, saltRounds);
+        const hashSenha = await hash(senha, saltRounds);
 
         //Valores para inserçao
         const values = [nome, sobrenome, telefone, email, hashSenha, permissao];
@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
         const usuario = result.rows[0];
 
         if (usuario) {
-            const match = await bcrypt.compare(senha, usuario.senha);
+            const match = await compare(senha, usuario.senha);
 
             if (match) {
                 const token = gerarToken(usuario.id, usuario.permissao);
@@ -143,4 +143,4 @@ router.patch('/permissao', autenticarToken, verificarPermissao, async(req, res) 
     }
 });
 
-module.exports = router;
+export default router;

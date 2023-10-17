@@ -1,5 +1,4 @@
-const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
+import jwt from 'jsonwebtoken';
 
 const segredo = 'segredo';
 
@@ -9,4 +8,4 @@ function gerarToken(id, permissao) {
     return token;
 }
 
-module.exports = gerarToken;
+export default gerarToken;

@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const segredo = 'segredo';
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
     const token = req.cookies.token;
 
     if (token) {

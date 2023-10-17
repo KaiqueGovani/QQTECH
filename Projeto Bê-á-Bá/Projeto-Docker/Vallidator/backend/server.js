@@ -2,19 +2,24 @@
 // ! Validar e Sanitizar inputs em todas as rotas
 // ! Analizar a necessidade de transação nas rotas
 // ! Autenticar Token de rotas ??
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const adminRoutes = require('./routes/admin');
-const arquivosRoutes = require('./routes/arquivos');
-const dbRoutes = require('./routes/db');
-const templatesRoutes = require('./routes/templates');
-const tiposRoutes = require('./routes/tipos');
-const usuariosRoutes = require('./routes/usuarios');
-const autenticarToken = require('./middlewares/autenticarToken');
-const verificarPermissao = require('./middlewares/verificarPermissao');
+import express from 'express';
+import { join } from 'path';
+import cookieParser from 'cookie-parser';
+import adminRoutes from './routes/admin.js';
+import arquivosRoutes from './routes/arquivos.js';
+import dbRoutes from './routes/db.js';
+import templatesRoutes from './routes/templates.js';
+import tiposRoutes from './routes/tipos.js';
+import usuariosRoutes from './routes/usuarios.js';
+import autenticarToken from './middlewares/autenticarToken.js';
+import verificarPermissao from './middlewares/verificarPermissao.js';
+
+
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Caminho do diretório atual
+const __dirname = new URL('.', import.meta.url).pathname;
 
 // Middleware para processar JSON
 app.use(express.json());
@@ -24,9 +29,9 @@ app.use(express.urlencoded({ extended: true })); // Para analisar corpos de form
 app.use(cookieParser());
 
 // Configurar rotas estáticas
-app.use('/styles', express.static(path.join(__dirname, '../frontend/styles')));
-app.use('/scripts', express.static(path.join(__dirname, '../frontend/scripts')));
-app.use('/icons', express.static(path.join(__dirname, '../frontend/icons')));
+app.use('/styles', express.static(join(__dirname, '../frontend/styles')));
+app.use('/scripts', express.static(join(__dirname, '../frontend/scripts')));
+app.use('/icons', express.static(join(__dirname, '../frontend/icons')));
 
 app.use('/db', dbRoutes);
 
@@ -42,15 +47,14 @@ app.get('/', autenticarToken, (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/public/login.html'));
+    res.sendFile(join(__dirname, '../frontend/public/login.html'));
 })
 
 
-app.use('/minha-conta', autenticarToken, express.static(path.join(__dirname, '../frontend/common/minha-conta.html')));
+app.use('/minha-conta', autenticarToken, express.static(join(__dirname, '../frontend/common/minha-conta.html')));
 
-app.use('/common', autenticarToken, express.static(path.join(__dirname, '../frontend/common')));
+app.use('/common', autenticarToken, express.static(join(__dirname, '../frontend/common')));
 
-//app.use('/admin', autenticarToken, verificarPermissao, express.static(path.join(__dirname, '../frontend/admin')));
 app.use('/admin', autenticarToken, verificarPermissao, adminRoutes);
 
 app.use('/arquivos', arquivosRoutes);

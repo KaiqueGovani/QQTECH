@@ -1,13 +1,13 @@
-const express = require('express');
-const path = require('path');
-const pool = require('../config/database');
-const autenticarToken = require('../middlewares/autenticarToken');
-const verificarPermissao = require('../middlewares/verificarPermissao');
+import { Router } from 'express';
+import { join } from 'path';
+import pool from '../config/database.js';
+import autenticarToken from '../middlewares/autenticarToken.js';
+import verificarPermissao from '../middlewares/verificarPermissao.js';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/', autenticarToken, async (req, res) => {
-    res.sendFile(path.join(__dirname, '../../frontend/common/templates.html'));
+    res.sendFile(join(__dirname, '../../frontend/common/templates.html'));
 });
 
 router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken para verificar a permissão
@@ -218,4 +218,4 @@ router.patch('/status', autenticarToken, verificarPermissao, async (req, res) =>
     }
 });
 
-module.exports = router;
+export default router;
