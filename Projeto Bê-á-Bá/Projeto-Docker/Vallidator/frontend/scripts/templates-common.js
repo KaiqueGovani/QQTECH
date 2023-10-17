@@ -197,7 +197,7 @@ function resetarForm(){
 
 async function enviarArquivo(){
     try {
-        const formUploadFile = document.getElementById("formUploadFile");
+        const formUploadFile = document.getElementById("formUploadFile"); // ! resetar form
         const fileInput = document.getElementById("templateFile");
         const file = fileInput.files[0];
         console.log("Enviando arquivo...");

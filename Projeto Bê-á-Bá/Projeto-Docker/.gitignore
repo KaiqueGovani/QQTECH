@@ -2,3 +2,5 @@ node_modules/
 data/
 pgadmin/
 uploads/
+credentials.json
+bucket-name.txt

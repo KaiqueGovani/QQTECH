@@ -1,6 +1,7 @@
 const express = require('express');
 const pool = require('../config/database');
 const path = require('path');
+const fetch = require('node-fetch');
 const multer = require('multer');
 
 const router = express.Router();
@@ -29,6 +30,11 @@ const upload = multer({ storage: storage });
 router.post('/upload', upload.single("uploadedFile"), async (req, res) => {
     console.log("Recebendo arquivo...");
     console.log("File:", req.file);
+
+    const response = await fetch('http://flask:5000/validar')
+
+    console.log("Response:", response);
+
     res.status(501).json({ mensagem: "arquivo recebido!"});
 });
 
