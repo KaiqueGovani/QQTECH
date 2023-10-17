@@ -5,11 +5,12 @@
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const usuariosRoutes = require('./routes/usuarios');
+const adminRoutes = require('./routes/admin');
+const arquivosRoutes = require('./routes/arquivos');
+const dbRoutes = require('./routes/db');
 const templatesRoutes = require('./routes/templates');
 const tiposRoutes = require('./routes/tipos');
-const dbRoutes = require('./routes/db');
-const adminRoutes = require('./routes/admin');
+const usuariosRoutes = require('./routes/usuarios');
 const autenticarToken = require('./middlewares/autenticarToken');
 const verificarPermissao = require('./middlewares/verificarPermissao');
 const app = express();
@@ -52,9 +53,10 @@ app.use('/common', autenticarToken, express.static(path.join(__dirname, '../fron
 //app.use('/admin', autenticarToken, verificarPermissao, express.static(path.join(__dirname, '../frontend/admin')));
 app.use('/admin', autenticarToken, verificarPermissao, adminRoutes);
 
-app.use('/usuarios', usuariosRoutes);
+app.use('/arquivos', arquivosRoutes);
 app.use('/templates', templatesRoutes);
-app.use('/tipos', tiposRoutes);
+app.use('/tipos', tiposRoutes)
+app.use('/usuarios', usuariosRoutes);
 
 // Inicia o Servidor
 app.listen(port, () => {

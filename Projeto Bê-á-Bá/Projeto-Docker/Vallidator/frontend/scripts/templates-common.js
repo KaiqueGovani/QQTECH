@@ -194,3 +194,38 @@ function resetarForm(){
     }
 
 }
+
+async function enviarArquivo(){
+    try {
+        const formUploadFile = document.getElementById("formUploadFile");
+        const fileInput = document.getElementById("templateFile");
+        const file = fileInput.files[0];
+        console.log("Enviando arquivo...");
+        console.log("File:", file);
+
+        if (!file) { // Se não houver arquivo selecionado
+            throw new Error("Nenhum arquivo selecionado");
+        }
+
+        // Cria um FormData e adiciona o arquivo
+        const formData = new FormData();
+        formData.append("uploadedFile", file);
+
+        console.log(formData);
+
+        // Utilizando o fetch com promises para fazer o POST
+        const response = await fetch('/arquivos/upload', {
+            method: 'POST',
+            body: formData
+        });
+
+        const data = await response.json();
+
+        showFeedbackModal("Validação Completa!", "Arquivo dentro dos padrões!", "Enviando para o repositório.", "../icons/badge-check.png");
+        
+        console.log("Resposta do servidor:", data.mensagem);
+
+    } catch (error) {
+        console.error('Erro ao enviar arquivo:', error);
+    }
+}

@@ -1,6 +1,7 @@
 const express = require('express');
-const router = express.Router();
 const pool = require('../config/database');
+
+const router = express.Router();
 
 // Route for initializing the database with a query
 router.get('/setup', (req, res) => {
