@@ -176,6 +176,7 @@ async function alterarTemplate(id){
     try {
         const formData = getFormData();
         const template = new Template(formData);
+        template.status = getStatus(id);
         template.id = id;
     
         console.log("Alterando template:\n", template);
@@ -197,6 +198,11 @@ async function alterarTemplate(id){
     } finally {
         await popularTemplates();
     }
+}
+
+function getStatus(id){
+    const statusSwitch = document.getElementById(`statusSwitch${id}`);
+    return statusSwitch.checked;
 }
 
 async function alterarStatus(id, status){

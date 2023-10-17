@@ -158,7 +158,7 @@ router.put("/alterar", autenticarToken, verificarPermissao, async (req, res) => 
         const {id, nome, extensao, status, campos} = req.body;
 
         // Inicia a transação:
-        pool.query('BEGIN');
+        await pool.query('BEGIN');
 
         const query = `
             UPDATE template 
@@ -195,6 +195,9 @@ router.put("/alterar", autenticarToken, verificarPermissao, async (req, res) => 
 
         res.status(201).json({ mensagem: 'Template atualizado com sucesso'});
     } catch(error) {
+        // Cancela a transação:
+        await pool.query('ROLLBACK');
+
         console.error(error);
         res.status(500).json({ mensagem: 'Erro ao atualizar template'});
     }
@@ -206,7 +209,7 @@ router.patch('/status', autenticarToken, verificarPermissao, async (req, res) =>
         const {id, status} = req.body;
         const values = [status, id];
 
-        pool.query(query, values);
+        await pool.query(query, values);
 
         res.status(201).json({ mensagem: 'Status do template atualizado com sucesso'});
     }   catch(error) {
