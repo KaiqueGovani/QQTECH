@@ -98,11 +98,11 @@
     </div>
 
     <!-- Estrutura do Modal de arquivo -->
-    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="fileModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Upload de Arquivo</h5>
+                    <h5 class="modal-title" id="fileModal">Upload de Arquivo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body mx-5">
@@ -117,7 +117,7 @@
                     <p id="templateUsado" class="opacity-50">Utilizando o template: #1 Clientes - CSV</p>
                     <div>
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" id="uploadButton">Upload</button>
+                        <button type="button" class="btn btn-primary" id="uploadButton" onclick="enviarArquivo();" data-bs-dismiss="modal">Upload</button>
                     </div>
                 </div>
             </div>
@@ -152,28 +152,6 @@
 
 
     <!-- ! Utilizar o Modal de Feedback p Tudo!, ver usuarios.js primeiro-->
-    <!-- Modal de Arquivo Compatível -->
-    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">Validação Completa!</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body d-flex flex-column text-center align-items-center pb-5">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="106" height="106" viewBox="0 0 106 106" fill="none">
-                        <path
-                            d="M39.75 53L48.5833 61.8333L66.25 44.1666M34.6034 20.7453C37.7725 20.4924 40.7811 19.2462 43.2008 17.1841C48.8475 12.3721 57.1525 12.3721 62.7992 17.1841C65.2189 19.2462 68.2275 20.4924 71.3966 20.7453C78.792 21.3354 84.6646 27.208 85.2547 34.6034C85.5076 37.7725 86.7538 40.7811 88.8159 43.2008C93.6279 48.8474 93.6279 57.1525 88.8159 62.7991C86.7538 65.2189 85.5076 68.2274 85.2547 71.3965C84.6645 78.792 78.792 84.6645 71.3966 85.2547C68.2275 85.5076 65.2189 86.7538 62.7992 88.8158C57.1525 93.6279 48.8475 93.6279 43.2008 88.8158C40.7811 86.7538 37.7725 85.5076 34.6034 85.2547C27.208 84.6645 21.3354 78.792 20.7453 71.3965C20.4924 68.2274 19.2462 65.2189 17.1841 62.7991C12.3721 57.1525 12.3721 48.8474 17.1841 43.2008C19.2462 40.7811 20.4924 37.7725 20.7453 34.6034C21.3354 27.208 27.208 21.3354 34.6034 20.7453Z"
-                            stroke="#36965E" stroke-width="8.83333" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <div class="color-AtivoVerde ff-ubuntu-700 pb-2">Arquivo dentro dos padrões!</div>
-                    <div class="opacity-75">Enviando para o repositório.</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Modal de Arquivo Incompatível -->
     <div class="modal fade" id="deniedModal" tabindex="-1" aria-labelledby="deniedModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

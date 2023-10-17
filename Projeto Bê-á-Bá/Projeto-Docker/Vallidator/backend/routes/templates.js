@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const pool = require('../config/database');
 const autenticarToken = require('../middlewares/autenticarToken');
-const verficarPermissao = require('../middlewares/verificarPermissao');
 const verificarPermissao = require('../middlewares/verificarPermissao');
 
 const router = express.Router();
@@ -54,7 +53,7 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
     }
 });
 
-router.get('/listar', autenticarToken, verficarPermissao, async (req, res) => {
+router.get('/listar', autenticarToken, verificarPermissao, async (req, res) => {
     try{
         const query = `
             SELECT
