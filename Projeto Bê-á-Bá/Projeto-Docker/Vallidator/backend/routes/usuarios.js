@@ -128,7 +128,7 @@ router.delete('/deletar-todos', async (req, res) => {
     }
 });
 
-router.patch('/permissao', autenticarToken, verificarPermissao, async(req, res) => {
+router.patch('/permissao', autenticarToken, verificarPermissao(), async(req, res) => {
     try {
         const query = "UPDATE usuario SET permissao = $1 WHERE id = $2";
         const {id, permissao} = req.body;

@@ -10,7 +10,7 @@ router.get('/', autenticarToken, async (req, res) => {
     res.sendFile(join(__dirname, '../../frontend/common/templates.html'));
 });
 
-router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken para verificar a permissão
+router.post('/criar', autenticarToken, verificarPermissao('criar'), async (req, res) => { //authenticarToken para verificar a permissão
     try{
         const { nome, id_criador, extensao, campos} = req.body;
 
@@ -53,7 +53,7 @@ router.post('/criar', autenticarToken, async (req, res) => { //authenticarToken 
     }
 });
 
-router.get('/listar', autenticarToken, verificarPermissao, async (req, res) => {
+router.get('/listar', autenticarToken, verificarPermissao(), async (req, res) => {
     try{
         const query = `
             SELECT
@@ -153,7 +153,7 @@ router.get('/buscar', async (req, res) => {
     }
 });
 
-router.put("/alterar", autenticarToken, verificarPermissao, async (req, res) => {
+router.put("/alterar", autenticarToken, verificarPermissao(), async (req, res) => {
     try {
         const {id, nome, extensao, status, campos} = req.body;
 
@@ -203,7 +203,7 @@ router.put("/alterar", autenticarToken, verificarPermissao, async (req, res) => 
     }
 });
 
-router.patch('/status', autenticarToken, verificarPermissao, async (req, res) => {
+router.patch('/status', autenticarToken, verificarPermissao(), async (req, res) => {
     try {
         const query = "UPDATE template SET status = $1 WHERE id = $2";
         const {id, status} = req.body;

@@ -55,9 +55,9 @@ app.use('/minha-conta', autenticarToken, express.static(join(__dirname, '../fron
 
 app.use('/common', autenticarToken, express.static(join(__dirname, '../frontend/common')));
 
-app.use('/admin', autenticarToken, verificarPermissao, adminRoutes);
+app.use('/admin', autenticarToken, verificarPermissao(), adminRoutes);
 
-app.use('/arquivos', arquivosRoutes);
+app.use('/arquivos', arquivosRoutes); // ! Admin ?
 app.use('/templates', templatesRoutes);
 app.use('/tipos', tiposRoutes)
 app.use('/usuarios', usuariosRoutes);

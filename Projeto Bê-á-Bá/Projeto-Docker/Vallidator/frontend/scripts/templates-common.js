@@ -214,7 +214,7 @@ async function enviarArquivo(){
         console.log(formData);
 
         // Utilizando o fetch com promises para fazer o POST
-        const response = await fetch('/arquivos/teste', {
+        const response = await fetch('/arquivos/validar', {
             method: 'POST',
             body: formData
         });
