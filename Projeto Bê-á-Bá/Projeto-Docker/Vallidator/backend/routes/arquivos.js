@@ -42,17 +42,16 @@ router.post('/upload', upload.single("uploadedFile"), async (req, res) => {
 
     console.log("Response:", response);
 
-    res.status(501).json({ mensagem: "arquivo recebido!"});
+    res.status(501).json({ mensagem: "arquivo recebido!" });
 });
 
 router.post('/teste', upload.single('uploadedFile'), async (req, res) => {
     console.log("Recebendo arquivo...");
-    
+
     try {
         //Recriando form-data
         const form = new FormData();
         form.append('file', fs.createReadStream(req.file.path), req.file.filename);
-
 
         const response = await fetch('http://flask:5000/validar', {
             method: 'POST',
@@ -66,7 +65,7 @@ router.post('/teste', upload.single('uploadedFile'), async (req, res) => {
             throw new Error(data.mensagem || "Erro ao reencaminhar o arquivo!");
         }
 
-        res.status(202).json({ mensagem: data.mensagem || "Arquivo enviado com sucesso"});
+        res.status(202).json({ mensagem: data.mensagem || "Arquivo enviado com sucesso" });
 
         // Você pode deletar o arquivo do servidor Node.js após enviar, se desejar
         /* fs.unlink(req.file.path, err => {
@@ -77,10 +76,10 @@ router.post('/teste', upload.single('uploadedFile'), async (req, res) => {
 
     } catch (error) {
         console.error(`Erro ao reencaminhar o arquivo. \n${error.message}`);
-        res.status(500).json({ mensagem: `Erro ao reencaminhar o arquivo. \n${error.message}`});
+        res.status(500).json({ mensagem: `Erro ao reencaminhar o arquivo. \n${error.message}` });
     }
 
-    
+
 })
 
 export default router;
