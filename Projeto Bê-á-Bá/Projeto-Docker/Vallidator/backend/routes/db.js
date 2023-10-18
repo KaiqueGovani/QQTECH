@@ -18,7 +18,8 @@ router.get('/setup', (req, res) => {
     
     CREATE TABLE public.Tipos (
         id serial PRIMARY KEY,
-        tipo varchar UNIQUE NOT NULL
+        tipo varchar UNIQUE NOT NULL,
+        python_dtype varchar UNIQUE NOT NULL
     );
     
     CREATE TABLE public.Template (
@@ -48,13 +49,13 @@ router.get('/setup', (req, res) => {
         path integer NOT NULL
     );    
 
-    INSERT INTO tipos (tipo) 
+    INSERT INTO tipos (tipo, python_dtype) 
     VALUES 
-        ('Texto'),
-        ('Inteiro'),
-        ('Decimal'),
-        ('Data'),
-        ('Hora');
+        ('Texto', 'str'),
+        ('Inteiro', 'int64'),
+        ('Decimal', 'float64'),
+        ('Timestamp', 'datetime64'),
+        ('Booleano', 'bool');
     `;
 
     pool.query(query, (error, result) => {
