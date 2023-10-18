@@ -1,18 +1,51 @@
-from flask import Flask
-from bucket_util import * # importa todas as funções do bucket_util.py
+from flask import Flask, request, jsonify
+import os
+
+from bucket_util import *  # importa todas as funções do bucket_util.py
+
 app = Flask(__name__)
 
-@app.route('/')
+
+@app.route("/")
 def hello_world():
-    return 'Ola, World!'
+    return "Ola, World!"
 
-@app.route('/validar', methods=['POST'])
+
+@app.route("/validar", methods=["POST"])
 def validar():
-    return 'Validado!', 200
+    if "file" not in request.files:  # verifica se o arquivo foi enviado
+        return {
+            "mensagem": "Arquivo não enviado."
+        }, 400  # retorna um json com uma mensagem de erro
 
-@app.route('/<name>')
+    file = request.files["file"]  # pega o arquivo enviado
+
+    if file.filename == "":  # verifica se o arquivo tem um nome
+        return {"mensagem": "Arquivo sem nome."}, 400
+
+    if not arquivo_permitido(
+        file.filename
+    ):  # verifica se o arquivo tem uma extensão válida
+        return {
+            "mensagem": f"Extensão não permitida: {file.filename.rsplit('.', 1)[1].lower()}"
+        }, 400
+
+    if file:  # verifica se o arquivo existe
+        criar_pasta_uploads()  # cria a pasta de uploads caso não exista
+
+        salvar_uploads(file)
+
+        return {"mensagem": "Sucesso!"}, 200
+
+    # retorna um json com uma mensagem de erro
+
+    return {"mensagem": "Erro no upload."}, 500
+
+
+@app.route("/<name>")
 def hello_name(name):
-    return f'Hello, {name}!'
+    return f"Hello, {name}!"
+
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host="0.0.0.0", debug=True)

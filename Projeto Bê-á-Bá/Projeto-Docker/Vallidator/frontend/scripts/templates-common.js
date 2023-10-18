@@ -214,18 +214,23 @@ async function enviarArquivo(){
         console.log(formData);
 
         // Utilizando o fetch com promises para fazer o POST
-        const response = await fetch('/arquivos/upload', {
+        const response = await fetch('/arquivos/teste', {
             method: 'POST',
             body: formData
         });
 
         const data = await response.json();
 
+        if (!response.ok) {
+            throw new Error(data.mensagem || "Erro ao enviar o arquivo!");
+        }
+
         showFeedbackModal("Validação Completa!", "Arquivo dentro dos padrões!", "Enviando para o repositório.", "../icons/badge-check.png");
         
         console.log("Resposta do servidor:", data.mensagem);
 
     } catch (error) {
-        console.error('Erro ao enviar arquivo:', error);
+        showFeedbackModal("Falha na Validação!", "Arquivo fora dos padrões!", error, "../icons/ban.png");
+        console.log('Erro ao enviar arquivo:', error);
     }
 }
