@@ -1,0 +1,7 @@
+{
+    "user": "kapouser",
+    "host": "postgres",
+    "database": "vallidatordb",
+    "password": "senhakapo",
+    "port": 5432
+}

@@ -38,8 +38,8 @@ services:
     image: postgres:13 
     environment:
       POSTGRES_DB: vallidatordb 
-      POSTGRES_USER: kapouser 
-      POSTGRES_PASSWORD: senhakapo 
+      POSTGRES_USER: user 
+      POSTGRES_PASSWORD: passwd 
     volumes:
       - ./data:/var/lib/postgresql/data # Volume para persistência de dados
 
@@ -51,7 +51,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: kaique.govani@hotmail.com 
+      PGADMIN_DEFAULT_EMAIL: admin@vallidator.com
       PGADMIN_DEFAULT_PASSWORD: admin
     volumes:
       - ./pgadmin:/var/lib/pgadmin
