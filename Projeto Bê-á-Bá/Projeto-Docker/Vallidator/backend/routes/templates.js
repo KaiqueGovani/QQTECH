@@ -6,6 +6,9 @@ import verificarPermissao from '../middlewares/verificarPermissao.js';
 
 const router = Router();
 
+// Caminho para o diretório atual
+const __dirname = new URL('.', import.meta.url).pathname;
+
 router.get('/', autenticarToken, async (req, res) => {
     res.sendFile(join(__dirname, '../../frontend/common/templates.html'));
 });

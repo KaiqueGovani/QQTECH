@@ -45,7 +45,7 @@ router.post('/upload', upload.single("uploadedFile"), async (req, res) => {
     res.status(501).json({ mensagem: "arquivo recebido!" });
 });
 
-router.post('/teste', upload.single('uploadedFile'), async (req, res) => {
+router.post('/validar', upload.single('uploadedFile'), async (req, res) => {
     console.log("Recebendo arquivo...");
 
     try {

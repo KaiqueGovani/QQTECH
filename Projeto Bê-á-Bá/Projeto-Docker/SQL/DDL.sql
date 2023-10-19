@@ -10,7 +10,8 @@ CREATE TABLE public.Usuario (
 
 CREATE TABLE public.Tipos (
     id serial PRIMARY KEY,
-    tipo varchar UNIQUE NOT NULL
+    tipo varchar UNIQUE NOT NULL,
+    python_dtype varchar UNIQUE NOT NULL
 );
 
 CREATE TABLE public.Template (
@@ -37,5 +38,5 @@ CREATE TABLE public.Upload (
     id_usuario integer REFERENCES public.Usuario(id) NOT NULL,
     nome varchar NOT NULL,
     data TIMESTAMP NOT NULL,
-    path VARCHAR NOT NULL
-);
+    path integer NOT NULL
+);    

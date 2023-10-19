@@ -202,6 +202,7 @@ async function alterarTemplate(id){
 
 function getStatus(id){
     const statusSwitch = document.getElementById(`statusSwitch${id}`);
+    if (statusSwitch == null) return false;
     return statusSwitch.checked;
 }
 

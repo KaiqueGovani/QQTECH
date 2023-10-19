@@ -22,6 +22,8 @@ router.get('/dados', autenticarToken, async (req, res) => { // Pega os dados do 
     }
 });
 
+// ! Rota put para admin.
+
 router.patch('/dados', autenticarToken, async (req, res) => { // Atualiza os dados do usuario que está logado
     try {
         const query = 'UPDATE usuario SET nome = $1, sobrenome = $2, telefone = $3 WHERE id = $4';
