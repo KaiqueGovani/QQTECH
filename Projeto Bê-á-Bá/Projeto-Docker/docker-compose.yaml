@@ -7,15 +7,11 @@ services:
     image: node:18-alpine
     volumes:
       - ./Vallidator:/app #
+      - ./config:/config
     ports:
       - "3000:3000" # Mapeia a porta do contêiner para a porta local
     working_dir: /app/backend
-    command: # Comando para iniciar servidor Node.js
-      - sh
-      - -c
-      - |
-        npm install
-        npm start
+    command: sh -c "npm install && npm start" # Comando para iniciar servidor Node.js
     depends_on:
       - postgres
       - pgadmin
@@ -29,6 +25,7 @@ services:
       FLASK_APP: app.py
     volumes:
       - ./python/src:/app
+      - ./config:/config
     ports:
       - "5000:5000"
 

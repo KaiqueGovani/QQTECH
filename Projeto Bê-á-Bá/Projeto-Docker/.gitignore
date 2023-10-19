@@ -4,3 +4,4 @@ pgadmin/
 uploads/
 credentials.json
 bucket-name.txt
+config.json

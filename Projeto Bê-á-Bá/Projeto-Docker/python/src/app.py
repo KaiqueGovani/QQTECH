@@ -23,9 +23,7 @@ def validar():
     if file.filename == "":  # verifica se o arquivo tem um nome
         return {"mensagem": "Arquivo sem nome."}, 400
 
-    if not arquivo_permitido(
-        file.filename
-    ):  # verifica se o arquivo tem uma extensão válida
+    if not arquivo_permitido(file.filename):  # verifica se o arquivo tem uma extensão válida
         return {
             "mensagem": f"Extensão não permitida: {file.filename.rsplit('.', 1)[1].lower()}"
         }, 400
