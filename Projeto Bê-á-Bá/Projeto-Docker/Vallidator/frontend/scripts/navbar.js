@@ -4,7 +4,7 @@ window.onload = () => {
     if(btnSair) btnSair.addEventListener('click', async (event) => {
         event.preventDefault();
         try {
-            await fetch('http://localhost:3000/usuarios/logout', {
+            await fetch('/usuarios/logout', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

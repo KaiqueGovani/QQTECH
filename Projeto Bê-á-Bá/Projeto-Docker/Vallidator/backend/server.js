@@ -13,6 +13,7 @@ import tiposRoutes from './routes/tipos.js';
 import usuariosRoutes from './routes/usuarios.js';
 import autenticarToken from './middlewares/autenticarToken.js';
 import verificarPermissao from './middlewares/verificarPermissao.js';
+//import cors from 'cors';
 
 
 const app = express();
@@ -20,6 +21,11 @@ const port = process.env.PORT || 3000;
 
 // Caminho do diretório atual
 const __dirname = new URL('.', import.meta.url).pathname;
+
+// app.use(cors({
+//     origin: 'https://bbbc-2804-fc0-c02b-301-b5bd-454d-a594-a1f9.ngrok-free.app',
+//     credentials: true
+// }));
 
 // Middleware para processar JSON
 app.use(express.json());
