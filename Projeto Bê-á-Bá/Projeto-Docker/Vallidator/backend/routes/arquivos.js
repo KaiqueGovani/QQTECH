@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import pool from '../config/database.js';
 import { extname, basename } from 'path';
+import autenticarToken from '../middlewares/autenticarToken.js';
 import fetch from 'node-fetch';
 import FormData from 'form-data';
 import multer, { diskStorage } from 'multer';
@@ -45,13 +46,30 @@ router.post('/upload', upload.single("uploadedFile"), async (req, res) => {
     res.status(501).json({ mensagem: "arquivo recebido!" });
 });
 
-router.post('/validar', upload.single('uploadedFile'), async (req, res) => {
+router.post('/validar', autenticarToken, upload.single('uploadedFile'), async (req, res) => {
     console.log("Recebendo arquivo...");
 
+    console.log("Body:", req.body);
+
+    // Verificações adicionais
+    if (!req.file) {
+        console.error("req.file é undefined!");
+        return res.status(400).json({ mensagem: "Arquivo não enviado!" });
+    }
+
+    if (!req.body.id_template) {
+        console.error("req.body.id_template é undefined!");
+        return res.status(400).json({ mensagem: "ID do template não enviado!" });
+    }
+
+
     try {
+        console.log("Enviando arquivo baseado em ", req.body.id_template, "por ", req.id);
         //Recriando form-data
         const form = new FormData();
         form.append('file', fs.createReadStream(req.file.path), req.file.filename);
+        form.append('id_template', req.body.id_template);
+        form.append('id_criador', req.id);// ! Utilizar o id do usuario logado pelo token
 
         const response = await fetch('http://flask:5000/validar', {
             method: 'POST',

@@ -195,7 +195,7 @@ function resetarForm(){
 
 }
 
-async function enviarArquivo(){
+async function enviarArquivo(id_template){
     try {
         const formUploadFile = document.getElementById("formUploadFile"); // ! resetar form
         const fileInput = document.getElementById("templateFile");
@@ -210,13 +210,16 @@ async function enviarArquivo(){
         // Cria um FormData e adiciona o arquivo
         const formData = new FormData();
         formData.append("uploadedFile", file);
+        formData.append("id_template", id_template);
 
-        console.log(formData);
+        formData.forEach((value, key) => {
+            console.log(key + ' = ' + value);
+        });
 
         // Utilizando o fetch com promises para fazer o POST
         const response = await fetch('/arquivos/validar', {
             method: 'POST',
-            body: formData
+            body: formData,
         });
 
         const data = await response.json();
@@ -233,4 +236,14 @@ async function enviarArquivo(){
         showFeedbackModal("Falha na Validação!", "Arquivo fora dos padrões!", error, "../icons/ban.png");
         console.log('Erro ao enviar arquivo:', error);
     }
+}
+
+function uploadArquivoModal(id_template){
+    const uploadModal = new bootstrap.Modal(document.getElementById("uploadModal"));
+    const uploadButton = document.getElementById("uploadButton");
+
+    uploadButton.onclick = () => enviarArquivo(id_template);
+
+
+    uploadModal.show();
 }

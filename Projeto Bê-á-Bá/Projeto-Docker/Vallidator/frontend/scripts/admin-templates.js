@@ -68,8 +68,7 @@ async function popularTemplates(){
                             <span>Download</span>
                             <i style="font-size: 20px;" class="fa-solid fa-download"></i>
                             </a>
-                            <a href="#" class="btn btn-light d-flex coluna-responsiva" data-bs-toggle="modal"
-                            data-bs-target="#uploadModal">
+                            <a href="#" class="btn btn-light d-flex coluna-responsiva" onclick="uploadArquivoModal(${template.id});"">
                             <span>Utilizar Template</span>
                             <i style="font-size: 20px;" class="fa-solid fa-folder"></i>
                             </a>

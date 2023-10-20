@@ -1,10 +1,10 @@
 from bucket_util import *
 
 
-filedir = ""  # ! posteriormente será ./uploads/
+filedir = ""  # ! em prod seria uploads/
 filename = "csv_correto.csv"
 id_template = 2
 
 
-verificar_arquivo(filedir + filename, id_template)
+validar_arquivo(filedir + filename, id_template)
 

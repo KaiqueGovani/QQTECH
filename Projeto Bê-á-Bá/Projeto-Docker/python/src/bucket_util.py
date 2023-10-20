@@ -45,6 +45,11 @@ def salvar_uploads(file):
     return
 
 
+def pegar_uploads_dir():
+    """Pega o diretório da pasta de uploads"""
+
+
+
 # Função que lê o arquivo de configuração
 def ler_config():
     """Lê o arquivo de configuração em formato JSON. Levanta exceções para erros como arquivo não encontrado ou JSON inválido."""
@@ -269,10 +274,12 @@ def verificar_dados(df, campos):
         raise Exception("Erro ao verificar dados: " + error.args[0])
 
 
-def verificar_arquivo(filepath, id_template):
+def validar_arquivo(filepath, id_template):
     """Executa uma série de verificações em um arquivo, incluindo verificar a extensão, o nome das colunas e os dados."""
-
+    
     try:
+        print("Validando arquivo: ",filepath, id_template)
+
         # Obter informações do template e desempacotar
         info = obter_info_template(id_template)
         template_id, id_criador, extensao, campos = (
@@ -293,6 +300,7 @@ def verificar_arquivo(filepath, id_template):
         verificar_dados(df, campos)
     except Exception as error:
         print("Erro ao verificar arquivo: " + error.args[0])
+        raise Exception("Erro ao verificar arquivo: " + error.args[0])
 
 
 def converte_tipos_dataframe(df, campos):
