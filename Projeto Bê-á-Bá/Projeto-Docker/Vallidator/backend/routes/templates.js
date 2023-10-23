@@ -98,6 +98,7 @@ router.get('/listar', autenticarToken, verificarPermissao(), async (req, res) =>
 
 router.get('/ativos', autenticarToken, async (req, res) => {
     try {
+        const id = req.id;
         const query = `
             SELECT
                 t.id,
@@ -123,7 +124,7 @@ router.get('/ativos', autenticarToken, async (req, res) => {
             JOIN
                 usuario u ON t.id_criador = u.id
             WHERE
-                t.status = true
+                t.status = true OR (t.id_criador = ${id} AND t.status IS NULL)
             GROUP BY
                 t.id, t.nome, t.id_criador, t.data_criacao, t.extensao, t.status, u.nome
             ORDER BY
@@ -219,6 +220,30 @@ router.patch('/status', autenticarToken, verificarPermissao(), async (req, res) 
         console.error(error);
         res.status(500).json({ mensagem: 'Erro ao atualizar status do template'});
     }
+});
+
+
+router.delete('/deletar/:id', autenticarToken, verificarPermissao(), async (req, res) => {
+
+    try{
+        const id = req.params.id;
+
+        const query = 'DELETE FROM template WHERE id = $1';
+        const values = [id];
+
+        await pool.query('BEGIN');
+
+        await pool.query(query, values);
+
+        await pool.query('COMMIT');
+
+        res.status(200).json({mensagem: `Template deletado com sucesso: ${id}` });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({mensagem: `Erro ao deletar o template: ${id}`})
+    }
+
 });
 
 export default router;

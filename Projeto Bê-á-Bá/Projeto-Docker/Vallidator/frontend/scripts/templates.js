@@ -7,6 +7,11 @@ async function fetchTemplates(){
     try {
         const response = await fetch('/templates/ativos');
         const templates = await response.json();
+
+        for (let template of templates){
+            console.log(new Template(template));
+        }
+
         return templates;
     } catch(error) {
         console.error('Erro ao carregar os templates:', error);
@@ -30,6 +35,12 @@ async function popularTemplates(){
                     </div>
                     
                         <div class="card-options d-flex justify-content-between gap-4">
+                            ${template.status == null ? `
+                            <div class="form-check form-switch form-control-lg d-flex align-items-center">
+                                <div class="form-check-label" style="line-height: 20px">Status: Aguardando Revisão</div>   
+                            </div>
+                            ` :
+                            `
                             <div class="d-flex gap-4 card-buttons"> 
                                 <a onclick="downloadEmptyCSV()" href="#" class="btn btn-secondary d-flex coluna-responsiva">
                                 <span>Download</span>
@@ -40,6 +51,8 @@ async function popularTemplates(){
                                 <i style="font-size: 20px;" class="fa-solid fa-folder"></i>
                                 </a>
                             </div>
+                            `}
+                            
                         </div>
                 
                 </div>   

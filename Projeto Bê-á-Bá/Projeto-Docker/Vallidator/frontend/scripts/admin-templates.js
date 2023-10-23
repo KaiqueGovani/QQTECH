@@ -163,10 +163,18 @@ function modalTemplate(id, templates){ //Função para ver o template que será 
                 .join('')}
             </div>
         </div>
-        <div class="modal-footer align-content-center">
-            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-            <button data-bs-dismiss="modal" onclick='${(id == 0) ? 'enviarTemplate()' : `alterarTemplate(${template.id})`};'
-                type="button" class="btn btn-primary" id="sendTemplate">Confirmar Template</button>
+        <div class="modal-footer align-content-center d-flex justify-content-between">
+            <div>
+                ${id == 0 ? '' : `
+                <button data-bs-dismiss="modal" type="button" class="btn btn-danger justify-self-start" id="deleteTemplate" onclick="deletarTemplate(${template.id});">
+                    <i class="bi bi-trash"></i>
+                </button>`}    
+            </div>
+            <div>
+                <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <button data-bs-dismiss="modal" onclick='${(id == 0) ? 'enviarTemplate()' : `alterarTemplate(${template.id})`};'
+                    type="button" class="btn btn-primary" id="sendTemplate">Confirmar Template</button>
+            </div>
         </div>
     `   
 }
@@ -221,5 +229,24 @@ async function alterarStatus(id, status){
 
     } catch(error) {
         console.log('Error:', error);
+    }
+}
+
+async function deletarTemplate(id){
+    console.log(`Deletando template ${id}`);
+
+    try {
+        const response = await fetch(`/templates/deletar/${id}`, {
+            method: 'DELETE',
+        })
+
+        const data = await response.json();
+        console.log(data.mensagem); //! Alterar esse tipo de feedback para um toast?
+
+
+    } catch (error) {
+        console.log("Erro:", error);
+    } finally {
+        await popularTemplates();
     }
 }
