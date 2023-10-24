@@ -233,7 +233,7 @@ async function enviarArquivo(id_template){
         console.log("Resposta do servidor:", data.mensagem);
 
     } catch (error) {
-        showFeedbackModal("Falha na Validação!", "Arquivo fora dos padrões!", error, "../icons/ban.png");
+        showFeedbackModal("Falha na Validação!", "Arquivo fora dos padrões!", error.message, "../icons/ban.png");
         console.log('Erro ao enviar arquivo:', error);
     }
 }

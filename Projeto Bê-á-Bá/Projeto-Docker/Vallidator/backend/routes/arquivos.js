@@ -35,17 +35,6 @@ const storage = diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/upload', upload.single("uploadedFile"), async (req, res) => {
-    console.log("Recebendo arquivo...");
-    console.log("File:", req.file);
-
-    const response = await fetch('http://flask:5000/validar')
-
-    console.log("Response:", response);
-
-    res.status(501).json({ mensagem: "arquivo recebido!" });
-});
-
 router.post('/validar', autenticarToken, upload.single('uploadedFile'), async (req, res) => {
     console.log("Recebendo arquivo...");
 
@@ -80,7 +69,9 @@ router.post('/validar', autenticarToken, upload.single('uploadedFile'), async (r
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.mensagem || "Erro ao reencaminhar o arquivo!");
+            res.status(400).json({ mensagem: data.mensagem || "Erro ao reencaminhar o arquivo!" });
+            return;
+            //throw new Error(data.mensagem || "Erro ao reencaminhar o arquivo!");
         }
 
         res.status(202).json({ mensagem: data.mensagem || "Arquivo enviado com sucesso" });

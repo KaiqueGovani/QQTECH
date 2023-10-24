@@ -18,9 +18,12 @@ export default (req, res, next) => {
             next();
         } catch(error){
             res.clearCookie('token');
-            res.status(403).redirect('/login');
+            if (req.method === 'GET') {
+                res.redirect('/login');
+            } else {
+                res.status(403).json({ mensagem: 'Você não está logado' });
+            }
         }
-        
     } else {
         if (req.method === 'GET') {
             res.redirect('/login');
