@@ -76,12 +76,12 @@ router.post('/validar', autenticarToken, upload.single('uploadedFile'), async (r
 
         res.status(202).json({ mensagem: data.mensagem || "Arquivo enviado com sucesso" });
 
-        // Você pode deletar o arquivo do servidor Node.js após enviar, se desejar
-        /* fs.unlink(req.file.path, err => {
+        // Deletar o arquivo do servidor Node.js após enviar
+         fs.unlink(req.file.path, err => {
             if (err) {
                 console.error("Erro ao deletar o arquivo:", err);
             }
-        }); */
+        }); 
 
     } catch (error) {
         console.error(`Erro ao reencaminhar o arquivo. \n${error.message}`);
