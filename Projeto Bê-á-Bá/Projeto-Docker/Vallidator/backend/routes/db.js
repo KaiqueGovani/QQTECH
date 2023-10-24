@@ -46,7 +46,7 @@ router.get('/setup', (req, res) => {
         id_usuario integer REFERENCES public.Usuario(id) NOT NULL,
         nome varchar NOT NULL,
         data TIMESTAMP NOT NULL,
-        path integer NOT NULL
+        path varchar NOT NULL
     );    
 
     INSERT INTO tipos (tipo, python_dtype) 
