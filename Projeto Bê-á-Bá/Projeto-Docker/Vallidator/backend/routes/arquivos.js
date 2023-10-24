@@ -72,7 +72,28 @@ router.post('/validar', autenticarToken, upload.single('uploadedFile'), async (r
             res.status(400).json({ mensagem: data.mensagem || "Erro ao reencaminhar o arquivo!" });
             //throw new Error(data.mensagem || "Erro ao reencaminhar o arquivo!");
         } else {
-            res.status(202).json({ mensagem: data.mensagem || "Arquivo enviado com sucesso" });
+            // Salvando o arquivo no banco de dados
+            try {
+                const arquivo = {
+                    nome: req.file.filename,
+                    caminho: req.file.path,
+                    id_template: req.body.id_template,
+                    id_criador: req.id
+                }
+
+                console.log("Arquivo:", arquivo);
+
+                const query = 'INSERT INTO upload (id_template, id_usuario, nome, data, path) VALUES ($1, $2, $3, $4, $5)'
+                const values = [arquivo.id_template, arquivo.id_criador, arquivo.nome, new Date(), arquivo.caminho];
+
+                await pool.query(query, values);
+
+                res.status(202).json({ mensagem: data.mensagem || "Arquivo enviado com sucesso" });
+
+            } catch (error) {
+                console.error(`Erro ao salvar o arquivo no banco de dados. \n${error.message}`);
+                res.status(500).json({ mensagem: `Erro ao salvar o arquivo no banco de dados. \nFale com um administrador.` });
+            }
         }
 
         // Deletar o arquivo do servidor Node.js após enviar
@@ -80,8 +101,8 @@ router.post('/validar', autenticarToken, upload.single('uploadedFile'), async (r
             if (err) {
                 console.error("Erro ao deletar o arquivo:", err);
             }
-        }); 
-        
+        });
+
     } catch (error) {
         console.error(`Erro ao reencaminhar o arquivo. \n${error.message}`);
         res.status(500).json({ mensagem: `Erro ao reencaminhar o arquivo. \n${error.message}` });
