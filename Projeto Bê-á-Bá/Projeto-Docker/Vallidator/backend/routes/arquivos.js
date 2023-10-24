@@ -70,19 +70,18 @@ router.post('/validar', autenticarToken, upload.single('uploadedFile'), async (r
 
         if (!response.ok) {
             res.status(400).json({ mensagem: data.mensagem || "Erro ao reencaminhar o arquivo!" });
-            return;
             //throw new Error(data.mensagem || "Erro ao reencaminhar o arquivo!");
+        } else {
+            res.status(202).json({ mensagem: data.mensagem || "Arquivo enviado com sucesso" });
         }
 
-        res.status(202).json({ mensagem: data.mensagem || "Arquivo enviado com sucesso" });
-
         // Deletar o arquivo do servidor Node.js após enviar
-         fs.unlink(req.file.path, err => {
+        fs.unlink(req.file.path, err => {
             if (err) {
                 console.error("Erro ao deletar o arquivo:", err);
             }
         }); 
-
+        
     } catch (error) {
         console.error(`Erro ao reencaminhar o arquivo. \n${error.message}`);
         res.status(500).json({ mensagem: `Erro ao reencaminhar o arquivo. \n${error.message}` });
