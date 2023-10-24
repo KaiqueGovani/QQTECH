@@ -205,7 +205,7 @@ def verificar_nome_colunas(df, campos) -> str:
                 campos[i]["nome_campo"] != df.columns.values[i]
             ):  # Se o nome dos campos for diferente do esperado
                 raise Exception(
-                    f"Nome da coluna {df.columns.values[i]} é diferente do nome do campo {campos[i]['nome_campo']}"
+                    f"Nome da coluna '{df.columns.values[i]}' é diferente do esperado '{campos[i]['nome_campo']}'"
                 )
 
         print("verificarNomeColunas OK")  # ! Remover
@@ -213,7 +213,7 @@ def verificar_nome_colunas(df, campos) -> str:
 
     except Exception as error:
         print("Erro ao verificar nome das colunas", error.args[0])  # ! Remover
-        raise Exception("Erro ao verificar nome das colunas " + error.args[0])
+        raise Exception("Erro ao verificar nome das colunas. " + error.args[0])
 
 
 # Funçao para verificar se o arquivo tem uma extensão válida
@@ -257,7 +257,7 @@ def verificar_dados(df, campos):
                     data, campo_dtype
                 ):  # Se não for possível converter
                     raise Exception(
-                        f"Erro ao converter {data} para {campo_type} => linha {i+1}, coluna '{campos[j]['nome_campo']}'."
+                        f"\nErro ao converter '{data}' para o tipo: {campo_type}. \n Linha {i+1}, coluna '{campos[j]['nome_campo']}'."
                     )
 
             #     print("dtype, campo_dtype, data")

@@ -1,5 +1,7 @@
 flask
 pandas
+openpyxl
+xlrd
 google-cloud-storage
 psycopg2-binary
 ```

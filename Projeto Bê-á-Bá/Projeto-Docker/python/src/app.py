@@ -52,7 +52,7 @@ def validar():
     
     except Exception as error:
         # retorna um json com uma mensagem de erro
-        return {"mensagem": f"Erro: {error}"}, 500
+        return {"mensagem": f"{error.args[0]}"}, 500
         
 
 
