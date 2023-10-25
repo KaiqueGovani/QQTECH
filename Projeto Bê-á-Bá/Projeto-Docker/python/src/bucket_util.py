@@ -2,6 +2,8 @@ import json
 import pandas as pd
 import os
 import psycopg2
+import sys
+from google.cloud import storage
 
 #! Documentar melhor as funções com docstrings detalhadas
 
@@ -10,7 +12,7 @@ import psycopg2
 def pegar_nome_bucket():
     """Pega o nome do bucket"""
 
-    with open("./bucket-name.txt", "r") as f:
+    with open("../bucket-name.txt", "r") as f:
         return f.read()
 
 
@@ -47,7 +49,6 @@ def salvar_uploads(file):
 
 def pegar_uploads_dir():
     """Pega o diretório da pasta de uploads"""
-
 
 
 # Função que lê o arquivo de configuração
@@ -208,11 +209,11 @@ def verificar_nome_colunas(df, campos) -> str:
                     f"Nome da coluna '{df.columns.values[i]}' é diferente do esperado '{campos[i]['nome_campo']}'"
                 )
 
-        print("verificarNomeColunas OK")  # ! Remover
+        # print("verificarNomeColunas OK")  # ! Remover
         return "OK"
 
     except Exception as error:
-        print("Erro ao verificar nome das colunas", error.args[0])  # ! Remover
+        # print("Erro ao verificar nome das colunas", error.args[0])  # ! Remover
         raise Exception("Erro ao verificar nome das colunas. " + error.args[0])
 
 
@@ -233,7 +234,7 @@ def verificar_extensão(filename, extensao):
                 f"Extensão não incompatível: {filename.rsplit('.', 1)[1].lower()}"
             )
 
-        print("verificarExtensão OK")  # ! Remover
+        # print("verificarExtensão OK")  # ! Remover
 
     except Exception as error:
         raise Exception("Erro ao verificar extensão do arquivo: " + error.args[0])
@@ -268,7 +269,7 @@ def verificar_dados(df, campos):
 
             # print()
 
-        print("verificarDados OK")  # ! Remover
+        # print("verificarDados OK")  # ! Remover
 
     except Exception as error:
         raise Exception("Erro ao verificar dados: " + error.args[0])
@@ -276,9 +277,9 @@ def verificar_dados(df, campos):
 
 def validar_arquivo(filepath, id_template):
     """Executa uma série de verificações em um arquivo, incluindo verificar a extensão, o nome das colunas e os dados."""
-    
+
     try:
-        print("Validando arquivo: ",filepath, id_template)
+        # print("Validando arquivo: ", filepath, id_template)
 
         # Obter informações do template e desempacotar
         info = obter_info_template(id_template)
@@ -299,7 +300,7 @@ def validar_arquivo(filepath, id_template):
         verificar_nome_colunas(df, campos)
         verificar_dados(df, campos)
     except Exception as error:
-        print("Erro ao verificar arquivo: " + error.args[0])
+        # print("Erro ao verificar arquivo: " + error.args[0]) # ! Remover
         raise Exception("Erro ao verificar arquivo: " + error.args[0])
 
 
@@ -319,7 +320,7 @@ def converte_tipos_dataframe(df, campos):
 
         df = df.astype(dict_dtypes)  # Converter os tipos do dataframe
 
-        print("converteTiposDataframe OK")  # ! Remover
+        # print("converteTiposDataframe OK")  # ! Remover
         return df
 
     except Exception as error:
@@ -327,9 +328,38 @@ def converte_tipos_dataframe(df, campos):
 
 
 def tenta_converter_com_pandas(valor, tipo):
-    """ Tenta converter o valor para o tipo especificado usando o pandas """ 
+    """Tenta converter o valor para o tipo especificado usando o pandas"""
     try:
         pd.Series([valor]).astype(tipo)
         return True
     except:
         return False
+
+
+def upload_blob(bucket_name, source_file_name, destination_blob_name):
+    """Uploada um arquivo para o bucket."""
+    # The ID of your GCS bucket
+    # bucket_name = "your-bucket-name"
+    # The path to your file to upload
+    # source_file_name = "local/path/to/file"
+    # The ID of your GCS object
+    # destination_blob_name = "storage-object-name"
+
+    storage_client = storage.Client.from_service_account_json("../config/credentials.json")
+    bucket = storage_client.bucket(bucket_name)
+    blob = bucket.blob(destination_blob_name)
+
+    blob.upload_from_filename(source_file_name)
+
+    # print(f"File {source_file_name} uploaded to {destination_blob_name}.")
+
+
+def apagar_arquivo(path: str):
+    """Apaga o arquivo no caminho especificado
+
+    Args:
+        path (str): caminho para o arquivo
+    """
+    
+    os.remove(path)
+    # print(f"Arquivo {path} apagado.")
