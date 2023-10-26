@@ -34,7 +34,7 @@ async function popularTemplates(){
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div class="card-text">
                     <h5 class="card-title"># ${template.id} ${template.nome} - ${template.extensao}</h5>
-                    <p class="card-text">Criado por ${template.nome_criador} - ID: ${template.id_criador}<br>Criado em ${new Date(template.data_criacao).toLocaleDateString("pt-BR")}</p>
+                    <p class="card-text">Criado por ${template.nome_criador} - ID: ${template.id_criador}<br>Criado em ${new Date(template.data_criacao).toLocaleDateString()}</p>
                 </div>
                 ${(template.status === null) ? 
                     `

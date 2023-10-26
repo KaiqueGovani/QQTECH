@@ -27,7 +27,7 @@ router.post('/criar', verificarPermissao('criar'), async (req, res) => { //authe
             ) VALUES (
                 $1, 
                 $2, 
-                timezone(\'America/Sao_Paulo\', current_timestamp), 
+                current_timestamp, 
                 $3, 
                 $4
             ) RETURNING *;
