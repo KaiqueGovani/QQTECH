@@ -5,3 +5,4 @@ uploads/
 credentials.json
 bucket-name.txt
 config.json
+__pycache__/
