@@ -363,3 +363,13 @@ def apagar_arquivo(path: str):
     
     os.remove(path)
     # print(f"Arquivo {path} apagado.")
+    
+
+def tamanho_arquivo(path: str):
+    """Retorna o tamanho do arquivo no caminho especificado
+
+    Args:
+        path (str): caminho para o arquivo
+    """
+    
+    return os.path.getsize(path)
