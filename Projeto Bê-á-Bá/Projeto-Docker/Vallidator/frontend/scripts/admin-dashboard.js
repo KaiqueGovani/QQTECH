@@ -58,6 +58,7 @@ async function popularUploads() {
                 <tr>
                     <th scope="row">${arquivo.id}</td>
                     <td>${removeTimestampFromFilename(arquivo.nome)}</td>
+                    <td>${arquivo.id_template}</td>
                     <td>${arquivo.id_usuario}</td>
                     <td>${new Date(arquivo.data).toLocaleDateString()}</td>
                     <td>${arquivo.tamanho_bytes}</td>
