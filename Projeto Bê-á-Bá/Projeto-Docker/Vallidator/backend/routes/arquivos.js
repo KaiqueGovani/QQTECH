@@ -78,13 +78,14 @@ router.post('/validar', autenticarToken, upload.single('uploadedFile'), async (r
                     nome: req.file.filename,
                     caminho: req.file.path,
                     id_template: req.body.id_template,
-                    id_criador: req.id
+                    id_criador: req.id,
+                    tamanho_bytes: req.file.size
                 }
 
                 console.log("Arquivo:", arquivo);
 
-                const query = 'INSERT INTO upload (id_template, id_usuario, nome, data, path) VALUES ($1, $2, $3, $4, $5)'
-                const values = [arquivo.id_template, arquivo.id_criador, arquivo.nome, new Date(), arquivo.caminho];
+                const query = 'INSERT INTO upload (id_template, id_usuario, nome, data, path, tamanho_bytes) VALUES ($1, $2, $3, $4, $5, $6)'
+                const values = [arquivo.id_template, arquivo.id_criador, arquivo.nome, new Date(), arquivo.caminho, arquivo.tamanho_bytes];
 
                 await pool.query(query, values);
 
