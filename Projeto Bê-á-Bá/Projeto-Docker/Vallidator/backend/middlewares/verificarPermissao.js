@@ -1,4 +1,4 @@
-//? Analizar o a verificação pelo banco de dados ao inves do token ?
+//? Analisar o a verificação pelo banco de dados ao inves do token ?
 //? por conta de possivel incompatibilidade entre token salvos e informações recem atualizadas no banco de dados ?
 function verificarPermissao(perm){
     return function (req, res, next) {
