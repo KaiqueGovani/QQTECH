@@ -6,6 +6,7 @@ import fetch from 'node-fetch';
 import FormData from 'form-data';
 import multer, { diskStorage } from 'multer';
 import fs from 'fs';
+import verificarPermissao from '../middlewares/verificarPermissao.js';
 
 const router = Router();
 
@@ -35,7 +36,7 @@ const storage = diskStorage({
 
 const upload = multer({ storage: storage });
 
-router.post('/validar', autenticarToken, upload.single('uploadedFile'), async (req, res) => {
+router.post('/validar', verificarPermissao('upload'), upload.single('uploadedFile'), async (req, res) => {
     console.log("Recebendo arquivo...");
 
     console.log("Body:", req.body);

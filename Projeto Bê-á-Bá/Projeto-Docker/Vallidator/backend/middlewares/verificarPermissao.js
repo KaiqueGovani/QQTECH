@@ -2,7 +2,7 @@
 //? por conta de possivel incompatibilidade entre token salvos e informações recem atualizadas no banco de dados ?
 function verificarPermissao(perm){
     return function (req, res, next) {
-        //console.log("Verificando permissão " + perm + " para " + req.id + " com permissão " + req.permissao);
+        console.log("Verificando permissão " + perm + " para " + req.id + " com permissão " + req.permissao);
         if (req.permissao === 'admin') {
             next();
         } else if (!req.permissao.includes(perm)) {
