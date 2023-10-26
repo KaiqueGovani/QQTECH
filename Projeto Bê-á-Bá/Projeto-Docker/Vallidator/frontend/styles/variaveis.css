@@ -261,3 +261,8 @@
 .form-switch .form-check-input {
     width: 2.3em;
 }
+
+.table-responsive *{
+    font-family: Inter;
+    text-align: center;
+}

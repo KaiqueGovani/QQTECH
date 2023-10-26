@@ -112,4 +112,15 @@ router.post('/validar', autenticarToken, upload.single('uploadedFile'), async (r
 
 })
 
+router.get('/recentes', async (req, res) => {
+    try {
+        const query = "SELECT * FROM upload ORDER BY data DESC LIMIT 10;"
+        const uploads = await pool.query(query);
+        res.status(200).json(uploads.rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar templates recentes' });
+    }
+});
+
 export default router;
