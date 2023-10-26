@@ -64,7 +64,7 @@ app.use('/common', autenticarToken, express.static(join(__dirname, '../frontend/
 app.use('/admin', autenticarToken, verificarPermissao(), adminRoutes);
 
 app.use('/arquivos', arquivosRoutes); // ! acessivel somente por Admins ?
-app.use('/templates', templatesRoutes);
+app.use('/templates',autenticarToken, templatesRoutes);
 app.use('/tipos', tiposRoutes)
 app.use('/usuarios', usuariosRoutes);
 

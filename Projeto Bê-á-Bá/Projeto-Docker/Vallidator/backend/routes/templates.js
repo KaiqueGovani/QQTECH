@@ -9,13 +9,13 @@ const router = Router();
 // Caminho para o diretório atual
 const __dirname = new URL('.', import.meta.url).pathname;
 
-router.get('/', autenticarToken, async (req, res) => {
+router.get('/', async (req, res) => {
     res.sendFile(join(__dirname, '../../frontend/common/templates.html'));
 });
 
-router.post('/criar', autenticarToken, verificarPermissao('criar'), async (req, res) => { //authenticarToken para verificar a permissão
-    try{
-        const { nome, id_criador, extensao, campos} = req.body;
+router.post('/criar', verificarPermissao('criar'), async (req, res) => { //authenticarToken para verificar a permissão
+    try {
+        const { nome, id_criador, extensao, campos } = req.body;
 
         const query = `
             INSERT INTO template (
@@ -32,7 +32,7 @@ router.post('/criar', autenticarToken, verificarPermissao('criar'), async (req, 
                 $4
             ) RETURNING *;
         `
-            
+
         const values = [nome, req.id, extensao, (req.permissao === 'admin') ? 0 : null];
 
         //Adiciona o template:
@@ -42,7 +42,7 @@ router.post('/criar', autenticarToken, verificarPermissao('criar'), async (req, 
         for (let i = 0; i < campos.length; i++) {
             const query = `INSERT INTO templatesCampos (id_template, id_tipo, ordem, nome_campo, anulavel)
                            VALUES ($1, $2, $3, $4, $5);`
-            const values = [temp.rows[0].id, campos[i].id_tipo, i+1, campos[i].nome_campo, campos[i].anulavel];
+            const values = [temp.rows[0].id, campos[i].id_tipo, i + 1, campos[i].nome_campo, campos[i].anulavel];
 
             await pool.query(query, values);
         }
@@ -50,14 +50,14 @@ router.post('/criar', autenticarToken, verificarPermissao('criar'), async (req, 
 
         res.status(201).json({ mensagem: 'Template criado com sucesso', result: temp.rows[0] });
 
-    } catch(error) {
+    } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar template'});
+        res.status(500).json({ mensagem: 'Erro ao criar template' });
     }
 });
 
-router.get('/listar', autenticarToken, verificarPermissao(), async (req, res) => {
-    try{
+router.get('/listar', verificarPermissao(), async (req, res) => {
+    try {
         const query = `
             SELECT
                 t.id,
@@ -90,13 +90,13 @@ router.get('/listar', autenticarToken, verificarPermissao(), async (req, res) =>
         const templates = await pool.query(query);
 
         res.status(200).json(templates.rows);
-    } catch(error) {
+    } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao listar templates'});
+        res.status(500).json({ mensagem: 'Erro ao listar templates' });
     }
-})
+});
 
-router.get('/ativos', autenticarToken, async (req, res) => {
+router.get('/ativos', async (req, res) => {
     try {
         const id = req.id;
         const query = `
@@ -130,12 +130,23 @@ router.get('/ativos', autenticarToken, async (req, res) => {
             ORDER BY
                 t.id;
         `
-                
+
         const templates = await pool.query(query);
         res.status(200).json(templates.rows);
-    } catch(error) {
+    } catch (error) {
         console.log(error);
-        res.status(500).json({ mensagem: 'Erro ao buscar templates ativos'});
+        res.status(500).json({ mensagem: 'Erro ao buscar templates ativos' });
+    }
+});
+
+router.get('/recentes', async (req, res) => {
+    try {
+        const query = "SELECT * FROM template ORDER BY data_criacao DESC LIMIT 10;"
+        const templates = await pool.query(query);
+        res.status(200).json(templates.rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar templates recentes' });
     }
 });
 
@@ -150,16 +161,16 @@ router.get('/buscar', async (req, res) => {
         const templates = await pool.query(query);
 
         res.status(200).json(templates.rows);
-                       
-    } catch(error) {
+
+    } catch (error) {
         console.log(error);
-        res.status(500).json({ mensagem: 'Erro ao buscar templates'});
+        res.status(500).json({ mensagem: 'Erro ao buscar templates' });
     }
 });
 
-router.put("/alterar", autenticarToken, verificarPermissao(), async (req, res) => {
+router.put("/alterar", verificarPermissao(), async (req, res) => {
     try {
-        const {id, nome, extensao, status, campos} = req.body;
+        const { id, nome, extensao, status, campos } = req.body;
 
         // Inicia a transação:
         await pool.query('BEGIN');
@@ -177,7 +188,7 @@ router.put("/alterar", autenticarToken, verificarPermissao(), async (req, res) =
         const values = [nome, extensao, (status == null) ? 0 : status, id];
 
         //Atualiza o template:
-        await pool.query(query, values); 
+        await pool.query(query, values);
         console.log(`Template ${id} atualizado com sucesso`);
 
         //Deleta os campos antigos:
@@ -189,7 +200,7 @@ router.put("/alterar", autenticarToken, verificarPermissao(), async (req, res) =
         for (let i = 0; i < campos.length; i++) {
             const query = `INSERT INTO templatesCampos (id_template, id_tipo, ordem, nome_campo, anulavel)
                            VALUES ($1, $2, $3, $4, $5);`
-            const values = [id, campos[i].id_tipo, i+1, campos[i].nome_campo, campos[i].anulavel];
+            const values = [id, campos[i].id_tipo, i + 1, campos[i].nome_campo, campos[i].anulavel];
 
             await pool.query(query, values);
         }
@@ -197,35 +208,34 @@ router.put("/alterar", autenticarToken, verificarPermissao(), async (req, res) =
         // Finaliza a transação:
         await pool.query('COMMIT');
 
-        res.status(201).json({ mensagem: 'Template atualizado com sucesso'});
-    } catch(error) {
+        res.status(201).json({ mensagem: 'Template atualizado com sucesso' });
+    } catch (error) {
         // Cancela a transação:
         await pool.query('ROLLBACK');
 
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao atualizar template'});
+        res.status(500).json({ mensagem: 'Erro ao atualizar template' });
     }
 });
 
-router.patch('/status', autenticarToken, verificarPermissao(), async (req, res) => {
+router.patch('/status', verificarPermissao(), async (req, res) => {
     try {
         const query = "UPDATE template SET status = $1 WHERE id = $2";
-        const {id, status} = req.body;
+        const { id, status } = req.body;
         const values = [status, id];
 
         await pool.query(query, values);
 
-        res.status(201).json({ mensagem: 'Status do template atualizado com sucesso'});
-    }   catch(error) {
+        res.status(201).json({ mensagem: 'Status do template atualizado com sucesso' });
+    } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao atualizar status do template'});
+        res.status(500).json({ mensagem: 'Erro ao atualizar status do template' });
     }
 });
 
+router.delete('/deletar/:id', verificarPermissao(), async (req, res) => {
 
-router.delete('/deletar/:id', autenticarToken, verificarPermissao(), async (req, res) => {
-
-    try{
+    try {
         const id = req.params.id;
 
         const query = 'DELETE FROM template WHERE id = $1';
@@ -237,11 +247,11 @@ router.delete('/deletar/:id', autenticarToken, verificarPermissao(), async (req,
 
         await pool.query('COMMIT');
 
-        res.status(200).json({mensagem: `Template deletado com sucesso: ${id}` });
+        res.status(200).json({ mensagem: `Template deletado com sucesso: ${id}` });
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({mensagem: `Erro ao deletar o template: ${id}`})
+        res.status(500).json({ mensagem: `Erro ao deletar o template: ${id}` })
     }
 
 });
