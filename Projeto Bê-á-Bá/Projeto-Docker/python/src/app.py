@@ -47,14 +47,14 @@ def validar():
             try:
                 validar_arquivo(filedir + file.filename, request.form["id_template"])
 
-                # ! upload_blob(pegar_nome_bucket(), filedir + file.filename, file.filename) ATIVAR UPLOAD 
+                # ! upload_blob(pegar_nome_bucket(), filedir + file.filename, file.filename) ATIVAR UPLOAD
+
+                return {"mensagem": "Sucesso!"}, 200
 
             except Exception as error:
                 # Apagar o arquivo aqui
                 # ! apagar_arquivo(filedir + file.filename)
                 raise Exception(error.args[0])
-
-            return {"mensagem": "Sucesso!"}, 200
 
         return {"mensagem": "Erro no upload."}, 500
 
