@@ -27,12 +27,15 @@ async function popularTemplates() {
                     <td>${template.id_criador}</td>
                     <td>${new Date(template.data_criacao).toLocaleDateString()}</td>
                     <th>${template.status ? 
-                        `<div class="text-white rounded-5 text-center"
+                        `<div class="text-white rounded-5 text-center p-1"
                             style="background-color: var(--Terciaria);">Ativo
                         </div>` 
+                        : (template.status === null ? `<div class="rounded-5 text-center p-1" style="background-color: #FFFAAA;">
+                        Revisão</div>`
                         : 
-                        `<div class="rounded-5 text-center" style="background-color: var(--Baby-Green);">
-                        Inativo</div>`}
+                        `<div class="rounded-5 text-center p-1" style="background-color: var(--Baby-Green);">
+                        Inativo</div>`)
+                        }
                     </th>
                 </tr>
                 `;
