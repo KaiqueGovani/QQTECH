@@ -47,8 +47,14 @@ def validar():
             try:
                 validar_arquivo(filedir + file.filename, request.form["id_template"])
 
-                # ! upload_blob(pegar_nome_bucket(), filedir + file.filename, file.filename) ATIVAR UPLOAD
-
+                # Realiza o upload do arquivo para o bucket caso o bucket exista
+                if (pegar_nome_bucket()):
+                    try :
+                        # ! upload_blob(pegar_nome_bucket(), filedir + file.filename, file.filename) ATIVAR UPLOAD
+                        pass
+                    except Exception as error:
+                        print(error.args[0]) 
+        
                 return {"mensagem": "Sucesso!"}, 200
 
             except Exception as error:
