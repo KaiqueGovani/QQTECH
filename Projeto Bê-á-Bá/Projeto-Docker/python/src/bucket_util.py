@@ -12,9 +12,14 @@ from google.cloud import storage
 def pegar_nome_bucket():
     """Pega o nome do bucket"""
 
-    with open("../bucket-name.txt", "r") as f:
+    with open("bucket-name.txt", "r") as f:
         return f.read()
 
+
+def pegar_url_bucket():
+    """Pega a url do bucket"""
+
+    return "https://console.cloud.google.com/storage/browser/" + pegar_nome_bucket()
 
 # Funçao para verificar se o arquivo tem uma extensão válida
 def arquivo_permitido(filename):
