@@ -36,7 +36,7 @@ async function popularTemplates() {
                         :
                         `<div class="rounded-5 text-center p-1" style="background-color: var(--Baby-Green);">
                         Inativo</div>`)
-                }
+                    }
                     </th>
                 </tr>
                 `;
@@ -76,7 +76,7 @@ async function popularUploads() {
 
 async function desenharGraficos() {
     await desenharGraficoTemplates();
-    //await desenharGraficoUploads();
+    await desenharGraficoArquivos();
 }
 
 async function desenharGraficoTemplates() {
@@ -129,6 +129,35 @@ async function desenharGraficoTemplates() {
         }
     });
 
+}
+
+async function desenharGraficoArquivos() {
+    const response = await fetch('/arquivos/data')
+    const data = await response.json();
+
+    console.log(data);
+
+    const ctx = document.getElementById('graficoArquivos1').getContext('2d');
+    const grafico1 = new Chart(ctx, {
+        type: 'pie',  // ou 'doughnut' para um gráfico de rosca
+        data: {
+            labels: ['Aprovados', 'Reprovados'],
+            datasets: [{
+                label: 'Envios',
+                data: [data.aprovados, data.reprovados],
+                backgroundColor: ['#36965E', '#FFAAAF']
+            },
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+            }
+        }
+    });
 }
 
 function removeTimestampFromFilename(filename) {
