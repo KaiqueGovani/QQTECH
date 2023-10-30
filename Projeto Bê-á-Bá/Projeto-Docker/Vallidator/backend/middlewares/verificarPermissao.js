@@ -1,6 +1,6 @@
 //? Analisar o a verificação pelo banco de dados ao inves do token ?
 //? por conta de possivel incompatibilidade entre token salvos e informações recem atualizadas no banco de dados ?
-function verificarPermissao(perm){
+function verificarPermissao(perm = 'admin'){
     return function (req, res, next) {
         console.log("Verificando permissão " + perm + " para " + req.id + " com permissão " + req.permissao);
         if (req.permissao === 'admin') {
