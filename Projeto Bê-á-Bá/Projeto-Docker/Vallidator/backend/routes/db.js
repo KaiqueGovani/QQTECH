@@ -50,6 +50,11 @@ router.get('/setup', (req, res) => {
         tamanho_bytes integer NOT NULL
     );    
 
+    CREATE TABLE public.UploadData (
+        aprovados INT NOT NULL DEFAULT 0,
+        reprovados INT NOT NULL DEFAULT 0
+    );
+
     INSERT INTO tipos (tipo, python_dtype) 
     VALUES 
         ('Texto', 'str'),
@@ -57,6 +62,8 @@ router.get('/setup', (req, res) => {
         ('Decimal', 'float64'),
         ('Timestamp', 'datetime64'),
         ('Booleano', 'bool');
+
+    INSERT INTO uploaddata DEFAULT VALUES;    
     `;
 
     pool.query(query, (error, result) => {

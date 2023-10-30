@@ -41,3 +41,8 @@ CREATE TABLE public.Upload (
     path varchar NOT NULL,
     tamanho_bytes integer NOT NULL
 );    
+
+CREATE TABLE public.UploadData (
+    aprovados INT NOT NULL DEFAULT 0,
+    reprovados INT NOT NULL DEFAULT 0
+)
