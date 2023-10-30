@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
     <link rel="stylesheet" href="../styles/variaveis.css" />
     <link rel="stylesheet" href="../styles/usuario.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../scripts/navbar.js"></script>
     <script src="../scripts/admin-dashboard.js"></script>
 
@@ -45,8 +46,8 @@
         <div class="page-title mb-4">Dashboard</div>
 
         <div class="page-body mx-sm-5 m-3 h-100">
-            <div class="container-fluid d-flex p-0 m-0 coluna-responsiva gap-3" style="height: 70vh;">
-                <div class="w-100 p-3" style="background-color: white; box-shadow: 0px 0px 3px 3px #00000025">
+            <div class="container-fluid d-flex p-0 m-0 coluna-responsiva gap-3" style="min-height: 70vh;">
+                <div class="w-100 p-3 d-flex flex-column" style="background-color: white; box-shadow: 0px 0px 3px 3px #00000025">
                     <h3 class="text-center my-2 mb-4">Templates Criados Recentemente</h3>
                     <div class="table-responsive">
                         <table class="table table-sm table-striped table-hover align-middle">
@@ -64,6 +65,18 @@
                                 <!-- ! Preenchido dinamicamente -->
                             </tbody>
                         </table>
+                        
+                    </div>
+                    <div class="container" style="width: auto; margin-top: auto;">
+                        <div class="row">
+                            <!-- Using d-flex to apply Flexbox on the container -->
+                            <div class="col-md-6 col-12 d-flex justify-content-center">
+                                <canvas id="graficoTemplates1"></canvas>
+                            </div>
+                            <div class="col-md-6 col-12 d-flex justify-content-center">
+                                <canvas id="graficoTemplates2"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="w-100 p-3" style="background-color: white; box-shadow: 0px 0px 3px 3px #00000025">
