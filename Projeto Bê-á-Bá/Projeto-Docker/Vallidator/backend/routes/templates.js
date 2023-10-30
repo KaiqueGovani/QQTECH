@@ -139,7 +139,7 @@ router.get('/ativos', async (req, res) => {
     }
 });
 
-router.get('/recentes', async (req, res) => {
+router.get('/recentes', verificarPermissao(), async (req, res) => {
     try {
         const query = "SELECT * FROM template ORDER BY data_criacao DESC LIMIT 10;"
         const templates = await pool.query(query);
@@ -149,6 +149,28 @@ router.get('/recentes', async (req, res) => {
         res.status(500).json({ mensagem: 'Erro ao buscar templates recentes' });
     }
 });
+
+router.get('/data', verificarPermissao(), async (req, res) => {
+    try {
+        const query = `
+        SELECT
+            COUNT(CASE WHEN status = TRUE THEN 1 END) AS Ativo,
+            COUNT(CASE WHEN status = FALSE THEN 1 END) AS Inativo,
+            COUNT(CASE WHEN status IS NULL THEN 1 END) AS Pendente,
+            COUNT(CASE WHEN extensao = 'csv' THEN 1 END) AS csv,
+            COUNT(CASE WHEN extensao = 'xls' THEN 1 END) AS xls,
+            COUNT(CASE WHEN extensao = 'xlsx' THEN 1 END) AS xlsx
+        FROM
+            template;`
+
+        const templates = await pool.query(query);
+        res.status(200).json(templates.rows[0]);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar templates em revisão' });
+    }
+});
+
 
 router.get('/buscar', async (req, res) => {
     try {
