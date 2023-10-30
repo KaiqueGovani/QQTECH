@@ -126,7 +126,7 @@ function modalTemplate(id, templates){ //Função para ver o template que será 
                     <label for="btnradio1" class="form-label">Tipo do arquivo:*</label>
                     <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="btnradio" id="csv"
-                            autocomplete="off" ${(template.extensao == "csv") ? "checked" : ""}>
+                            autocomplete="off" ${(template.extensao == "csv") ? "checked" : ""} required>
                         <label class="btn btn-outline-primary" for="csv">
                             <img src="../icons/csv-icon.png" alt="">
                         </label>
@@ -172,8 +172,8 @@ function modalTemplate(id, templates){ //Função para ver o template que será 
             </div>
             <div>
                 <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button data-bs-dismiss="modal" onclick='${(id == 0) ? 'enviarTemplate()' : `alterarTemplate(${template.id})`};'
-                    type="button" class="btn btn-primary" id="sendTemplate">Confirmar Template</button>
+                <button onclick='${(id == 0) ? 'enviarTemplate(event)' : `alterarTemplate(${template.id})`};'
+                    type="submit" class="btn btn-primary" id="sendTemplate">Confirmar Template</button>
             </div>
         </div>
     `   
@@ -181,6 +181,11 @@ function modalTemplate(id, templates){ //Função para ver o template que será 
 
 async function alterarTemplate(id){
     try {
+        let form = document.querySelector("form");
+        if (!form.checkValidity()) {
+            // Se o formulário não for válido, mostre um alerta ou algum feedback ao usuário.
+            return false;
+        }
         const formData = getFormData();
         const template = new Template(formData);
         template.status = getStatus(id);
@@ -197,6 +202,13 @@ async function alterarTemplate(id){
             body: JSON.stringify(template)
         });
         const data = await response.json();
+
+        //Fecha o modal de template
+        const templateModal = document.getElementById("templateModal");
+        const templateModalBS = bootstrap.Modal.getInstance(templateModal);
+        templateModalBS.hide();
+
+        //Mostra o modal de feedback
         showFeedbackModal("Template Atualizado!", "Mudanças Registradas.", "Template está disponível para uso.", "../icons/badge-check.png");
         console.log("Resposta do servidor:", data.mensagem);
         

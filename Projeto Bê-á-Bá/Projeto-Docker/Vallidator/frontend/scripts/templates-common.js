@@ -152,6 +152,12 @@ function getSelectedFileExtension() {
 
 async function enviarTemplate(){
     try{
+        let form = document.querySelector("form");
+        if (!form.checkValidity()) {
+            // Se o formulário não for válido, mostre um alerta ou algum feedback ao usuário.
+            return false;
+        }
+
         const formData = getFormData();
         const template = new Template(formData);
 
@@ -167,6 +173,11 @@ async function enviarTemplate(){
         })
         .then(response => response.json()) // Funciona como um middleware
         .then(data => {
+            //Fecha o modal de template
+            const templateModal = document.getElementById("templateModal");
+            const templateModalBS = bootstrap.Modal.getInstance(templateModal);
+            templateModalBS.hide();
+
             showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");
             console.log("Resposta do servidor:", data.mensagem);
         })
