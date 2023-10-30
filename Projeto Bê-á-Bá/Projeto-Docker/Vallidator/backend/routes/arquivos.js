@@ -70,8 +70,9 @@ router.post('/validar', verificarPermissao('upload'), upload.single('uploadedFil
         const data = await response.json();
 
         if (!response.ok) {
+            // Incrementando o contador de uploads
+            await pool.query('UPDATE uploaddata SET reprovados = reprovados + 1');
             res.status(400).json({ mensagem: data.mensagem || "Erro ao reencaminhar o arquivo!" });
-            //throw new Error(data.mensagem || "Erro ao reencaminhar o arquivo!");
         } else {
             // Salvando o arquivo no banco de dados
             try {
@@ -89,6 +90,9 @@ router.post('/validar', verificarPermissao('upload'), upload.single('uploadedFil
                 const values = [arquivo.id_template, arquivo.id_criador, arquivo.nome, new Date(), arquivo.caminho, arquivo.tamanho_bytes];
 
                 await pool.query(query, values);
+
+                // Incrementando o contador de uploads
+                await pool.query('UPDATE uploaddata SET aprovados = aprovados + 1');
 
                 res.status(202).json({ mensagem: data.mensagem || "Arquivo enviado com sucesso" });
 
@@ -109,8 +113,6 @@ router.post('/validar', verificarPermissao('upload'), upload.single('uploadedFil
         console.error(`Erro ao reencaminhar o arquivo. \n${error.message}`);
         res.status(500).json({ mensagem: `Erro ao reencaminhar o arquivo. \n${error.message}` });
     }
-
-
 })
 
 router.get('/recentes', async (req, res) => {
@@ -118,6 +120,17 @@ router.get('/recentes', async (req, res) => {
         const query = "SELECT * FROM upload ORDER BY data DESC LIMIT 10;"
         const uploads = await pool.query(query);
         res.status(200).json(uploads.rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar templates recentes' });
+    }
+});
+
+router.get('/data', async (req, res) => {
+    try {
+        const query = "SELECT * FROM uploaddata;"
+        const uploads = await pool.query(query);
+        res.status(200).json(uploads.rows[0]);
     } catch (error) {
         console.log(error);
         res.status(500).json({ mensagem: 'Erro ao buscar templates recentes' });
