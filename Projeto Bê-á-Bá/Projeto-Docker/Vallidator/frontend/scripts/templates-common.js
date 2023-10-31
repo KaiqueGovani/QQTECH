@@ -1,6 +1,6 @@
 class Template { //Classe para representar um template
-    constructor(data){
-        const {id, nome, id_criador, data_criacao, extensao, status, campos, nome_criador} = data;
+    constructor(data) {
+        const { id, nome, id_criador, data_criacao, extensao, status, campos, nome_criador } = data;
         this.id = id;
         this.nome = nome;
         this.id_criador = id_criador; //-> Join usuario = nome_criador
@@ -14,8 +14,8 @@ class Template { //Classe para representar um template
 }
 
 class Campo { //Classe para representar um campo
-    constructor(data){
-        const {ordem, nome_campo, id_tipo, anulavel, id_template} = data;
+    constructor(data) {
+        const { ordem, nome_campo, id_tipo, anulavel, id_template } = data;
         this.ordem = ordem;
         this.nome_campo = nome_campo;
         this.nome_tipo = typeMapping[id_tipo];
@@ -66,7 +66,7 @@ function atualizarInputs(n) { // !
     areaInputsCampos.innerHTML = '';
 
     //Adicionar os campos
-    for (let i = 1; i < n+1; i++) {
+    for (let i = 1; i < n + 1; i++) {
         // ! Atualizar os tipos dinamicamente
         areaInputsCampos.innerHTML += `
         <div class="col-md-6 mb-3">
@@ -109,10 +109,11 @@ function showFeedbackModal(title, response, additionalInfo, iconURL) {
 
     // Show the modal
     feedbackModal.show();
-} // ? Alterar para um arquivo separado ?
+}
 
-function updateFooter(){
-    console.log("Atualizando o footer");
+function updateFooter(x) {
+    const footerText = document.getElementById("footerText");
+    footerText.innerHTML = `Visualizando ${x} templates.`
 }
 
 function getFormData() {
@@ -150,8 +151,8 @@ function getSelectedFileExtension() {
     return null; // No radio button selected
 }
 
-async function enviarTemplate(){
-    try{
+async function enviarTemplate() {
+    try {
         let form = document.querySelector("form");
         if (!form.checkValidity()) {
             // Se o formulário não for válido, mostre um alerta ou algum feedback ao usuário.
@@ -171,18 +172,18 @@ async function enviarTemplate(){
             },
             body: JSON.stringify(template)
         })
-        .then(response => response.json()) // Funciona como um middleware
-        .then(data => {
-            //Fecha o modal de template
-            const templateModal = document.getElementById("templateModal");
-            const templateModalBS = bootstrap.Modal.getInstance(templateModal);
-            templateModalBS.hide();
+            .then(response => response.json()) // Funciona como um middleware
+            .then(data => {
+                //Fecha o modal de template
+                const templateModal = document.getElementById("templateModal");
+                const templateModalBS = bootstrap.Modal.getInstance(templateModal);
+                templateModalBS.hide();
 
-            showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");
-            console.log("Resposta do servidor:", data.mensagem);
-        })
+                showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");
+                console.log("Resposta do servidor:", data.mensagem);
+            })
     }
-    catch(error){
+    catch (error) {
         console.error('Error:', error);
     }
     finally {
@@ -190,7 +191,7 @@ async function enviarTemplate(){
     }
 }
 
-function resetarForm(){
+function resetarForm() {
     const select = document.getElementById("inputNCampos");
     const nomeTemplate = document.getElementById("inputNomeTemplate");
 
@@ -206,7 +207,7 @@ function resetarForm(){
 
 }
 
-async function enviarArquivo(id_template){
+async function enviarArquivo(id_template) {
     try {
         const formUploadFile = document.getElementById("formUploadFile"); // ! resetar form
         const fileInput = document.getElementById("templateFile");
@@ -240,7 +241,7 @@ async function enviarArquivo(id_template){
         }
 
         showFeedbackModal("Validação Completa!", "Arquivo dentro dos padrões!", "Enviando para o repositório.", "../icons/badge-check.png");
-        
+
         console.log("Resposta do servidor:", data.mensagem);
 
     } catch (error) {
@@ -249,7 +250,7 @@ async function enviarArquivo(id_template){
     }
 }
 
-function uploadArquivoModal(id_template){
+function uploadArquivoModal(id_template) {
     const uploadModal = new bootstrap.Modal(document.getElementById("uploadModal"));
     const uploadButton = document.getElementById("uploadButton");
 

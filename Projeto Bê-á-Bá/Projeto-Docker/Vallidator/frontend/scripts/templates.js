@@ -3,29 +3,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateFooter(); // TODO - Implementar
 });
 
-async function fetchTemplates(){
+async function fetchTemplates() {
     try {
         const response = await fetch('/templates/ativos');
         const templates = await response.json();
 
-        for (let template of templates){
+        for (let template of templates) {
             console.log(new Template(template));
         }
 
         return templates;
-    } catch(error) {
+    } catch (error) {
         console.error('Erro ao carregar os templates:', error);
     }
 }
 
 const campoTemplates = document.getElementById("cb-templates");
 
-async function popularTemplates(){
+async function popularTemplates() {
     const templates = await fetchTemplates();
     campoTemplates.innerHTML = "";
 
     try {
-        for (let template of templates){
+        for (let template of templates) {
             template = new Template(template);
             campoTemplates.innerHTML += `
                 <div class="card-body d-flex justify-content-between align-items-center">
@@ -40,7 +40,7 @@ async function popularTemplates(){
                                 <div class="form-check-label" style="line-height: 20px">Status: Aguardando Revisão</div>   
                             </div>
                             ` :
-                            `
+                    `
                             <div class="d-flex gap-4 card-buttons"> 
                                 <a onclick="downloadEmptyCSV()" href="#" class="btn btn-secondary d-flex coluna-responsiva">
                                 <span>Download</span>
@@ -61,7 +61,10 @@ async function popularTemplates(){
         //Adiciona os eventos de click nos botões de editar
         document.querySelectorAll("#editarTemplateBtn")
             .forEach(btn => btn.addEventListener("click", () => {
-                verEditarTemplate(btn.dataset.templateId, templates)}));
+                verEditarTemplate(btn.dataset.templateId, templates)
+            }));
+
+        updateFooter(templates.length);
 
     } catch (error) {
         console.error("Erro ao popular os templates: " + error.message);
