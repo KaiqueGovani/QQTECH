@@ -38,8 +38,20 @@ def run_storage_setup():
                 f.write(bucket_name)
     
             print(f"nome do Bucket salvo em bucket-name.txt.")
-            
-            
+    else:
+        # Nome para seu bucket do GCS
+        bucket_name = "vallidator-" + strftime("%Y%m%d%H%M%S", gmtime())
+
+         # Cria o bucket
+        bucket = storage_client.create_bucket(bucket_name, location="us-central1")
+        print(f"Bucket {bucket.name} criado.")
+        
+        # Cria um arquivo para salvar o nome do bucket
+        with open("bucket-name.txt", "w") as f:
+            f.write(bucket_name)
+
+        print(f"nome do Bucket salvo em bucket-name.txt.")
+        
     print(f"Bucket disponível em: " + pegar_url_bucket())
         
 
