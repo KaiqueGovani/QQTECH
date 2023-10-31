@@ -60,6 +60,19 @@ router.post('/criar', async (req, res) => {
     }
 });
 
+router.post('/convidar', autenticarToken, verificarPermissao(), async (req, res) => {
+    try {
+        const email = req.body.email;
+
+        console.log(email);
+
+        res.status(201).json({ mensagem: 'Usuário convidado com sucesso' })
+    } catch {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao convidar usuário' });
+    }
+})
+
 router.post('/login', async (req, res) => {
     try {
         const { email, senha } = req.body;

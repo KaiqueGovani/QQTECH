@@ -113,6 +113,26 @@
         </div>
     </div>
 
+    <!-- Modal de Convite -->
+    <div class="modal fade" id="convidarModal" tabindex="-1" aria-labelledby="convidarModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="convidarModalLabel">Adicionar novo Usuário</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="" id="conviteForm">
+                    <div class="modal-body d-flex flex-column pb-5 px-4">
+                        <label class="form-label" for="conviteEmail">Digite o email do usuário para enviar um convite: </label>
+                        <input type="email" class="form-control" id="conviteEmail" placeholder="E-mail do Usuário" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" onclick="enviarConvite(); event.preventDefault();">Enviar Convite</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal de Feedback -->
     <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModal" aria-hidden="true">
