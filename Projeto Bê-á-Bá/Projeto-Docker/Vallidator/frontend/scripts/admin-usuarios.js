@@ -11,10 +11,6 @@ class Usuario {
 
 document.addEventListener('DOMContentLoaded', async () => {
     await renderizarUsuarios();
-    
-    
-    showFeedbackToast('This is a success message!', 'success', 'path_to_success_icon.png');
-    showFeedbackToast('This is an error message!', 'danger', 'path_to_error_icon.png');
 });
 
 async function fetchUsuarios() {
@@ -317,7 +313,7 @@ async function editarUsuarioModal(id) {
 async function editarUsuario(id) {
     const form = document.getElementById("editarForm");
     if (!form.checkValidity()) {
-        //! Se o formulário não for válido, mostre um alerta ou algum feedback ao usuário.
+        showFeedbackToast("Erro ao editar usuário", "Por favor, preencha todos os campos corretamente.", "danger", "../icons/ban.png");
         return false;
     }
 
@@ -359,58 +355,3 @@ async function editarUsuario(id) {
         console.error('Erro ao editar usuário: ', error);
     }
 }
-
-//Função de mostrar um Modal de Feedback
-function showFeedbackModal(title, response, additionalInfo, iconURL) {
-    const feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
-    const feedbackModalLabel = document.getElementById("feedbackModalLabel");
-    const feedbackModalResponse = document.getElementById("feedbackModalResponse");
-    const feedbackModalP = document.getElementById("feedbackModalP");
-    const feedbackModalIcon = document.getElementById("feedbackModalIcon");
-
-    // Seta o título, response e informação adicional
-    feedbackModalLabel.innerText = title;
-    feedbackModalResponse.innerText = response;
-    feedbackModalP.innerText = additionalInfo;
-
-    // Seta o ícone (pode ser um URL ou um elemento de Icone)
-    if (iconURL) {
-        feedbackModalIcon.innerHTML = `<img src="${iconURL}" alt="Icon">`;
-    } else {
-        feedbackModalIcon.innerHTML = '';
-    }
-
-    // Show the modal
-    feedbackModal.show();
-}
-
-
-function showFeedbackToast(message, color = 'primary', icon = '') {
-    // Construct the toast's HTML
-    const toastHTML = `
-        <div class="toast align-items-center text-bg-${color} border-0" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    ${message}
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    `;
-
-    // Append to body
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = toastHTML;
-    const toastEl = tempDiv.firstChild;
-    document.body.appendChild(toastEl);
-
-    // Use Bootstrap's toast API to show the toast
-    const toast = new bootstrap.Toast(toastEl);
-    toast.show();
-
-    // Remove the toast from DOM after it's hidden
-    toastEl.addEventListener('hidden.bs.toast', function() {
-        toastEl.remove();
-    });
-}
-
