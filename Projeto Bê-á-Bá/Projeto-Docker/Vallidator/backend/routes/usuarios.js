@@ -22,7 +22,19 @@ router.get('/dados', autenticarToken, async (req, res) => { // Pega os dados do 
     }
 });
 
-// ! Rota put para admin.
+router.put('/dados', autenticarToken, verificarPermissao(), async (req, res) => { // Atualiza os dados do usuario
+    try { 
+        const query = 'UPDATE usuario SET nome = $1, sobrenome = $2, telefone = $3, email = $4 WHERE id = $5';
+        const values = [req.body.nome, req.body.sobrenome, req.body.telefone, req.body.email, req.body.id];
+
+        await pool.query(query, values);
+
+        res.status(201).json({ mensagem: 'Dados atualizados com sucesso' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({mensagem: 'Erro ao atualizar dados de usuário'});
+    }
+});
 
 router.patch('/dados', autenticarToken, async (req, res) => { // Atualiza os dados do usuario que está logado
     try {

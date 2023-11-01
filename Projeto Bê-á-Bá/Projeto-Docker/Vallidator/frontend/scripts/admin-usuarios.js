@@ -11,6 +11,10 @@ class Usuario {
 
 document.addEventListener('DOMContentLoaded', async () => {
     await renderizarUsuarios();
+    
+    
+    showFeedbackToast('This is a success message!', 'success', 'path_to_success_icon.png');
+    showFeedbackToast('This is an error message!', 'danger', 'path_to_error_icon.png');
 });
 
 async function fetchUsuarios() {
@@ -200,7 +204,7 @@ async function renderizarUsuarios() {
                             onclick="gerarPermissao(${usuario.id})">
                     </div>
                     <button class="btn btn-outline-secondary"
-                        data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        data-bs-toggle="modal" data-bs-target="#editarModal" onclick="editarUsuarioModal(${usuario.id});">
                         <span>Editar</span>
                         <i style="font-size: 20px;" class="fa-solid fa-square-pen"></i>
                     </button>
@@ -284,9 +288,129 @@ async function enviarConvite(){
 
         form.reset();
          
-        renderizarUsuarios();
+        await renderizarUsuarios();
 
     } catch(error) {
         console.error('Erro ao enviar convite: ', error);
     }
 }
+
+async function editarUsuarioModal(id) {
+    const nomeInput = document.getElementById("nome");
+    const sobrenomeInput = document.getElementById("sobrenome");
+    const telefoneInput = document.getElementById("telefone");
+    const emailInput = document.getElementById("email");
+
+    const usuarios = await fetchUsuarios();
+
+    const usuario = usuarios.find(usuario => usuario.id === id);
+
+    nomeInput.value = usuario.nome;
+    sobrenomeInput.value = usuario.sobrenome;
+    telefoneInput.value = usuario.telefone;
+    emailInput.value = usuario.email;
+
+    const editarButton = document.getElementById("editarUsuarioBtn");
+    editarButton.setAttribute("onclick", `editarUsuario(${id}); event.preventDefault();`);
+}
+
+async function editarUsuario(id) {
+    const form = document.getElementById("editarForm");
+    if (!form.checkValidity()) {
+        //! Se o formulário não for válido, mostre um alerta ou algum feedback ao usuário.
+        return false;
+    }
+
+    const nomeInput = document.getElementById("nome");
+    const sobrenomeInput = document.getElementById("sobrenome");
+    const telefoneInput = document.getElementById("telefone");
+    const emailInput = document.getElementById("email");
+
+    const nome = nomeInput.value;
+    const sobrenome = sobrenomeInput.value;
+    const telefone = telefoneInput.value;
+    const email = emailInput.value;
+
+    try {
+        const response = await fetch(`/usuarios/dados`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nome, sobrenome, telefone, email, id })
+        });
+
+        const data = await response.json();
+        console.log(data.mensagem); //? Alterar esse tipo de feedback para um toast?
+
+        if (!response.ok) {
+            throw new Error(data.mensagem);
+        }
+
+        await renderizarUsuarios();
+        
+        const editarModal = document.getElementById("editarModal");
+        const editarModalBS = bootstrap.Modal.getInstance(editarModal);
+        editarModalBS.hide();
+
+        showFeedbackModal("Usuário Editado!", "Usuário editado com sucesso.", "", "../icons/badge-check.png");
+
+    } catch(error) {
+        console.error('Erro ao editar usuário: ', error);
+    }
+}
+
+//Função de mostrar um Modal de Feedback
+function showFeedbackModal(title, response, additionalInfo, iconURL) {
+    const feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
+    const feedbackModalLabel = document.getElementById("feedbackModalLabel");
+    const feedbackModalResponse = document.getElementById("feedbackModalResponse");
+    const feedbackModalP = document.getElementById("feedbackModalP");
+    const feedbackModalIcon = document.getElementById("feedbackModalIcon");
+
+    // Seta o título, response e informação adicional
+    feedbackModalLabel.innerText = title;
+    feedbackModalResponse.innerText = response;
+    feedbackModalP.innerText = additionalInfo;
+
+    // Seta o ícone (pode ser um URL ou um elemento de Icone)
+    if (iconURL) {
+        feedbackModalIcon.innerHTML = `<img src="${iconURL}" alt="Icon">`;
+    } else {
+        feedbackModalIcon.innerHTML = '';
+    }
+
+    // Show the modal
+    feedbackModal.show();
+}
+
+
+function showFeedbackToast(message, color = 'primary', icon = '') {
+    // Construct the toast's HTML
+    const toastHTML = `
+        <div class="toast align-items-center text-bg-${color} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    ${message}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    `;
+
+    // Append to body
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = toastHTML;
+    const toastEl = tempDiv.firstChild;
+    document.body.appendChild(toastEl);
+
+    // Use Bootstrap's toast API to show the toast
+    const toast = new bootstrap.Toast(toastEl);
+    toast.show();
+
+    // Remove the toast from DOM after it's hidden
+    toastEl.addEventListener('hidden.bs.toast', function() {
+        toastEl.remove();
+    });
+}
+
