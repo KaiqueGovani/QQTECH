@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="../styles/usuario.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../scripts/navbar.js"></script>
+    <script src="../scripts/feedback.js"></script>
     <script src="../scripts/admin-dashboard.js"></script>
 
     <title>Dashboard</title>
@@ -104,6 +105,20 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Feedback -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="feedbackToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <div id="feedbackToastIcon" class="me-2"></div>
+                <strong id="feedbackToastTitle" class="me-auto">Bootstrap</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Hello, world! This is a toast message.
             </div>
         </div>
     </div>
