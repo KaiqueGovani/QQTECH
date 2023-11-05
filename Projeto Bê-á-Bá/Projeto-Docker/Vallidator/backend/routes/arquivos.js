@@ -24,6 +24,8 @@ const storage = diskStorage({
         const date = new Date();
         const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}_${(date.getHours() - 3).toString().padStart(2, '0')}-${date.getMinutes().toString().padStart(2, '0')}-${date.getSeconds().toString().padStart(2, '0')}`;
 
+        file.originalname = Buffer.from(file.originalname, 'latin1').toString('utf8')
+
         // Extrai a extensão do arquivo
         const fileExt = extname(file.originalname);
         // Extrai o nome do arquivo sem a extensão
