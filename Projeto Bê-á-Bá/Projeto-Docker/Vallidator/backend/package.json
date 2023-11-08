@@ -21,6 +21,8 @@
     "start": "^5.1.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.23.2",
+    "esm": "^3.2.25",
     "nodemon": "^3.0.1"
   },
   "type": "module"
