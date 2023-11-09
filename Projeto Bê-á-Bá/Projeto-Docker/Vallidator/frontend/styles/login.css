@@ -41,7 +41,7 @@ body {
     padding: 12px;
 }
 
-.form-label {
+.login-form-label {
     color: var(--Terciaria);
     font-family: Inter;
     font-size: 14px;

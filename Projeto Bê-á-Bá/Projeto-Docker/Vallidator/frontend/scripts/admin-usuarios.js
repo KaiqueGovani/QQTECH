@@ -222,7 +222,7 @@ async function atualizarPermissao(id, permissao) {
         });
 
         const data = await response.json();
-        console.log(data.mensagem); //? Alterar esse tipo de feedback para um toast?
+        showFeedbackToast("Permissão Atualizada!", "Permissão atualizada com sucesso.", "success", "../icons/badge-check.png");
 
     } catch(error) {
         console.error('Error:', error);
@@ -267,7 +267,7 @@ async function enviarConvite(){
     const email = form.conviteEmail.value;
 
     try {
-        const response = await fetch(`/usuarios/convidar`, {
+        const response = await fetch(`/usuarios/gerar-token`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -276,7 +276,7 @@ async function enviarConvite(){
         });
 
         const data = await response.json();
-        console.log(data.mensagem, "Alterar"); //? Alterar esse tipo de feedback para um toast?
+        showFeedbackToast("Convite Enviado!", "Convite enviado com sucesso.", "success", "../icons/badge-check.png");
 
         if (!response.ok) {
             throw new Error(data.mensagem);

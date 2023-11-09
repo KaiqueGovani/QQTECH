@@ -4,5 +4,6 @@ pgadmin/
 uploads/
 credentials.json
 bucket-name.txt
+mail-service.json
 config.json
 __pycache__/
