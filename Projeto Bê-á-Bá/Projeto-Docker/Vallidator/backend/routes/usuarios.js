@@ -165,6 +165,10 @@ router.post('/redefinir-senha', async (req, res) => {
     }
 });
 
+router.get('/obter-permissao', autenticarToken, async (req, res) => {
+    const permissao = req.permissao;
+    res.status(200).json({ permissao: permissao });
+});
 
 router.post('/login', async (req, res) => {
     try {

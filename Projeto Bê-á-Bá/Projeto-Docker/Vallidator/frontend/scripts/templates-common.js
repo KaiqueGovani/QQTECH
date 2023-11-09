@@ -32,6 +32,21 @@ const typeMapping = { // !Mapeamento de tipos de campos // Posteriormente conect
     5: "Booleano"
 };
 
+async function obterPermissao() {
+    try {
+        const perm = await fetch('/usuarios/obter-permissao', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        return perm.json();
+    } catch (error) {
+        console.error('Erro ao obter permissão:', error);
+    }
+}
+
 function downloadEmptyCSV() { // ! Função Placeholder
     // Create a data URI for an empty CSV content
     const csvContent = "data:text/csv;charset=utf-8,";

@@ -1,7 +1,25 @@
 document.addEventListener('DOMContentLoaded', async () => {
     await popularTemplates();
-    updateFooter(); // TODO - Implementar
+    await sincronizarPermissao();
 });
+
+async function sincronizarPermissao() {
+    const permissaoJson = await obterPermissao();
+    const permissao = permissaoJson.permissao;
+    console.log('Permissão:', permissao);  
+
+    if (permissao.includes("criar")) {
+        document.getElementById("adicionarTemplateBtn").classList.remove("d-none");
+    } else {
+        document.getElementById("adicionarTemplateBtn").classList.add("d-none");
+    }
+
+    if (permissao.includes("upload")){
+        document.querySelectorAll(".uploadArquivoBtn").forEach(btn => btn.classList.remove("d-none"));
+    } else {
+        document.querySelectorAll(".uploadArquivoBtn").forEach(btn => btn.classList.add("d-none"));
+    }
+}
 
 async function fetchTemplates() {
     try {
@@ -46,7 +64,7 @@ async function popularTemplates() {
                                 <span>Download</span>
                                 <i style="font-size: 20px;" class="fa-solid fa-download"></i>
                                 </a>
-                                <a href="#" class="btn btn-light d-flex coluna-responsiva" onclick="uploadArquivoModal(${template.id});">
+                                <a href="#" class="btn btn-light d-flex coluna-responsiva uploadArquivoBtn" onclick="uploadArquivoModal(${template.id});">
                                 <span>Utilizar Template</span>
                                 <i style="font-size: 20px;" class="fa-solid fa-folder"></i>
                                 </a>
@@ -71,7 +89,6 @@ async function popularTemplates() {
             }));
 
         updateFooter(templates.length);
-
     } catch (error) {
         console.error("Erro ao popular os templates: " + error.message);
     }
