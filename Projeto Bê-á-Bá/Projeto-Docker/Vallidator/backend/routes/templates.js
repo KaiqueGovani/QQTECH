@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { join } from 'path';
 import pool from '../config/database.js';
 import autenticarToken from '../middlewares/autenticarToken.js';
+import fetch from 'node-fetch';
 import verificarPermissao from '../middlewares/verificarPermissao.js';
 
 const router = Router();
@@ -189,6 +190,38 @@ router.get('/buscar', async (req, res) => {
         res.status(500).json({ mensagem: 'Erro ao buscar templates' });
     }
 });
+
+router.post('/download', async (req, res) => {
+    try {
+        const response = await fetch('http://flask:5000/download', {  // Replace with your Flask server URL
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(req.body)
+        });
+
+        
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(`Flask server responded with: ${response.status}, ${data.mensagem}`);
+        }
+
+        // Set the appropriate headers for file download
+        const fileExtension = req.body.extensao || 'csv';
+        const fileName = req.body.nome || 'download';
+        res.setHeader('Content-Disposition', `attachment; filename=${fileName}.${fileExtension}`);
+        res.setHeader('Content-Type', response.headers.get('content-type'));
+
+        // Pipe the response stream directly to the client
+        response.body.pipe(res);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao baixar o template' });
+    }
+});
+
 
 router.put("/alterar", verificarPermissao(), async (req, res) => {
     try {

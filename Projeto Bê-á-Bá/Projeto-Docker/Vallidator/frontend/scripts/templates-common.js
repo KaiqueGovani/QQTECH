@@ -56,6 +56,44 @@ function downloadEmptyCSV() { // ! Função Placeholder
     window.URL.revokeObjectURL(url);
 }
 
+async function downloadTemplate(template_id, templates) {
+    try {
+        const template = templates.find(template => template.id == template_id);
+        const response = await fetch(`/templates/download`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(template)
+        });
+
+        if (!response.ok) {
+            throw new Error("Erro ao baixar o template!");
+        }
+
+        const blob = await response.blob();
+
+        // Create a URL for the Blob
+        const url = window.URL.createObjectURL(blob);
+
+        // Create a temporary <a> element to trigger the download
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${template.nome}.${template.extensao}`; // File name
+        document.body.appendChild(a);
+
+        // Trigger the click event on the <a> element
+        a.click();
+
+        // Clean up: remove the <a> element and revoke the URL
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Erro ao baixar o template:', error);
+        showFeedbackToast("Erro ao baixar o template!", "Tente novamente mais tarde.", "danger", "../icons/ban.png");
+    }
+}
+
 //Função para Atualizar os inputs de campos
 function atualizarInputs(n) { // !
     //console.log(`Atualizando a área de inputs para ${n} inputs`);
@@ -85,30 +123,6 @@ function atualizarInputs(n) { // !
         </div>
         `
     }
-}
-
-//Função de mostrar um Modal de Feedback
-function showFeedbackModal(title, response, additionalInfo, iconURL) {
-    const feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
-    const feedbackModalLabel = document.getElementById("feedbackModalLabel");
-    const feedbackModalResponse = document.getElementById("feedbackModalResponse");
-    const feedbackModalP = document.getElementById("feedbackModalP");
-    const feedbackModalIcon = document.getElementById("feedbackModalIcon");
-
-    // Seta o título, response e informação adicional
-    feedbackModalLabel.innerText = title;
-    feedbackModalResponse.innerText = response;
-    feedbackModalP.innerText = additionalInfo;
-
-    // Seta o ícone (pode ser um URL ou um elemento de Icone)
-    if (iconURL) {
-        feedbackModalIcon.innerHTML = `<img src="${iconURL}" alt="Icon">`;
-    } else {
-        feedbackModalIcon.innerHTML = '';
-    }
-
-    // Show the modal
-    feedbackModal.show();
 }
 
 function updateFooter(x) {

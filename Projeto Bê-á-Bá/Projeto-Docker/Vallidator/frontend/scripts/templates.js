@@ -42,7 +42,7 @@ async function popularTemplates() {
                             ` :
                     `
                             <div class="d-flex gap-4 card-buttons"> 
-                                <a onclick="downloadEmptyCSV()" href="#" class="btn btn-secondary d-flex coluna-responsiva">
+                                <a id="downloadTemplateBtn" data-template-id="${template.id}" class="btn btn-secondary d-flex coluna-responsiva">
                                 <span>Download</span>
                                 <i style="font-size: 20px;" class="fa-solid fa-download"></i>
                                 </a>
@@ -58,6 +58,12 @@ async function popularTemplates() {
                 </div>   
             `
         }
+        //Adiciona os eventos de click nos botões de download
+        document.querySelectorAll("#downloadTemplateBtn")
+            .forEach(btn => btn.addEventListener("click", () => {
+                downloadTemplate(btn.dataset.templateId, templates)
+            }));
+
         //Adiciona os eventos de click nos botões de editar
         document.querySelectorAll("#editarTemplateBtn")
             .forEach(btn => btn.addEventListener("click", () => {

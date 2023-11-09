@@ -115,7 +115,7 @@ router.post('/validar', verificarPermissao('upload'), upload.single('uploadedFil
         console.error(`Erro ao reencaminhar o arquivo. \n${error.message}`);
         res.status(500).json({ mensagem: `Erro ao reencaminhar o arquivo. \n${error.message}` });
     }
-})
+});
 
 router.get('/recentes', async (req, res) => {
     try {

@@ -1,5 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import os
+import pandas as pd
+from io import BytesIO
 
 from bucket_util import *  # importa todas as funções do bucket_util.py
 
@@ -68,6 +70,45 @@ def validar():
         # retorna um json com uma mensagem de erro
         return {"mensagem": f"{error.args[0]}"}, 500
 
+@app.route("/download", methods=["POST"])
+def download_template():
+    try:
+        # Pega o JSON do corpo da requisição
+        data = request.get_json()
+        
+        app.logger.info(f"JSON recebido: {data}")
 
+        # Cria um DataFrame com os cabeçalhos das colunas e uma linha com os tipos
+        headers = [field['nome_campo'] for field in data['campos']]
+        types = [field['nome_tipo'] for field in data['campos']]
+
+        # Cria um buffer para armazenar o arquivo temporariamente
+        buffer = BytesIO()
+
+        # Escreve os cabeçalhos e tipos em um arquivo, dependendo da extensão
+        if data['extensao'] == 'csv':
+            # Para CSV, escreve diretamente no buffer
+            buffer.write(','.join(headers).encode(encoding='utf-8-sig'))
+            buffer.write('\n'.encode(encoding='utf-8-sig'))
+            buffer.write(','.join(types).encode(encoding='utf-8-sig'))
+            buffer.seek(0) # Volta ao início do buffer para ler o conteúdo na resposta
+        elif data['extensao'] in ['xls', 'xlsx']:
+            # Para Excel, usa o Pandas para escrever
+            df = pd.DataFrame([types], columns=headers)
+            df.to_excel(buffer, index=False, engine='openpyxl')
+            buffer.seek(0) # Volta ao início do buffer para ler o conteúdo na resposta
+        else:
+            return "Extensão não suportada", 400
+
+        buffer.seek(0)
+
+        # Retorna o arquivo
+        return send_file(buffer, as_attachment=True, download_name=f"file.{data['extensao']}")
+
+    except ValueError as ve:  # Catch only ValueError
+        return {"mensagem": str(ve)}, 400  # Return a client error on bad request
+    except Exception as e:  # Catch all other exceptions
+        return {"mensagem": f"Erro ao gerar template de download: {str(e)}"}, 500  # Return a server error
+    
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

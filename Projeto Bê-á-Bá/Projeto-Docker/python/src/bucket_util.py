@@ -3,6 +3,7 @@ import pandas as pd
 import os
 import psycopg2
 import sys
+import io
 from google.cloud import storage
 
 #! Documentar melhor as funções com docstrings detalhadas
