@@ -171,8 +171,8 @@ async function renderizarUsuarios() {
         campoUsuarios.innerHTML += `
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div class="card-text" style="max-width: 268px">
-                    <h5 class="card-title"># ${usuario.id} ${usuario.nome} ${usuario.sobrenome}</h5>
-                    <p class="card-text">✉️ ${usuario.email} <br> 📱 ${usuario.telefone}</p>
+                    <h5 class="card-title"># ${usuario.id} ${usuario.nome || ""} ${usuario.sobrenome || ""}</h5>
+                    <p class="card-text">✉️ ${usuario.email} <br> 📱 ${usuario.telefone || ""}</p>
                 </div>
                 <div class="card-options d-flex gap-1 align-items-center">
                     <div class="form-check form-control-lg mb-0 px-2">
