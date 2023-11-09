@@ -1,0 +1,9 @@
+{
+    "service": "gmail",
+    "host": "smtp.gmail.com",
+    "port": 465,
+    "auth": {
+        "user": "vallidator.app@gmail.com",
+        "pass": "rxdf evlk iudi wrun"
+    }
+}

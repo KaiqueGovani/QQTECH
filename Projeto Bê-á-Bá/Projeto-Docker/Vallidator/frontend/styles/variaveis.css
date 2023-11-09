@@ -266,3 +266,7 @@
     font-family: Inter;
     text-align: center;
 }
+
+.toast-body {
+    color: white;
+}
