@@ -2,9 +2,9 @@ from bucket_util import *
 
 
 filedir = "uploads/"  # ! em prod seria uploads/
-filename = "relatório-pessoal_2023-11-05_19-17-54.csv"
-id_template = 2
+filename = "relatório-pessoal_data_tipo_texto_2023-11-10_14-34-34.xls"
+id_template = 53
 
 
-upload_blob(pegar_nome_bucket(), filedir + filename, filename)
+validar_arquivo(filedir + filename, id_template)
 
