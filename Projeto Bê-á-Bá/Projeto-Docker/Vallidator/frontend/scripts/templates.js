@@ -48,7 +48,7 @@ async function popularTemplates() {
             campoTemplates.innerHTML += `
                 <div class="card-body d-flex justify-content-between align-items-center">
                     <div class="card-text">
-                        <h5 class="card-title"># ${template.id} ${template.nome} - ${template.extensao}</h5>
+                        <h5 class="card-title"># ${template.id} ${template.nome} - ${template.extensao.toUpperCase()}</h5>
                         <p class="card-text">Criado por ${template.nome_criador} - ID: ${template.id_criador}<br>Criado em ${new Date(template.data_criacao).toLocaleDateString("pt-BR")}</p>
                     </div>
                     
@@ -64,7 +64,7 @@ async function popularTemplates() {
                                 <span>Download</span>
                                 <i style="font-size: 20px;" class="fa-solid fa-download"></i>
                                 </a>
-                                <a href="#" class="btn btn-light d-flex coluna-responsiva uploadArquivoBtn" onclick="uploadArquivoModal(${template.id});">
+                                <a href="#" class="btn btn-light d-flex coluna-responsiva uploadArquivoBtn" onclick="uploadArquivoModal(event, ${template.id});">
                                 <span>Utilizar Template</span>
                                 <i style="font-size: 20px;" class="fa-solid fa-folder"></i>
                                 </a>

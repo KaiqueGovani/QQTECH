@@ -279,9 +279,15 @@ async function enviarArquivo(id_template) {
     }
 }
 
-function uploadArquivoModal(id_template) {
+function uploadArquivoModal(event, id_template) {
+    const btn = event.target;
+    const templateNome = btn.closest('.card-body').querySelector('h5').innerText;
+    const templateUsado = document.getElementById("templateUsado");
+    templateUsado.innerHTML = `Utilizando o template: ${templateNome} `;
+
     const uploadModal = new bootstrap.Modal(document.getElementById("uploadModal"));
     const uploadButton = document.getElementById("uploadButton");
+
 
     uploadButton.onclick = () => enviarArquivo(id_template);
 
