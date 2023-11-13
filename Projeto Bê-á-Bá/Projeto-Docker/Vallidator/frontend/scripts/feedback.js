@@ -1,6 +1,14 @@
 //Função de mostrar um Modal de Feedback
-function showFeedbackModal(title, response, additionalInfo, iconURL) {
-    const feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
+function showFeedbackModal(title, response, additionalInfo, iconURL, isLoading = false) {
+    // Fecha o modal anterior
+    let feedbackModal = document.getElementById("feedbackModal");
+    const feedbackModalBS = bootstrap.Modal.getInstance(feedbackModal);
+    if (feedbackModalBS) {
+        feedbackModalBS.hide();
+    }
+
+
+    feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
     const feedbackModalLabel = document.getElementById("feedbackModalLabel");
     const feedbackModalResponse = document.getElementById("feedbackModalResponse");
     const feedbackModalP = document.getElementById("feedbackModalP");
@@ -12,7 +20,11 @@ function showFeedbackModal(title, response, additionalInfo, iconURL) {
     feedbackModalP.innerText = additionalInfo;
 
     // Seta o ícone (pode ser um URL ou um elemento de Icone)
-    if (iconURL) {
+    if (isLoading) {
+        feedbackModalIcon.innerHTML = `<div class="spinner-border text-success" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                       </div>`;
+    } else if (iconURL) {
         feedbackModalIcon.innerHTML = `<img src="${iconURL}" alt="Icon">`;
     } else {
         feedbackModalIcon.innerHTML = '';

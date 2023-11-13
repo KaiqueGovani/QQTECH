@@ -47,30 +47,6 @@ async function obterPermissao() {
     }
 }
 
-function downloadEmptyCSV() { // ! Função Placeholder
-    // Create a data URI for an empty CSV content
-    const csvContent = "data:text/csv;charset=utf-8,";
-    // Create a Blob containing the CSV content
-    const blob = new Blob([csvContent], {
-        type: "text/csv"
-    });
-    // Create a URL for the Blob
-    const url = window.URL.createObjectURL(blob);
-
-    // Create a temporary <a> element to trigger the download
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "empty.csv"; // File name
-    document.body.appendChild(a);
-
-    // Trigger the click event on the <a> element
-    a.click();
-
-    // Clean up: remove the <a> element and revoke the URL
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-}
-
 async function downloadTemplate(template_id, templates) {
     try {
         const template = templates.find(template => template.id == template_id);
@@ -238,6 +214,9 @@ function resetarForm() {
 
 async function enviarArquivo(id_template) {
     try {
+        // Mostra o modal de carregamento
+        showFeedbackModal("Enviando Arquivo!", "Enviando para o servidor.", "Aguarde...", "../icons/clock.png", true);
+
         const formUploadFile = document.getElementById("formUploadFile"); // ! resetar form
         const fileInput = document.getElementById("templateFile");
         const file = fileInput.files[0];
@@ -289,7 +268,7 @@ function uploadArquivoModal(event, id_template) {
     const uploadButton = document.getElementById("uploadButton");
 
 
-    uploadButton.onclick = () => enviarArquivo(id_template);
+    uploadButton.onclick = async () => await enviarArquivo(id_template);
 
 
     uploadModal.show();

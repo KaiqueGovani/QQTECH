@@ -52,7 +52,7 @@ def validar():
                 # Realiza o upload do arquivo para o bucket caso o bucket exista
                 if (pegar_nome_bucket()):
                     try :
-                        upload_blob(pegar_nome_bucket(), filedir + file.filename, file.filename)
+                        upload_blob(pegar_nome_bucket(), filedir + file.filename, file.filename, "teste")
                         pass
                     except Exception as error:
                         print(error.args[0]) 
