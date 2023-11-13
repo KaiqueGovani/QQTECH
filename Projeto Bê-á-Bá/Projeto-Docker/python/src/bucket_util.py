@@ -281,7 +281,7 @@ def verificar_dados(df, campos):
         raise Exception("Erro ao verificar dados: " + error.args[0])
 
 
-def validar_arquivo(filepath, id_template):
+def validar_arquivo(filepath, id_template, depth = 0):
     """Executa uma série de verificações em um arquivo, incluindo verificar a extensão, o nome das colunas e os dados."""
 
     try:
@@ -304,7 +304,12 @@ def validar_arquivo(filepath, id_template):
 
         verificar_extensão(filepath, extensao)
         verificar_nome_colunas(df, campos)
-        verificar_dados(df, campos)
+        
+        if (depth == 1):
+            verificar_dados(df, campos)
+        else:
+            converte_tipos_dataframe(df, campos)
+    
     except Exception as error:
         # print("Erro ao verificar arquivo: " + error.args[0]) # ! Remover
         raise Exception("Erro ao verificar arquivo: " + error.args[0])
@@ -342,7 +347,7 @@ def tenta_converter_com_pandas(valor, tipo):
         return False
 
 
-def upload_blob(bucket_name, source_file_name, destination_blob_name):
+def upload_blob(bucket_name, source_file_name, destination_blob_name, save_path = None):
     """Uploada um arquivo para o bucket."""
     # The ID of your GCS bucket
     # bucket_name = "your-bucket-name"
@@ -353,6 +358,8 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
 
     storage_client = storage.Client.from_service_account_json("../config/credentials.json")
     bucket = storage_client.bucket(bucket_name)
+    if (save_path):
+        destination_blob_name = save_path + '/' + destination_blob_name
     blob = bucket.blob(destination_blob_name)
 
     blob.upload_from_filename(source_file_name)
