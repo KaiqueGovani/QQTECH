@@ -102,7 +102,7 @@ function atualizarInputs(n) { // !
             <label for="inputNomeCampo${i}" class="form-label">Nome do Campo # ${i}:<span>*</span></label>
             <input type="text" class="form-control" id="inputNomeCampo${i}">
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-4 mb-3">
             <label for="inputTipoCampo${i}" class="form-label">Tipo do Campo # ${i}:*</label>
             <select type="text" class="form-control form-select" id="inputTipoCampo${i}" required>
                 <option value="1">Texto</option>
@@ -112,6 +112,22 @@ function atualizarInputs(n) { // !
                 <option value="5">Booleano</option>
             </select>
         </div>
+        <div class="col-md-2 mb-3">
+            <div class="d-flex flex-column align-items-center gap-1">
+                <div>
+                    <label class="form-check-label" for="inputAnulavelCampo${i}">
+                        Anulável 
+                    </label>
+                    <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-html="true"
+                    data-bs-title="Define se podem haver registros sem valores/nulos nessa coluna"></i>
+                    <br>
+                </div>
+                <div class="mt-2">
+                    <input class="mx-2 form-check-input" type="checkbox" value="" id="inputAnulavelCampo${i}">
+                </div>
+            </div>
+        </div>
+        
         `
     }
 }
@@ -130,12 +146,13 @@ function getFormData() {
     for (let i = 1; i <= nCampos; i++) {
         const nome_campo = document.getElementById(`inputNomeCampo${i}`).value;
         const id_tipo = document.getElementById(`inputTipoCampo${i}`).value;
+        const anulavel = document.getElementById(`inputAnulavelCampo${i}`).checked;
 
         campos.push({
             ordem: i,
             nome_campo: nome_campo,
             id_tipo: id_tipo,
-            anulavel: false // TODO: Implementar
+            anulavel: anulavel
         });
     }
 

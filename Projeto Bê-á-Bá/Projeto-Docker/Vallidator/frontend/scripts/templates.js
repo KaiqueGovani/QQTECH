@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
     await popularTemplates();
-    await sincronizarPermissao();
     await atualizarCaminhos();
 });
 
@@ -90,6 +89,7 @@ async function popularTemplates() {
             }));
 
         updateFooter(templates.length);
+        await sincronizarPermissao();
     } catch (error) {
         console.error("Erro ao popular os templates: " + error.message);
     }

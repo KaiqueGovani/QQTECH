@@ -6,7 +6,12 @@ function verificarPermissao(perm = 'admin'){
         if (req.permissao === 'admin') {
             next();
         } else if (!req.permissao.includes(perm)) {
-            res.status(403).json({ mensagem: 'Você não tem permissão para acessar este recurso' });
+            if (req.method === 'GET') {
+                console.log("Sem permissão, Redirecionando para /login");
+                res.redirect('/login');
+            } else {
+                res.status(403).json({ mensagem: 'Você não tem permissão para acessar este recurso' });
+            }
         } else {
             next();
         }

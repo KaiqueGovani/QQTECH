@@ -163,13 +163,28 @@ function modalTemplate(id, templates) { //Função para ver o template que será
                     <label for="inputNomeCampo${index + 1}" class="form-label">Nome do Campo # ${index + 1}:*</label>
                     <input type="text" class="form-control" id="inputNomeCampo${index + 1}" value="${template.campos[index].nome_campo}">
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-4 mb-3">
                     <label for="inputTipoCampo${index + 1}" class="form-label">Tipo do Campo # ${index + 1}:*</label>
                     <select type="text" class="form-control form-select" id="inputTipoCampo${index + 1}" required>
                         ${Array.from({ length: Object.keys(typeMapping).length }, (_, jndex) => `
                             <option value="${jndex + 1}" ${(template.campos[index].id_tipo == jndex + 1 ? 'selected' : '')}>${typeMapping[jndex + 1]}</option>`)
                     .join('')}
                     </select>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <div class="d-flex flex-column align-items-center gap-1">
+                        <div>
+                            <label class="form-check-label" for="inputAnulavelCampo${index + 1}">
+                                Anulável 
+                            </label>
+                            <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-html="true"
+                            data-bs-title="Define se podem haver registros sem valores/nulos nessa coluna"></i>
+                            <br>
+                        </div>
+                        <div class="mt-2">
+                            <input class="mx-2 form-check-input" type="checkbox" ${template.campos[index].anulavel ? 'checked' : ''} id="inputAnulavelCampo${index + 1}">
+                        </div>
+                    </div>
                 </div>`)
             .join('')}
             </div>
