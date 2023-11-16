@@ -259,6 +259,13 @@ def verificar_dados(df, campos):
                 dtype = type(data)
                 campo_type = typeMap[campos[j]["id_tipo"]][0]
                 campo_dtype = typeMap[campos[j]["id_tipo"]][1]
+                
+                # Verifica anuláveis
+                if not campos[j]["anulavel"]:
+                    if pd.isnull(data):
+                        raise Exception(
+                            f"Coluna '{campos[j]['nome_campo']}' não deve conter valores vazios/nulos"
+                        )
 
                 if not tenta_converter_com_pandas(
                     data, campo_dtype
@@ -317,25 +324,36 @@ def validar_arquivo(filepath, id_template, depth = 0):
 
 def converte_tipos_dataframe(df, campos):
     """Converte os tipos do dataframe para os tipos do banco"""
-
+    print(campos)
+    print(df)
     try:
         typeMap = obter_tipos_map()
         colunas = [campo["nome_campo"] for campo in campos]  # Obter os nomes dos campos
-        colunas_dtypes = [
-            typeMap[campo["id_tipo"]][1] for campo in campos
-        ]  # Obter os data-tipos dos campos
+        colunas_dtypes = [typeMap[campo["id_tipo"]][1] for campo in campos]  # Obter os data-tipos dos campos
+        anulaveis = [campo["anulavel"] for campo in campos]  # Obter os anuláveis dos campos
 
         dict_dtypes = dict(
-            zip(colunas, colunas_dtypes)
+            zip(colunas, tuple(zip(colunas_dtypes, anulaveis)))
         )  # Dicionário com os nomes e tipos dos campos
 
-        df = df.astype(dict_dtypes)  # Converter os tipos do dataframe
+        print(dict_dtypes)
+        for coluna, info in dict_dtypes.items():
+            tipo = info[0]
+            anulavel = info[1]
+            if not anulavel:
+                if df[coluna].isnull().values.any():
+                    raise Exception(f"Coluna '{coluna}' não deve conter valores vazios/nulos")    
+            try:
+                df[coluna] = df[coluna].astype(tipo) # Converte os tipos das colunas
+            except Exception as error:
+                raise Exception(f"Erro ao converter coluna '{coluna}' para o tipo '{tipo}'")
+        
 
-        # print("converteTiposDataframe OK")  # ! Remover
+        print("converteTiposDataframe OK")  # ! Remover
         return df
 
     except Exception as error:
-        raise Exception("Erro ao converter tipos do dataframe")
+        raise Exception("Erro ao converter tipos do dataframe. " + error.args[0])
 
 
 def tenta_converter_com_pandas(valor, tipo):

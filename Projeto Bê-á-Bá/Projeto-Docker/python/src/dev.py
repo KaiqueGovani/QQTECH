@@ -2,8 +2,8 @@ from bucket_util import *
 
 
 filedir = "uploads/"  # ! em prod seria uploads/
-filename = "relatório-pessoal_data_tipo_texto_2023-11-10_14-34-34.xls"
-id_template = 53
+filename = "clientes_incorreto_valor_faltando_2023-11-16_16-46-52.csv"
+id_template = 2
 
 
 validar_arquivo(filedir + filename, id_template)
