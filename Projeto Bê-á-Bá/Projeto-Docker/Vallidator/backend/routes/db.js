@@ -25,7 +25,7 @@ router.get('/setup', (req, res) => {
     CREATE TABLE public.Template (
         id serial PRIMARY KEY,
         nome varchar UNIQUE NOT NULL,
-        id_criador integer REFERENCES public.Usuario(id) NOT NULL,
+        id_criador integer REFERENCES public.Usuario(id) ON DELETE CASCADE NOT NULL,
         data_criacao TIMESTAMP NOT NULL,
         extensao varchar NOT NULL,
         status BOOLEAN
@@ -42,8 +42,8 @@ router.get('/setup', (req, res) => {
     
     CREATE TABLE public.Upload (
         id serial PRIMARY KEY,
-        id_template integer REFERENCES public.Template(id) NOT NULL,
-        id_usuario integer REFERENCES public.Usuario(id) NOT NULL,
+        id_template integer REFERENCES public.Template(id) ON DELETE CASCADE NOT NULL,
+        id_usuario integer REFERENCES public.Usuario(id) ON DELETE CASCADE NOT NULL,
         nome varchar NOT NULL,
         data TIMESTAMP NOT NULL,
         path varchar NOT NULL,
