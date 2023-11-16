@@ -44,7 +44,7 @@ async function popularTemplates() {
                 <div class="form-check-label" style="line-height: 20px">Status: Aguardando Revisão</div>   
                 </div>
                 <div class="d-flex gap-4 card-buttons"> 
-                <a style="width: 300px; justify-content: center; background-color: #fffaaa" class="btn btn-warning d-flex coluna-responsiva" data-bs-toggle="modal"
+                <a style="width: 320px; justify-content: center; background-color: #fffaaa" class="btn btn-warning d-flex coluna-responsiva" data-bs-toggle="modal"
                 data-bs-target="#templateModal" id="editarTemplateBtn" data-template-id="${template.id}">
                 <span>Verificar Template</span>
                 <i style="font-size: 20px;" class="fa-solid fa-square-pen"></i>
