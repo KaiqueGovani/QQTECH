@@ -6,9 +6,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     for (let template of templates) {
         template = new Template(template);
         console.log(template);
-    }
+    }// ? Desnecessário
 
     await popularTemplates();
+    await setupSelectCaminho();
 });
 
 async function fetchTemplates() {
@@ -274,4 +275,41 @@ async function deletarTemplate(id) {
     } finally {
         await popularTemplates();
     }
+}
+
+async function setupSelectCaminho() {
+    let input = document.getElementById('inputNovoCaminho');
+    const select = document.getElementById('caminhoEnvio');
+
+    await atualizarCaminhos();
+
+    select.add(new Option('+ Adicionar novo caminho', 'addNovo'));
+
+    document.getElementById('caminhoEnvio').addEventListener('input', function () {
+        if (this.value === 'addNovo') {
+            this.classList.add('d-none');
+            input.classList.remove('d-none');
+            input.focus();
+        }
+    });
+
+    input.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (this.value === '' || this.value === 'addNovo' || this.value.includes('/')) {
+                select.value = select.options[0].value;
+                showFeedbackToast('Caminho Inválido', 'Nome de caminho não permitido', 'danger', '../icons/ban.png');
+            }
+            else {
+                input.value = input.value.trim();
+                const novaOpcao = new Option(input.value, input.value);
+                select.add(novaOpcao, select.options[select.options.length - 1]);
+                select.value = novaOpcao.value;
+                input.value = '';
+                showFeedbackToast('Caminho Adicionado', 'Caminho adicionado com sucesso, faça um upload para adicionar ao banco de dados!', 'success', '../icons/badge-check.png');
+            }
+            input.classList.add('d-none');
+            select.classList.remove('d-none');
+        }
+    });
 }

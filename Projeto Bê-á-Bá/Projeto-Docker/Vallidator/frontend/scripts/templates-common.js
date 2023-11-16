@@ -227,10 +227,16 @@ async function enviarArquivo(id_template) {
             throw new Error("Nenhum arquivo selecionado");
         }
 
+        const caminho = document.getElementById("caminhoEnvio").value;
+        let depth = document.getElementById("depth").checked;
+        depth ? depth = 1 : depth = 0;
+
         // Cria um FormData e adiciona o arquivo
         const formData = new FormData();
         formData.append("uploadedFile", file);
         formData.append("id_template", id_template);
+        formData.append("caminho", caminho);
+        formData.append("depth", depth);
 
         formData.forEach((value, key) => {
             console.log(key + ' = ' + value);
@@ -272,4 +278,28 @@ function uploadArquivoModal(event, id_template) {
 
 
     uploadModal.show();
+}
+
+async function atualizarCaminhos(){
+    try {
+        const response = await fetch('/arquivos/caminhos');
+        const caminhos = await response.json();
+
+        const caminhoEnvio = document.getElementById("caminhoEnvio");
+        caminhoEnvio.innerHTML = "";
+
+        for (let caminho of caminhos) {
+            let value = caminho.path.replace('/', '');
+            let path = caminho.path.replace('/', '');
+            if (caminho.path == "/") {
+                path = "Caminho Padrão"
+                value = ""
+            };
+            caminhoEnvio.innerHTML += `
+                <option value="${value}">${path}</option>
+            `
+        }
+    } catch (error) {
+        console.error('Erro ao carregar os caminhos:', error);
+    }
 }

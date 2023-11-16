@@ -75,7 +75,7 @@
 
     <!-- Modal de Upload de template -->
     <div class="modal fade" id="templateModal" tabindex="-1" data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Informações do Template</h5>
@@ -106,18 +106,16 @@
                         </div>
                         <div class="row gy-3">
                             <div class="col-6">
-                                <label for="caminho" class="form-label">Escolha o caminho para salvar o arquivo:</label>
+                                <label for="caminhoEnvio" class="form-label">Escolha o caminho para salvar o arquivo:</label>
                                 <select class="form-select" name="caminho" id="caminhoEnvio">
-                                    <option selected value="0">Caminho padrão</option>
-                                    <option value="1">Caminho1</option>
-                                    <option value="2">Caminho2</option>
-                                    <option value="3">Caminho3</option>
+                                    <!-- ? Atualizado Dinamicamente -->
                                 </select>
+                                <input type="text" id="inputNovoCaminho" class="d-none form-control" placeholder="Enter para confirmar">
                             </div>
                             <div class="col-6 d-flex justify-content-end">
                                 <div class="form-check d-flex align-items-center gap-1 mt-4 p-3">
-                                  <input class="form-check-input mt-0" type="checkbox" value="false" id="">
-                                  <label class="form-check-label" for="">
+                                  <input class="form-check-input mt-0" type="checkbox" value="false" id="depth" name="depth">
+                                  <label class="form-check-label" for="depth">
                                     Validação profunda
                                   </label>
                                   <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Validação profunda procura por valores incorretos em cada linha e coluna da tabela. <b>Pode demorar mais tempo!</b>"></i>

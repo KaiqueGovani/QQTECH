@@ -40,6 +40,12 @@ def validar():
                 "mensagem": f"Extensão não permitida: {file.filename.rsplit('.', 1)[1].lower()}"
             }, 400
 
+        caminho = request.form["caminho"] if "caminho" in request.form else None
+        depth = request.form["depth"] if "depth" in request.form else None
+        
+        app.logger.info(f"Caminho recebido: {caminho}")
+        app.logger.info(f"Depth recebido: {depth}")
+
         if file:  # verifica se o arquivo existe
             criar_pasta_uploads()  # cria a pasta de uploads caso não exista
             filedir = "uploads/"
@@ -47,12 +53,12 @@ def validar():
             salvar_uploads(file)
 
             try:
-                validar_arquivo(filedir + file.filename, request.form["id_template"])
+                validar_arquivo(filedir + file.filename, request.form["id_template"], depth)
 
                 # Realiza o upload do arquivo para o bucket caso o bucket exista
                 if (pegar_nome_bucket()):
                     try :
-                        upload_blob(pegar_nome_bucket(), filedir + file.filename, file.filename, "teste")
+                        upload_blob(pegar_nome_bucket(), filedir + file.filename, file.filename, caminho)
                         pass
                     except Exception as error:
                         print(error.args[0]) 

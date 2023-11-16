@@ -54,6 +54,15 @@ router.post('/validar', verificarPermissao('upload'), upload.single('uploadedFil
         return res.status(400).json({ mensagem: "ID do template não enviado!" });
     }
 
+    if (req.body.caminho === undefined) {
+        console.error("req.body.caminho é undefined!");
+        return res.status(400).json({ mensagem: "Caminho do template não enviado!" });
+    }
+
+    if (req.body.depth === undefined) {
+        console.error("req.body.depth é undefined!");
+        return res.status(400).json({ mensagem: "Profundidade do template não enviada!" });
+    }
 
     try {
         console.log("Enviando arquivo baseado em ", req.body.id_template, "por ", req.id);
@@ -61,7 +70,9 @@ router.post('/validar', verificarPermissao('upload'), upload.single('uploadedFil
         const form = new FormData();
         form.append('file', fs.createReadStream(req.file.path), req.file.filename);
         form.append('id_template', req.body.id_template);
-        form.append('id_criador', req.id);// ! Utilizar o id do usuario logado pelo token
+        form.append('id_criador', req.id);// ! Utilizando o id do usuario logado pelo token
+        form.append('caminho', req.body.caminho);
+        form.append('depth', req.body.depth);
 
         const response = await fetch('http://flask:5000/validar', {
             method: 'POST',
@@ -80,7 +91,7 @@ router.post('/validar', verificarPermissao('upload'), upload.single('uploadedFil
             try {
                 const arquivo = {
                     nome: req.file.filename,
-                    caminho: req.file.path,
+                    caminho: req.body.caminho + '/',
                     id_template: req.body.id_template,
                     id_criador: req.id,
                     tamanho_bytes: req.file.size
@@ -117,18 +128,18 @@ router.post('/validar', verificarPermissao('upload'), upload.single('uploadedFil
     }
 });
 
-router.get('/recentes', async (req, res) => {
+router.get('/recentes', verificarPermissao(), async (req, res) => {
     try {
         const query = "SELECT * FROM upload ORDER BY data DESC LIMIT 10;"
         const uploads = await pool.query(query);
         res.status(200).json(uploads.rows);
     } catch (error) {
         console.log(error);
-        res.status(500).json({ mensagem: 'Erro ao buscar templates recentes' });
+        res.status(500).json({ mensagem: 'Erro ao buscar uploads recentes' });
     }
 });
 
-router.get('/data', async (req, res) => {
+router.get('/data', verificarPermissao(), async (req, res) => {
     try {
         const query = "SELECT * FROM uploaddata;"
         const uploads = await pool.query(query);
@@ -137,6 +148,17 @@ router.get('/data', async (req, res) => {
         console.log(error);
         res.status(500).json({ mensagem: 'Erro ao buscar templates recentes' });
     }
+});
+
+router.get('/caminhos', async (req, res) => {
+    try {
+        const query = "SELECT DISTINCT path FROM upload ORDER BY path ASC;"
+        const caminhos = await pool.query(query);
+        res.status(200).json(caminhos.rows);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ mensagem: 'Erro ao buscar caminhos de arquivos' });    
+    }   
 });
 
 export default router;

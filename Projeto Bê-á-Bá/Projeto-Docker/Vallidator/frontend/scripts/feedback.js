@@ -6,38 +6,63 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //Função de mostrar um Modal de Feedback
 function showFeedbackModal(title, response, additionalInfo, iconURL, isLoading = false) {
-    // Fecha o modal anterior
-    let feedbackModal = document.getElementById("feedbackModal");
-    const feedbackModalBS = bootstrap.Modal.getInstance(feedbackModal);
-    if (feedbackModalBS) {
-        feedbackModalBS.hide();
-    }
+    // Pega o modal se 
+    let feedbackModalEl = document.getElementById("feedbackModal");
+    const modalAnterior = bootstrap.Modal.getInstance(feedbackModalEl);
+    const feedbackModal = modalAnterior || new bootstrap.Modal(feedbackModalEl);
 
+    if (modalAnterior) {
+        feedbackModal.hide();
 
-    feedbackModal = new bootstrap.Modal(document.getElementById("feedbackModal"));
-    const feedbackModalLabel = document.getElementById("feedbackModalLabel");
-    const feedbackModalResponse = document.getElementById("feedbackModalResponse");
-    const feedbackModalP = document.getElementById("feedbackModalP");
-    const feedbackModalIcon = document.getElementById("feedbackModalIcon");
+        setTimeout(() => {
+            const feedbackModalLabel = document.getElementById("feedbackModalLabel");
+            const feedbackModalResponse = document.getElementById("feedbackModalResponse");
+            const feedbackModalP = document.getElementById("feedbackModalP");
+            const feedbackModalIcon = document.getElementById("feedbackModalIcon");
 
-    // Seta o título, response e informação adicional
-    feedbackModalLabel.innerText = title;
-    feedbackModalResponse.innerText = response;
-    feedbackModalP.innerText = additionalInfo;
+            // Seta o título, response e informação adicional
+            feedbackModalLabel.innerText = title;
+            feedbackModalResponse.innerText = response;
+            feedbackModalP.innerText = additionalInfo;
 
-    // Seta o ícone (pode ser um URL ou um elemento de Icone)
-    if (isLoading) {
-        feedbackModalIcon.innerHTML = `<div class="spinner-border text-success" role="status">
-                                        <span class="visually-hidden">Loading...</span>
-                                       </div>`;
-    } else if (iconURL) {
-        feedbackModalIcon.innerHTML = `<img src="${iconURL}" alt="Icon">`;
+            // Seta o ícone (pode ser um URL ou um elemento de Icone)
+            if (isLoading) {
+                feedbackModalIcon.innerHTML = `<div class="spinner-border text-success" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                           </div>`;
+            } else if (iconURL) {
+                feedbackModalIcon.innerHTML = `<img src="${iconURL}" alt="Icon">`;
+            } else {
+                feedbackModalIcon.innerHTML = '';
+            }
+
+            feedbackModal.show();
+        }, 400) // Delay de 400ms para dar tempo do modal anterior fechar
     } else {
-        feedbackModalIcon.innerHTML = '';
-    }
+        const feedbackModalLabel = document.getElementById("feedbackModalLabel");
+        const feedbackModalResponse = document.getElementById("feedbackModalResponse");
+        const feedbackModalP = document.getElementById("feedbackModalP");
+        const feedbackModalIcon = document.getElementById("feedbackModalIcon");
 
-    // Mostra o modal
-    feedbackModal.show();
+        // Seta o título, response e informação adicional
+        feedbackModalLabel.innerText = title;
+        feedbackModalResponse.innerText = response;
+        feedbackModalP.innerText = additionalInfo;
+
+        // Seta o ícone (pode ser um URL ou um elemento de Icone)
+        if (isLoading) {
+            feedbackModalIcon.innerHTML = `<div class="spinner-border text-success" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                           </div>`;
+        } else if (iconURL) {
+            feedbackModalIcon.innerHTML = `<img src="${iconURL}" alt="Icon">`;
+        } else {
+            feedbackModalIcon.innerHTML = '';
+        }
+
+        // Mostra o modal
+        feedbackModal.show();
+    }
 }
 
 

@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
     await popularTemplates();
     await sincronizarPermissao();
+    await atualizarCaminhos();
 });
 
 async function sincronizarPermissao() {

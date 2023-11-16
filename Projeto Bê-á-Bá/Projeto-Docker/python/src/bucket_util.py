@@ -305,7 +305,7 @@ def validar_arquivo(filepath, id_template, depth = 0):
         verificar_extensão(filepath, extensao)
         verificar_nome_colunas(df, campos)
         
-        if (depth == 1):
+        if (int(depth) == 1):
             verificar_dados(df, campos)
         else:
             converte_tipos_dataframe(df, campos)
