@@ -40,7 +40,7 @@ async function obterPermissao() {
                 'Content-Type': 'application/json'
             }
         });
-        
+
         return perm.json();
     } catch (error) {
         console.error('Erro ao obter permissão:', error);
@@ -209,7 +209,7 @@ async function enviarTemplate() {
         console.error('Error:', error);
     }
     finally {
-        await popularTemplates();
+        await popularTemplates(await fetchTemplates());
     }
 }
 
@@ -297,7 +297,7 @@ function uploadArquivoModal(event, id_template) {
     uploadModal.show();
 }
 
-async function atualizarCaminhos(){
+async function atualizarCaminhos() {
     try {
         const response = await fetch('/arquivos/caminhos');
         const caminhos = await response.json();
@@ -319,4 +319,32 @@ async function atualizarCaminhos(){
     } catch (error) {
         console.error('Erro ao carregar os caminhos:', error);
     }
+}
+
+async function filtrarTemplates() {
+    const inputFiltro = document.getElementById("filtro");
+    const filtro = inputFiltro.value.toLowerCase();
+    const filterOp = document.getElementById("filterOp").value;
+    const templates = await fetchTemplates();
+
+    if (filtro == "") {
+        popularTemplates(templates);
+        return
+    }
+
+    const templatesFiltrados = templates.filter(template => {
+        if (filterOp == "nome") {
+            return template.nome.toLowerCase().includes(filtro);
+        } else if (filterOp == "criador") {
+            return template.nome_criador.toLowerCase().includes(filtro);
+        } else if (filterOp == "id") {
+            return template.id.toString().includes(filtro);
+        } else if (filterOp == "extensao") {
+            return template.extensao.toLowerCase().includes(filtro);
+        }
+    });
+
+    showFeedbackToast("Filtro Aplicado!", `Filtrando por ${filterOp} contendo "${filtro}".`, "success", "../icons/badge-check.png");
+
+    popularTemplates(templatesFiltrados);
 }

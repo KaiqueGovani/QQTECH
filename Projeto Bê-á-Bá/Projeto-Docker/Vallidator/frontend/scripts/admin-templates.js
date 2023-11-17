@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log(template);
     }// ? Desnecessário
 
-    await popularTemplates();
+    await popularTemplates(templates);
     await setupSelectCaminho();
 });
 
@@ -24,8 +24,7 @@ async function fetchTemplates() {
 
 const campoTemplates = document.getElementById("cb-templates");
 
-async function popularTemplates() {
-    const templates = await fetchTemplates();
+async function popularTemplates(templates) {
     campoTemplates.innerHTML = "";
 
     try {
@@ -241,7 +240,7 @@ async function alterarTemplate(id) {
     } catch (error) {
         console.error('Error:', error);
     } finally {
-        await popularTemplates();
+        await popularTemplates(await fetchTemplates());
     }
 }
 
@@ -288,7 +287,7 @@ async function deletarTemplate(id) {
     } catch (error) {
         console.log("Erro:", error);
     } finally {
-        await popularTemplates();
+        await popularTemplates(await fetchTemplates());
     }
 }
 

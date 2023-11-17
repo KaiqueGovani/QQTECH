@@ -51,13 +51,34 @@
         <div class="page-body mx-5">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <div>
-                        Todos os Templates
-                    </div>
-                    <div>
-                        <a href="#" class="btn btn-primary card-header-btn" data-bs-toggle="modal"
-                            data-bs-target="#templateModal" onclick="modalTemplate(0); resetarForm();">Adicionar Novo
-                            Template</a>
+                    <div class="container">
+                        <div class="row gx-3 gy-1 align-items-center justify-content-between">
+                            <div class="col-md-3 col-12 p-0">
+                                Todos os Templates
+                            </div>
+                            <div class="col-md-6 col-12 ms-auto d-flex justify-content-between align-items-center">
+                                <div class="input-group" style="height: fit-content;">
+                                    <input type="text" class="form-control" id="filtro" name="filtro"
+                                        placeholder="Filtrar templates..." required onkeypress="if (event.key === 'Enter' || event.keyCode === 13) filtrarTemplates()">
+                                    <select class="form-select" name="filterOp" id="filterOp" style="max-width: 120px;">
+                                        <option value="nome" selected>Nome</option>
+                                        <option value="id">ID</option>
+                                        <option value="criador">Criador</option>
+                                        <option value="extensao">Extensão</option>
+                                    </select>
+                                    <span id="icone-filtro" onclick="filtrarTemplates();" class="input-group-text"
+                                        style="cursor: pointer;">
+                                        <i class="fa-solid fa-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-12 col-3 ms-auto p-0 text-end">
+                                <a href="#" class="btn btn-primary card-header-btn" data-bs-toggle="modal"
+                                    data-bs-target="#templateModal" onclick="modalTemplate(0); resetarForm();">Adicionar
+                                    Novo
+                                    Template</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -106,19 +127,23 @@
                         </div>
                         <div class="row gy-3">
                             <div class="col-6">
-                                <label for="caminhoEnvio" class="form-label">Escolha o caminho para salvar o arquivo:</label>
+                                <label for="caminhoEnvio" class="form-label">Escolha o caminho para salvar o
+                                    arquivo:</label>
                                 <select class="form-select" name="caminho" id="caminhoEnvio">
                                     <!-- ? Atualizado Dinamicamente -->
                                 </select>
-                                <input type="text" id="inputNovoCaminho" class="d-none form-control" placeholder="Enter para confirmar">
+                                <input type="text" id="inputNovoCaminho" class="d-none form-control"
+                                    placeholder="Enter para confirmar">
                             </div>
                             <div class="col-6 d-flex justify-content-end">
                                 <div class="form-check d-flex align-items-center gap-1 mt-4 p-3">
-                                  <input class="form-check-input mt-0" type="checkbox" value="false" id="depth" name="depth">
-                                  <label class="form-check-label" for="depth">
-                                    Validação profunda
-                                  </label>
-                                  <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="Validação profunda procura por valores incorretos em cada linha e coluna da tabela. <b>Pode demorar mais tempo!</b>"></i>
+                                    <input class="form-check-input mt-0" type="checkbox" value="false" id="depth"
+                                        name="depth">
+                                    <label class="form-check-label" for="depth">
+                                        Validação profunda
+                                    </label>
+                                    <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-html="true"
+                                        data-bs-title="Validação profunda procura por valores incorretos em cada linha e coluna da tabela. <b>Pode demorar mais tempo!</b>"></i>
                                 </div>
                             </div>
                         </div>

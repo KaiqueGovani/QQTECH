@@ -49,12 +49,34 @@
         <div class="page-body mx-5">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <div>
-                        Templates Ativos
-                    </div>
-                    <div id="adicionarTemplateBtn">
-                        <a href="#" class="btn btn-primary card-header-btn" data-bs-toggle="modal"
-                            data-bs-target="#templateModal">Adicionar Novo Template</a>
+                    <div class="container">
+                        <div class="row gx-3 gy-1 align-items-center justify-content-between">
+                            <div class="col-md-3 col-12 p-0">
+                                Todos os Templates
+                            </div>
+                            <div class="col-md-6 col-12 ms-auto d-flex justify-content-between align-items-center">
+                                <div class="input-group" style="height: fit-content;">
+                                    <input type="text" class="form-control" id="filtro" name="filtro"
+                                        placeholder="Filtrar templates..." required onkeypress="if (event.key === 'Enter' || event.keyCode === 13) filtrarTemplates()">
+                                    <select class="form-select" name="filterOp" id="filterOp" style="max-width: 120px;">
+                                        <option value="nome" selected>Nome</option>
+                                        <option value="id">ID</option>
+                                        <option value="criador">Criador</option>
+                                        <option value="extensao">Extensão</option>
+                                    </select>
+                                    <span id="icone-filtro" onclick="filtrarTemplates();" class="input-group-text"
+                                        style="cursor: pointer;">
+                                        <i class="fa-solid fa-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="adicionarTemplateBtn" class="col-md-3 col-12 col-3 ms-auto p-0 text-end">
+                                <a href="#" class="btn btn-primary card-header-btn" data-bs-toggle="modal"
+                                    data-bs-target="#templateModal" onclick="modalTemplate(0); resetarForm();">Adicionar
+                                    Novo
+                                    Template</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

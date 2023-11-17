@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     await verificarDados();
-    await popularTemplates();
+    await popularTemplates(await fetchTemplates());
     await atualizarCaminhos();
 });
 
@@ -39,8 +39,7 @@ async function fetchTemplates() {
 
 const campoTemplates = document.getElementById("cb-templates");
 
-async function popularTemplates() {
-    const templates = await fetchTemplates();
+async function popularTemplates(templates) {
     campoTemplates.innerHTML = "";
 
     try {
