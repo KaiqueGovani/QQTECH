@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    await verificarDados();
     await popularTemplates();
     await atualizarCaminhos();
 });
@@ -95,9 +96,13 @@ async function popularTemplates() {
     }
 }
 
+async function verificarDados() {
+    const response = await fetch('usuarios/dados');
+    const dados = await response.json();
 
-
-
-
-
+    // verifica se algum valor dos dados é nulo ou "" e redireciona para minha-conta
+    if (Object.values(dados).some(value => value == null || value == "")) {
+        window.location.href = "/minha-conta";
+    }
+}
 

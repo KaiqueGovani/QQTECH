@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', async function () {
+    await verificarDados();
     await fetchUserData();
 });
 
@@ -69,10 +70,21 @@ async function atualizarDadosUsuario() {
 
         const data = await response.json();
 
-        alert(data.mensagem);
+        showFeedbackToast('Dados atualizados', 'Seus dados foram atualizados com sucesso', 'success', '../icons/badge-check.png');
 
         await fetchUserData();
     } catch (error) {
         console.log("Erro ao atualizar dados de usuário:", error);
     }
 }
+
+async function verificarDados() {
+    const response = await fetch('usuarios/dados');
+    const dados = await response.json();
+
+    // verifica se algum valor dos dados é nulo ou "" e redireciona para minha-conta
+    if (Object.values(dados).some(value => value == null || value == "")) {
+        showFeedbackToast('Dados incompletos', 'Por favor, preencha seus dados antes de continuar', 'danger', '../icons/clock.png');
+    }
+}
+

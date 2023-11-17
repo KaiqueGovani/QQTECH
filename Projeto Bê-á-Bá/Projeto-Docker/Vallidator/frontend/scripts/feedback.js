@@ -65,7 +65,7 @@ function showFeedbackModal(title, response, additionalInfo, iconURL, isLoading =
     }
 }
 
-
+//Função de mostrar um Toast de Feedback
 function showFeedbackToast(title, message, color = 'primary', icon = '') {
     const feedbackToast = document.getElementById("feedbackToast");
     const feedbackToastTitle = document.getElementById("feedbackToastTitle");
