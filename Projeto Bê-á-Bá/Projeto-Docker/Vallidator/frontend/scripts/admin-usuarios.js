@@ -10,7 +10,7 @@ class Usuario {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    await renderizarUsuarios();
+    await renderizarUsuarios(await fetchUsuarios());
 });
 
 async function fetchUsuarios() {
@@ -28,10 +28,7 @@ async function fetchUsuarios() {
     }
 }
 
-async function renderizarUsuarios() {
-    //Fazer a requisição de todos os usuários
-    const usuarios = await fetchUsuarios();
-
+async function renderizarUsuarios(usuarios) {
     // ! Debug
     // for (const usuario of usuarios) {
     //     console.log(usuario);
@@ -284,7 +281,7 @@ async function enviarConvite(){
 
         form.reset();
          
-        await renderizarUsuarios();
+        await renderizarUsuarios(await fetchUsuarios());
 
     } catch(error) {
         console.error('Erro ao enviar convite: ', error);
@@ -343,7 +340,7 @@ async function editarUsuario(id) {
             throw new Error(data.mensagem);
         }
 
-        await renderizarUsuarios();
+        await renderizarUsuarios(await fetchUsuarios());
         
         const editarModal = document.getElementById("editarModal");
         const editarModalBS = bootstrap.Modal.getInstance(editarModal);
@@ -354,4 +351,30 @@ async function editarUsuario(id) {
     } catch(error) {
         console.error('Erro ao editar usuário: ', error);
     }
+}
+
+async function filtrarUsuarios() {
+    const inputFiltro = document.getElementById("filtro");
+    const filtro = inputFiltro.value.toLowerCase();
+    const filterOp = document.getElementById("filterOp").value;
+    const usuarios = await fetchUsuarios();
+
+    if (filtro == "") {
+        renderizarUsuarios(usuarios);
+        return
+    }
+
+    const usuariosFiltrados = usuarios.filter(usuario => {
+        if (filterOp == "nome") {
+            return (usuario.nome + " " + usuario.sobrenome).toLowerCase().includes(filtro);
+        } else if (filterOp == "email") {
+            return usuario.email.toLowerCase().includes(filtro);
+        } else if (filterOp == "id") {
+            return usuario.id.toString().includes(filtro);
+        }
+    });
+    
+    showFeedbackToast("Filtro Aplicado!", `Filtrando por ${filterOp} contendo "${filtro}".`, "success", "../icons/badge-check.png");
+
+    renderizarUsuarios(usuariosFiltrados);
 }
