@@ -280,6 +280,10 @@ async function deletarTemplate(id) {
     console.log(`Deletando template ${id}`);
 
     try {
+        if (!(await showConfirmationModal("Deletar Template", "Tem certeza que deseja deletar este template? <br>Isso irá <b>deletar todos os dados relacionados a ele!</b> (uploads, etc)."))) {
+            return;
+        }
+
         const response = await fetch(`/templates/deletar/${id}`, {
             method: 'DELETE',
         })
