@@ -94,9 +94,9 @@ def download_template():
         # Escreve os cabeçalhos e tipos em um arquivo, dependendo da extensão
         if data['extensao'] == 'csv':
             # Para CSV, escreve diretamente no buffer
-            buffer.write(','.join(headers).encode(encoding='utf-8-sig'))
-            buffer.write('\n'.encode(encoding='utf-8-sig'))
-            buffer.write(','.join(types).encode(encoding='utf-8-sig'))
+            buffer.write(','.join(headers).encode(encoding='utf-8'))
+            buffer.write('\n'.encode(encoding='utf-8'))
+            buffer.write(','.join(types).encode(encoding='utf-8'))
             buffer.seek(0) # Volta ao início do buffer para ler o conteúdo na resposta
         elif data['extensao'] in ['xls', 'xlsx']:
             # Para Excel, usa o Pandas para escrever

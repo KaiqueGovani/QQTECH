@@ -208,9 +208,8 @@ def verificar_nome_colunas(df, campos) -> str:
 
         # Verificar se o nome das colunas é igual ao nome dos campos
         for i in range(len(campos)):
-            if (
-                campos[i]["nome_campo"] != df.columns.values[i]
-            ):  # Se o nome dos campos for diferente do esperado
+            # Se o nome dos campos for diferente do esperado
+            if (campos[i]["nome_campo"] != df.columns.values[i]):  
                 raise Exception(
                     f"Nome da coluna '{df.columns.values[i]}' é diferente do esperado '{campos[i]['nome_campo']}'"
                 )
