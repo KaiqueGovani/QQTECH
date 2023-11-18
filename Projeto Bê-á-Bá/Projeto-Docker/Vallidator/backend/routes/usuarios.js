@@ -78,12 +78,27 @@ router.post('/gerar-token', autenticarToken, verificarPermissao(), async (req, r
     try {
         const email = req.body.email;
         console.log(email);
+
+        // Verifica se o email já está cadastrado
+        const query = 'SELECT * FROM usuario WHERE email = $1';
+        const values = [email];
+
+        const response = await pool.query(query, values);
+        const usuario = response.rows[0];
+        
+        if (usuario) {
+            res.status(409).json({ mensagem: 'Email já cadastrado' });
+            return;
+        }
+        
+
+        // Envia o email e insere o usuário no banco de dados
         await enviarEmail(email);
 
         const senhaAleatoria = Math.random().toString(36).slice(-8);
 
-        const query = 'INSERT INTO usuario (email, senha) VALUES ($1, $2)';
-        const values = [email, senhaAleatoria];
+        query = 'INSERT INTO usuario (email, senha) VALUES ($1, $2)';
+        values = [email, senhaAleatoria];
 
         await pool.query(query, values);
 

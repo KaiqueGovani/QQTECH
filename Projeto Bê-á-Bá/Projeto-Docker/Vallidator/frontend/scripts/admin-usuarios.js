@@ -257,11 +257,12 @@ async function gerarPermissao(id){
 async function enviarConvite(){
     const form = document.getElementById("conviteForm");
     if (!form.checkValidity()) {
-        //! Se o formulário não for válido, mostre um alerta ou algum feedback ao usuário.
+        showFeedbackToast("Erro ao enviar convite", "Por favor, preencha todos os campos corretamente.", "danger", "../icons/ban.png");
         return false;
     }
     
     const email = form.conviteEmail.value;
+    form.reset();
 
     try {
         const response = await fetch(`/usuarios/gerar-token`, {
@@ -273,18 +274,16 @@ async function enviarConvite(){
         });
 
         const data = await response.json();
-        showFeedbackToast("Convite Enviado!", "Convite enviado com sucesso.", "success", "../icons/badge-check.png");
-
+        
         if (!response.ok) {
             throw new Error(data.mensagem);
         }
-
-        form.reset();
-         
+        
+        showFeedbackToast("Convite Enviado!", "Convite enviado com sucesso.", "success", "../icons/badge-check.png");
         await renderizarUsuarios(await fetchUsuarios());
 
     } catch(error) {
-        console.error('Erro ao enviar convite: ', error);
+        showFeedbackToast("Erro ao enviar convite", error, "danger", "../icons/ban.png");
     }
 }
 
