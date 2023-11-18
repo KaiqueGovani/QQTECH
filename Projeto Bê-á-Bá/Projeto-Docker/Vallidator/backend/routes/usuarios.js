@@ -80,8 +80,8 @@ router.post('/gerar-token', autenticarToken, verificarPermissao(), async (req, r
         console.log(email);
 
         // Verifica se o email já está cadastrado
-        const query = 'SELECT * FROM usuario WHERE email = $1';
-        const values = [email];
+        let query = 'SELECT * FROM usuario WHERE email = $1';
+        let values = [email];
 
         const response = await pool.query(query, values);
         const usuario = response.rows[0];
@@ -243,6 +243,22 @@ router.get('/listar', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ mensagem: 'Erro ao listar usuários' });
+    }
+});
+
+router.delete('/deletar', autenticarToken, verificarPermissao(), async (req, res) => {
+    try {
+        const id = req.body.id;
+        if (id === req.id) {
+            res.status(401).json({ mensagem: 'Você não pode apagar a si mesmo' });
+            return;
+        }
+
+        const result = await pool.query('DELETE FROM usuario WHERE id = $1', [id]);
+        res.status(204).json({ mensagem: 'Usuário apagado!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ mensagem: 'Erro ao apagar usuário' })
     }
 });
 

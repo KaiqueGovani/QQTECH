@@ -265,6 +265,7 @@ async function enviarConvite(){
     form.reset();
 
     try {
+        showFeedbackToast("Enviando convite...", "Enviando convite para o email informado.", "warning", "../icons/clock.png")
         const response = await fetch(`/usuarios/gerar-token`, {
             method: 'POST',
             headers: {
@@ -304,6 +305,9 @@ async function editarUsuarioModal(id) {
 
     const editarButton = document.getElementById("editarUsuarioBtn");
     editarButton.setAttribute("onclick", `editarUsuario(${id}); event.preventDefault();`);
+
+    const deleteButton = document.getElementById("deletarUsuarioBtn");
+deleteButton.setAttribute("onclick", `deletarUsuario(${id}); event.preventDefault();`);
 }
 
 async function editarUsuario(id) {
@@ -333,7 +337,6 @@ async function editarUsuario(id) {
         });
 
         const data = await response.json();
-        console.log(data.mensagem); //? Alterar esse tipo de feedback para um toast?
 
         if (!response.ok) {
             throw new Error(data.mensagem);
@@ -349,6 +352,39 @@ async function editarUsuario(id) {
 
     } catch(error) {
         console.error('Erro ao editar usuário: ', error);
+    }
+}
+
+async function deletarUsuario(id) { 
+    try {
+        if (!(await showConfirmationModal("Deletar Usuário", "Tem certeza que deseja deletar este usuário? <br>Isso irá <b>deletar todos os dados relacionados a ele!</b> (templates, uploads, etc)."))) {
+            return;
+        }
+
+        const response = await fetch(`/usuarios/deletar`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id })
+        });
+
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.mensagem);
+        }
+
+        await renderizarUsuarios(await fetchUsuarios());
+        
+        const editarModal = document.getElementById("editarModal");
+        const editarModalBS = bootstrap.Modal.getInstance(editarModal);
+        editarModalBS.hide();
+
+        showFeedbackModal("Usuário Deletado!", "Usuário deletado com sucesso.", "", "../icons/badge-check.png");
+
+    } catch(error) {
+        console.error('Erro ao deletar usuário: ', error);
+        showFeedbackToast("Erro ao deletar usuário", error, "danger", "../icons/ban.png");
     }
 }
 
