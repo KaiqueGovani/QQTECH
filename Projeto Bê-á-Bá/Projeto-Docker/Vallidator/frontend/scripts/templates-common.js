@@ -24,13 +24,24 @@ class Campo { //Classe para representar um campo
     }
 }
 
-const typeMapping = { // !Mapeamento de tipos de campos // Posteriormente conectar ao banco
-    1: "Texto",
-    2: "Inteiro",
-    3: "Real",
-    4: "Data",
-    5: "Booleano"
-};
+let typeMapping;
+
+async function fetchTipos() {
+    try {
+        const response = await fetch('/tipos/listar');
+        if (!response.ok) {
+            throw new Error("Erro ao obter tipos!, HTTP status " + response.status);
+        }
+        data = await response.json();
+
+        typeMapping = data.reduce((acc, tipo) => {
+            acc[tipo.id] = tipo.tipo;
+            return acc;
+        }, {});
+    } catch (error) {
+        console.error('Erro ao obter tipos:', error);
+    }
+}
 
 async function obterPermissao() {
     try {
@@ -86,7 +97,7 @@ async function downloadTemplate(template_id, templates) {
 }
 
 //Função para Atualizar os inputs de campos
-function atualizarInputs(n) { // !
+function atualizarInputs(n) {
     //console.log(`Atualizando a área de inputs para ${n} inputs`);
 
     const areaInputsCampos = document.getElementById("areaInputsCampos");
@@ -96,7 +107,6 @@ function atualizarInputs(n) { // !
 
     //Adicionar os campos
     for (let i = 1; i < n + 1; i++) {
-        // ! Atualizar os tipos dinamicamente
         areaInputsCampos.innerHTML += `
         <div class="col-md-6 mb-3">
             <label for="inputNomeCampo${i}" class="form-label">Nome do Campo # ${i}:<span>*</span></label>
@@ -105,11 +115,7 @@ function atualizarInputs(n) { // !
         <div class="col-md-4 mb-3">
             <label for="inputTipoCampo${i}" class="form-label">Tipo do Campo # ${i}:*</label>
             <select type="text" class="form-control form-select" id="inputTipoCampo${i}" required>
-                <option value="1">Texto</option>
-                <option value="2">Inteiro</option>
-                <option value="3">Real</option>
-                <option value="4">Date</option>
-                <option value="5">Booleano</option>
+                ${Object.entries(typeMapping).map(([id, tipo]) => `<option value="${id}">${tipo}</option>`).join('')}
             </select>
         </div>
         <div class="col-md-2 mb-3">
@@ -234,7 +240,7 @@ async function enviarArquivo(id_template) {
         // Mostra o modal de carregamento
         showFeedbackModal("Enviando Arquivo!", "Enviando para o servidor.", "Aguarde...", "../icons/clock.png", true);
 
-        const formUploadFile = document.getElementById("formUploadFile"); // ! resetar form
+        const formUploadFile = document.getElementById("formUploadFile"); // ? resetar form
         const fileInput = document.getElementById("templateFile");
         const file = fileInput.files[0];
         console.log("Enviando arquivo...");

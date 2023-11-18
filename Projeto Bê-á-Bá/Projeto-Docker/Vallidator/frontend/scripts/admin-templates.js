@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    await fetchTipos();
+
     //? Desnecessário
     const templates = await fetchTemplates();
     console.log(typeof (templates));
@@ -100,108 +102,110 @@ async function popularTemplates(templates) {
 }
 
 function modalTemplate(id, templates) { //Função para ver o template que será editado
-    // ! Tratar melhor as exeções de erro!
+    try {
+        let template = new Template({ campos: [{}] }); //Cria um template vazio
+        if (id != 0) {
+            template = new Template(templates.find(template => template.id == id));
+            console.log(template);
+        }
 
-    let template = new Template({ campos: [{}] }); //Cria um template vazio
-    if (id != 0) {
-        template = new Template(templates.find(template => template.id == id));
-        console.log(template);
-    }
+        // Pega o modal
+        const templateUploadForm = document.getElementById("templateUploadForm");
 
-    // Pega o modal
-    const templateUploadForm = document.getElementById("templateUploadForm");
-
-    // Altera o modal com os dados do template selecionado
-    templateUploadForm.innerHTML = `
+        // Altera o modal com os dados do template selecionado
+        templateUploadForm.innerHTML = `
         <div class="container">
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="inputNomeTemplate" class="form-label">Nome do Template:*</label>
-                    <input type="text" class="form-control" id="inputNomeTemplate"
-                        placeholder="Escreva o nome do template" required value="${template.nome}">
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="inputNCampos" class="form-label">Número de Campos no Arquivo:*</label>
-                    <select oninput="atualizarInputs(parseInt(value));" type="dropdown"
-                        class="form-control form-select" id="inputNCampos"
-                        placeholder="Escolha o número de campos" required>
-                        ${Array.from({ length: 7 }, (_, index) => `
-                            <option value="${index + 1}" ${index === template.campos.length - 1 ? 'selected' : ''}>${index + 1}</option>`)
-            .join('')}
-                    </select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="btnradio1" class="form-label">Tipo do arquivo:*</label>
-                    <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="btnradio" id="csv"
-                            autocomplete="off" ${(template.extensao == "csv") ? "checked" : ""} required>
-                        <label class="btn btn-outline-primary" for="csv">
-                            <img src="../icons/csv-icon.png" alt="">
-                        </label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="xls"
-                            autocomplete="off" ${(template.extensao == "xls") ? "checked" : ""}>
-                        <label class="btn btn-outline-primary" for="xls">
-                            <img src="../icons/xls-icon.png" alt="">
-                        </label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="xlsx"
-                            autocomplete="off" ${(template.extensao == "xlsx") ? "checked" : ""}>
-                        <label class="btn btn-outline-primary" for="xlsx">
-                            <img src="../icons/xlsx-icon.png" alt="">
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row" id="areaInputsCampos">
-                ${Array.from({ length: template.campos.length }, (_, index) => `
-                
-                <div class="col-md-6 mb-3">
-                    <label for="inputNomeCampo${index + 1}" class="form-label">Nome do Campo # ${index + 1}:*</label>
-                    <input type="text" class="form-control" id="inputNomeCampo${index + 1}" value="${template.campos[index].nome_campo}">
-                </div>
-                <div class="col-md-4 mb-3">
-                    <label for="inputTipoCampo${index + 1}" class="form-label">Tipo do Campo # ${index + 1}:*</label>
-                    <select type="text" class="form-control form-select" id="inputTipoCampo${index + 1}" required>
-                        ${Array.from({ length: Object.keys(typeMapping).length }, (_, jndex) => `
-                            <option value="${jndex + 1}" ${(template.campos[index].id_tipo == jndex + 1 ? 'selected' : '')}>${typeMapping[jndex + 1]}</option>`)
-                    .join('')}
-                    </select>
-                </div>
-                <div class="col-md-2 mb-3">
-                    <div class="d-flex flex-column align-items-center gap-1">
-                        <div>
-                            <label class="form-check-label" for="inputAnulavelCampo${index + 1}">
-                                Anulável 
-                            </label>
-                            <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-html="true"
-                            data-bs-title="Define se podem haver registros sem valores/nulos nessa coluna"></i>
-                            <br>
-                        </div>
-                        <div class="mt-2">
-                            <input class="mx-2 form-check-input" type="checkbox" ${template.campos[index].anulavel ? 'checked' : ''} id="inputAnulavelCampo${index + 1}">
-                        </div>
-                    </div>
-                </div>`)
-            .join('')}
-            </div>
+        <div class="row">
+        <div class="col-md-6 mb-3">
+        <label for="inputNomeTemplate" class="form-label">Nome do Template:*</label>
+        <input type="text" class="form-control" id="inputNomeTemplate"
+        placeholder="Escreva o nome do template" required value="${template.nome}">
+        </div>
+        <div class="col-md-6 mb-3">
+        <label for="inputNCampos" class="form-label">Número de Campos no Arquivo:*</label>
+        <select oninput="atualizarInputs(parseInt(value));" type="dropdown"
+        class="form-control form-select" id="inputNCampos"
+        placeholder="Escolha o número de campos" required>
+        ${Array.from({ length: 7 }, (_, index) => `
+        <option value="${index + 1}" ${index === template.campos.length - 1 ? 'selected' : ''}>${index + 1}</option>`)
+                .join('')}
+        </select>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-md-6 mb-3">
+        <label for="btnradio1" class="form-label">Tipo do arquivo:*</label>
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check" name="btnradio" id="csv"
+        autocomplete="off" ${(template.extensao == "csv") ? "checked" : ""} required>
+        <label class="btn btn-outline-primary" for="csv">
+        <img src="../icons/csv-icon.png" alt="">
+        </label>
+        
+        <input type="radio" class="btn-check" name="btnradio" id="xls"
+        autocomplete="off" ${(template.extensao == "xls") ? "checked" : ""}>
+        <label class="btn btn-outline-primary" for="xls">
+        <img src="../icons/xls-icon.png" alt="">
+        </label>
+        
+        <input type="radio" class="btn-check" name="btnradio" id="xlsx"
+        autocomplete="off" ${(template.extensao == "xlsx") ? "checked" : ""}>
+        <label class="btn btn-outline-primary" for="xlsx">
+        <img src="../icons/xlsx-icon.png" alt="">
+        </label>
+        </div>
+        </div>
+        </div>
+        <div class="row" id="areaInputsCampos">
+        ${Array.from({ length: template.campos.length }, (_, index) => `
+        
+        <div class="col-md-6 mb-3">
+        <label for="inputNomeCampo${index + 1}" class="form-label">Nome do Campo # ${index + 1}:*</label>
+        <input type="text" class="form-control" id="inputNomeCampo${index + 1}" value="${template.campos[index].nome_campo}">
+        </div>
+        <div class="col-md-4 mb-3">
+        <label for="inputTipoCampo${index + 1}" class="form-label">Tipo do Campo # ${index + 1}:*</label>
+        <select type="text" class="form-control form-select" id="inputTipoCampo${index + 1}" required>
+        ${Array.from({ length: Object.keys(typeMapping).length }, (_, jndex) => `
+        <option value="${jndex + 1}" ${(template.campos[index].id_tipo == jndex + 1 ? 'selected' : '')}>${typeMapping[jndex + 1]}</option>`)
+                        .join('')}
+        </select>
+        </div>
+        <div class="col-md-2 mb-3">
+        <div class="d-flex flex-column align-items-center gap-1">
+        <div>
+        <label class="form-check-label" for="inputAnulavelCampo${index + 1}">
+        Anulável 
+        </label>
+        <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-html="true"
+        data-bs-title="Define se podem haver registros sem valores/nulos nessa coluna"></i>
+        <br>
+        </div>
+        <div class="mt-2">
+        <input class="mx-2 form-check-input" type="checkbox" ${template.campos[index].anulavel ? 'checked' : ''} id="inputAnulavelCampo${index + 1}">
+        </div>
+        </div>
+        </div>`)
+                .join('')}
+        </div>
         </div>
         <div class="modal-footer align-content-center d-flex justify-content-between">
-            <div>
-                ${id == 0 ? '' : `
-                <button data-bs-dismiss="modal" type="button" class="btn btn-danger justify-self-start" id="deleteTemplate" onclick="deletarTemplate(${template.id});">
-                    <i class="bi bi-trash"></i>
-                </button>`}    
-            </div>
-            <div>
-                <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <button onclick='${(id == 0) ? 'enviarTemplate(event)' : `alterarTemplate(${template.id})`};'
-                    type="submit" class="btn btn-primary" id="sendTemplate">Confirmar Template</button>
-            </div>
+        <div>
+        ${id == 0 ? '' : `
+        <button data-bs-dismiss="modal" type="button" class="btn btn-danger justify-self-start" id="deleteTemplate" onclick="deletarTemplate(${template.id});">
+        <i class="bi bi-trash"></i>
+        </button>`}    
         </div>
-    `
+        <div>
+        <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        <button onclick='${(id == 0) ? 'enviarTemplate(event)' : `alterarTemplate(${template.id})`};'
+        type="submit" class="btn btn-primary" id="sendTemplate">Confirmar Template</button>
+        </div>
+        </div>
+        `
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 async function alterarTemplate(id) {
@@ -279,9 +283,11 @@ async function deletarTemplate(id) {
         const response = await fetch(`/templates/deletar/${id}`, {
             method: 'DELETE',
         })
-
+        if (!response.ok) {
+            throw new Error(response.statusText);
+        }
         const data = await response.json();
-        console.log(data.mensagem); //! Alterar esse tipo de feedback para um toast?
+        showFeedbackToast("Template Deletado!", "Template deletado com sucesso.", "success", "../icons/badge-check.png");
 
 
     } catch (error) {

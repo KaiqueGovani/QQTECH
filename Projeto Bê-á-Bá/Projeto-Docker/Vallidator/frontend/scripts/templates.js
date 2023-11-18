@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    await fetchTipos();
     await verificarDados();
     await popularTemplates(await fetchTemplates());
     await atualizarCaminhos();

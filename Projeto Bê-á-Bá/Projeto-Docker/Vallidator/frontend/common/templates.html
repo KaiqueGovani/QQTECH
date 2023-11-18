@@ -72,7 +72,7 @@
                             </div>
                             <div id="adicionarTemplateBtn" class="col-md-3 col-12 col-3 ms-auto p-0 text-end">
                                 <a href="#" class="btn btn-primary card-header-btn" data-bs-toggle="modal"
-                                    data-bs-target="#templateModal" onclick="modalTemplate(0); resetarForm();">Adicionar
+                                    data-bs-target="#templateModal" onclick="resetarForm();">Adicionar
                                     Novo
                                     Template</a>
                             </div>
@@ -81,7 +81,7 @@
                 </div>
 
                 <div id="cb-templates">
-
+                    <!-- ? Atualizado Dinamicamente -->
                 </div>
 
                 <div class="card-footer d-flex align-content-center justify-content-between">
@@ -157,12 +157,7 @@
                                 <div class="col-md-4 mb-3">
                                     <label for="inputTipoCampo1" class="form-label">Tipo do Campo # 1:*</label>
                                     <select type="text" class="form-control form-select" id="inputTipoCampo1" required>
-                                        <!-- ! Atualizar esses valores dinamicamente com o banco-->
-                                        <option value="1">Texto</option>
-                                        <option value="2">Inteiro</option>
-                                        <option value="3">Real</option>
-                                        <option value="4">Date</option>
-                                        <option value="5">Booleano</option>
+                                        <!-- ? Atualizado Dinamicamente -->
                                     </select>
                                 </div>
                                 <div class="col-md-2 mb-3">
@@ -172,7 +167,7 @@
                                                 Anulável 
                                             </label>
                                             <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-html="true"
-                                            data-bs-title="Define se podem haver registros sem valores/nulos nessa coluna"></i>
+                                            data-bs-title="Define se podem haver registros <b>nulos/vazios</b> nessa coluna"></i>
                                             <br>
                                         </div>
                                         <div class="mt-2">
