@@ -173,8 +173,6 @@ router.get('/obter-permissao', autenticarToken, async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const { email, senha } = req.body;
-        console.log(email, senha);
-        console.log(req.body);
 
         const query = 'SELECT * FROM usuario WHERE email = $1';
         const values = [email];
