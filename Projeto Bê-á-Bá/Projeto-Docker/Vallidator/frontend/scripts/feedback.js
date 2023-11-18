@@ -89,7 +89,7 @@ function showFeedbackToast(title, message, color = 'primary', icon = '') {
     const feedbackToastBody = document.querySelector(".toast-body")
     const feedbackToastIcon = document.getElementById("feedbackToastIcon");
 
-    // Seta o título, response e informação adicional
+    // Seta o título e mensagem
     feedbackToastTitle.innerText = title;
     feedbackToastBody.innerText = message;
 
@@ -103,6 +103,11 @@ function showFeedbackToast(title, message, color = 'primary', icon = '') {
     // Mostra o modal
     feedbackToast.classList.remove('bg-primary', 'bg-success', 'bg-danger', 'bg-warning');
     feedbackToast.classList.add(`bg-${color}`);
+    if (color === 'warning') {
+        feedbackToastBody.classList.add('text-dark');
+    } else {
+        feedbackToastBody.classList.remove('text-dark');
+    }
     const toast = new bootstrap.Toast(feedbackToast);
     toast.show();
 }
