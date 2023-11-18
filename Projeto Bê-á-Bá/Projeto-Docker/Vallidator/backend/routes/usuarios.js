@@ -274,9 +274,20 @@ router.delete('/deletar-todos', async (req, res) => {
 
 router.patch('/permissao', autenticarToken, verificarPermissao(), async (req, res) => {
     try {
-        const query = "UPDATE usuario SET permissao = $1 WHERE id = $2";
+        // Verifica se o usuário já possui a permissão
+        let query = "SELECT * FROM usuario WHERE id = $1";
+        let values = [req.body.id];
+
+        const response = await pool.query(query, values);
+
+        if (response.rows[0].permissao === req.body.permissao) {
+            res.status(409).json({ mensagem: 'Usuário já possui essa permissão' });
+            return;
+        }
+
+        query = "UPDATE usuario SET permissao = $1 WHERE id = $2";
         const { id, permissao } = req.body;
-        const values = [permissao, id];
+        values = [permissao, id];
 
         await pool.query(query, values);
 
