@@ -60,6 +60,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
         const data = await response.json();
         console.log(data);
         showFeedbackToast('Erro', data.mensagem, 'danger', '/icons/ban.png');
+        this.reset();
     } else {
         const data = await response.json();
         window.location.href = data.redirect;
