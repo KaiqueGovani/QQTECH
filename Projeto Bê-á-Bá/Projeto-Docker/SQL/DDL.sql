@@ -45,4 +45,12 @@ CREATE TABLE public.Upload (
 CREATE TABLE public.UploadData (
     aprovados INT NOT NULL DEFAULT 0,
     reprovados INT NOT NULL DEFAULT 0
-)
+);
+
+CREATE TABLE public.Log (
+    id SERIAL PRIMARY KEY,
+    operacao VARCHAR NOT NULL,
+    tabela VARCHAR NOT NULL,
+    detalhes VARCHAR NOT NULL,
+    DataEvento timestamp NOT NULL
+);
