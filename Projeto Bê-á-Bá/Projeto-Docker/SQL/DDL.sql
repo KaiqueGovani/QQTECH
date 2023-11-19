@@ -52,5 +52,5 @@ CREATE TABLE public.Log (
     operacao VARCHAR NOT NULL,
     tabela VARCHAR NOT NULL,
     detalhes VARCHAR NOT NULL,
-    DataEvento timestamp NOT NULL
+    data_evento timestamp NOT NULL
 );

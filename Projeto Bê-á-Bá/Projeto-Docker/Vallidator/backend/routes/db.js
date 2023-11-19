@@ -60,7 +60,7 @@ router.get('/setup', (req, res) => {
         operacao VARCHAR NOT NULL,
         tabela VARCHAR NOT NULL,
         detalhes VARCHAR NOT NULL,
-        DataEvento timestamp NOT NULL
+        data_evento timestamp NOT NULL
     );
 
     INSERT INTO tipos (tipo, python_dtype) 
@@ -78,7 +78,7 @@ router.get('/setup', (req, res) => {
     CREATE OR REPLACE FUNCTION log_usuario_insert()
     RETURNS TRIGGER AS $$
     BEGIN
-        INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+        INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
         VALUES ('Inserção', 'Usuario', NOW(), 'Usuário inserido: ' || 'ID: ' || NEW.id || ' (' || NEW.email || ')');
         RETURN NEW;
     END;
@@ -93,7 +93,7 @@ router.get('/setup', (req, res) => {
     CREATE OR REPLACE FUNCTION log_usuario_delete()
     RETURNS TRIGGER AS $$
     BEGIN
-        INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+        INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
         VALUES (
             'Exclusão', 
             'Usuario', 
@@ -118,7 +118,7 @@ router.get('/setup', (req, res) => {
     CREATE OR REPLACE FUNCTION log_usuario_update()
     RETURNS TRIGGER AS $$
     BEGIN
-        INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+        INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
         VALUES (
             'Atualização', 
             'Usuario', 
@@ -144,7 +144,7 @@ router.get('/setup', (req, res) => {
     CREATE OR REPLACE FUNCTION log_template_insert()
     RETURNS TRIGGER AS $$
     BEGIN
-        INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+        INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
         VALUES (
             'Inserção', 
             'Template', 
@@ -192,7 +192,7 @@ router.get('/setup', (req, res) => {
     CREATE OR REPLACE FUNCTION log_template_update()
     RETURNS TRIGGER AS $$
     BEGIN
-        INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+        INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
         VALUES (
             'Atualização', 
             'Template', 
@@ -218,7 +218,7 @@ router.get('/setup', (req, res) => {
     CREATE OR REPLACE FUNCTION log_upload_insert()
     RETURNS TRIGGER AS $$
     BEGIN
-        INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+        INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
         VALUES (
             'Inserção', 
             'Upload', 
@@ -244,7 +244,7 @@ router.get('/setup', (req, res) => {
     CREATE OR REPLACE FUNCTION log_upload_delete()
     RETURNS TRIGGER AS $$
     BEGIN
-        INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+        INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
         VALUES (
             'Exclusão', 
             'Upload', 
@@ -270,7 +270,7 @@ router.get('/setup', (req, res) => {
     CREATE OR REPLACE FUNCTION log_upload_update()
     RETURNS TRIGGER AS $$
     BEGIN
-        INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+        INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
         VALUES (
             'Atualização', 
             'Upload', 

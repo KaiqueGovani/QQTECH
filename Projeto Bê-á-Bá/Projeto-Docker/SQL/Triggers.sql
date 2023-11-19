@@ -3,7 +3,7 @@
 CREATE OR REPLACE FUNCTION log_usuario_insert()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+    INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
     VALUES ('Inserção', 'Usuario', NOW(), 'Usuário inserido: ' || 'ID: ' || NEW.id || ' (' || NEW.email || ')');
     RETURN NEW;
 END;
@@ -18,7 +18,7 @@ EXECUTE FUNCTION log_usuario_insert();
 CREATE OR REPLACE FUNCTION log_usuario_delete()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+    INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
     VALUES (
         'Exclusão', 
         'Usuario', 
@@ -43,7 +43,7 @@ EXECUTE FUNCTION log_usuario_delete();
 CREATE OR REPLACE FUNCTION log_usuario_update()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+    INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
     VALUES (
         'Atualização', 
         'Usuario', 
@@ -69,7 +69,7 @@ EXECUTE FUNCTION log_usuario_update();
 CREATE OR REPLACE FUNCTION log_template_insert()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+    INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
     VALUES (
         'Inserção', 
         'Template', 
@@ -93,7 +93,7 @@ EXECUTE FUNCTION log_template_insert();
 CREATE OR REPLACE FUNCTION log_template_delete()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+    INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
     VALUES (
         'Exclusão', 
         'Template', 
@@ -117,7 +117,7 @@ EXECUTE FUNCTION log_template_delete();
 CREATE OR REPLACE FUNCTION log_template_update()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+    INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
     VALUES (
         'Atualização', 
         'Template', 
@@ -143,7 +143,7 @@ EXECUTE FUNCTION log_template_update();
 CREATE OR REPLACE FUNCTION log_upload_insert()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+    INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
     VALUES (
         'Inserção', 
         'Upload', 
@@ -169,7 +169,7 @@ EXECUTE FUNCTION log_upload_insert();
 CREATE OR REPLACE FUNCTION log_upload_delete()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+    INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
     VALUES (
         'Exclusão', 
         'Upload', 
@@ -195,7 +195,7 @@ EXECUTE FUNCTION log_upload_delete();
 CREATE OR REPLACE FUNCTION log_upload_update()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.Log(operacao, tabela, dataEvento, detalhes)
+    INSERT INTO public.Log(operacao, tabela, data_evento, detalhes)
     VALUES (
         'Atualização', 
         'Upload', 
