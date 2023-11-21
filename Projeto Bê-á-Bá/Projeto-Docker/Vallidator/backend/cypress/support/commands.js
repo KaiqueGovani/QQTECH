@@ -26,10 +26,12 @@
 
 
 Cypress.Commands.add('login', (email, senha) => {
-    cy.visit('http://localhost:3000')
+    cy.visit('/')
     
     cy.get('#email').type(email);
     cy.get('#senha').type(senha);
     cy.get('button.btn-entrar').click();
     cy.url().should('not.contain', '/login');
+    //Espera a página carregar
+    cy.wait(1000)
 })
