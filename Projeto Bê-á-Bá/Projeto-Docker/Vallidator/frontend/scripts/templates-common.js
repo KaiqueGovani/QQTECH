@@ -192,27 +192,26 @@ async function enviarTemplate() {
 
         console.log("Criando template:\n", template);
 
-        // Utilizando o fetch com promises para fazer o POST
-        fetch('/templates/criar', {
+        // Utilizando await e fetch para fazer o POST
+        const response = await fetch('/templates/criar', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(template)
-        })
-            .then(response => response.json()) // Funciona como um middleware
-            .then(data => {
-                //Fecha o modal de template
-                const templateModal = document.getElementById("templateModal");
-                const templateModalBS = bootstrap.Modal.getInstance(templateModal);
-                templateModalBS.hide();
+        });
 
-                showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");
-                console.log("Resposta do servidor:", data.mensagem);
-            })
+        if (!response.ok) {
+            data = await response.json();
+            throw new Error(data.mensagem || "Erro ao criar o template!");
+        }
+
+        showFeedbackModal("Template Criado!", "Enviado para Verificação.", "Aguardando verificação de um Administrador.", "../icons/clock.png");
+        console.log("Resposta do servidor:", data.mensagem);
+
     }
     catch (error) {
-        console.error('Error:', error);
+        showFeedbackModal("Falha na Criação!", "Erro ao criar o template!", error.message, "../icons/ban.png");
     }
     finally {
         await popularTemplates(await fetchTemplates());
