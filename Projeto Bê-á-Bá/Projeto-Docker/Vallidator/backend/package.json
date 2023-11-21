@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Aplicação Node.js com Express e PostgreSQL",
   "scripts": {
-    "start": "nodemon -L server.js",
+    "start": "nodemon --ignore cypress/ -L server.js",
+    "e2e": "cypress open",
     "test": "jest --verbose"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.23.2",
+    "cypress": "^13.5.1",
     "esm": "^3.2.25",
     "nodemon": "^3.0.1"
   },
