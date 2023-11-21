@@ -263,7 +263,7 @@ def verificar_dados(df, campos):
                 if not campos[j]["anulavel"]:
                     if pd.isnull(data):
                         raise Exception(
-                            f"Coluna '{campos[j]['nome_campo']}' não deve conter valores vazios/nulos"
+                            f"Coluna '{campos[j]['nome_campo']}' não deve conter valores vazios/nulos. \n Linha {i+1}, coluna '{campos[j]['nome_campo']}'."
                         )
 
                 if not tenta_converter_com_pandas(
