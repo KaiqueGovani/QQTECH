@@ -218,11 +218,16 @@ async function atualizarPermissao(id, permissao) {
             body: JSON.stringify({ id, permissao })
         });
 
-        const data = await response.json();
+        if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.mensagem);
+        }    
+
         showFeedbackToast("Permissão Atualizada!", "Permissão atualizada com sucesso.", "success", "../icons/badge-check.png");
 
     } catch(error) {
         console.error('Error:', error);
+        showFeedbackToast("Erro ao atualizar permissão", error, "danger", "../icons/ban.png");
     }
 }
 
