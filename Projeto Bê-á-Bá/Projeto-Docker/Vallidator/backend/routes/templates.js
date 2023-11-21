@@ -11,7 +11,11 @@ const router = Router();
 const __dirname = new URL('.', import.meta.url).pathname;
 
 router.get('/', async (req, res) => {
-    res.sendFile(join(__dirname, '../../frontend/common/templates.html'));
+    if(req.permissao === 'admin'){
+        res.redirect('../admin/templates');
+    }else{
+        res.sendFile(join(__dirname, '../../frontend/templates/templates.html'));
+    }
 });
 
 router.post('/criar', verificarPermissao('criar'), async (req, res) => { //authenticarToken para verificar a permissão
