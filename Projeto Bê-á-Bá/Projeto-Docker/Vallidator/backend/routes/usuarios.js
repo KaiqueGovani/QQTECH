@@ -115,8 +115,11 @@ router.post('/gerar-token-alterar-senha', async (req, res) => {
         const query = 'SELECT * FROM usuario WHERE email = $1';
         const values = [email];
 
+        console.log(email);
+
         const result = await pool.query(query, values);
         const usuario = result.rows[0];
+        console.log(usuario);
 
         if (usuario) {
             await enviarEmail(email);
@@ -274,6 +277,12 @@ router.delete('/deletar-todos', async (req, res) => {
 
 router.patch('/permissao', autenticarToken, verificarPermissao(), async (req, res) => {
     try {
+        // Verifica se o usuário é você mesmo
+        if (req.body.id === req.id) {
+            res.status(401).json({ mensagem: 'Você não pode alterar sua própria permissão' });
+            return;
+        }
+
         // Verifica se o usuário já possui a permissão
         let query = "SELECT * FROM usuario WHERE id = $1";
         let values = [req.body.id];

@@ -121,9 +121,12 @@ document.getElementById('emailForm').addEventListener('submit', async function (
     // Previne o envio do formulário
     event.preventDefault();
 
+    // Mostra toast de carregamento
+    showFeedbackToast('Enviando...', 'Enviando email...', 'warning', '../icons/clock.png');
+
     // Cria um objeto FormData e o preenche com os campos do formulário
     const body = {
-        email: document.getElementById('email').value,
+        email: document.getElementById('envioEmail').value,
     }
 
     // Envia o formulário assincronamente
@@ -143,5 +146,8 @@ document.getElementById('emailForm').addEventListener('submit', async function (
     } else {
         const data = await response.json();
         showFeedbackToast('Sucesso', data.mensagem, 'success', '/icons/badge-check.png');
+        // Fecha o modal
+        const emailModal = bootstrap.Modal.getInstance(document.getElementById('emailModal'));
+        emailModal.hide();
     }
 });
