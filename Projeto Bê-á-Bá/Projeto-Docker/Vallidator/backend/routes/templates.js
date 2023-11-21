@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
     if(req.permissao === 'admin'){
         res.redirect('../admin/templates');
     }else{
-        res.sendFile(join(__dirname, '../../frontend/templates/templates.html'));
+        res.sendFile(join(__dirname, '../../frontend/common/templates.html'));
     }
 });
 
