@@ -153,7 +153,7 @@ router.get('/setup', (req, res) => {
             ' - Nome: ' || NEW.nome || 
             ' - Criador ID: ' || NEW.id_criador ||
             ' - Extensão: ' || NEW.extensao ||
-            ' - Status: ' || NEW.status
+            ' - Status: ' || COALESCE(NEW.status::text, 'análise')
         );
         RETURN NEW;
     END;
