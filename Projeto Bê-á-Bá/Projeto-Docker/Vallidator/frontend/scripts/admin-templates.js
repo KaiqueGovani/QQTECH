@@ -134,7 +134,7 @@ function modalTemplate(id, templates) { //Função para ver o template que será
         </div>
         <div class="row">
         <div class="col-md-6 mb-3">
-        <label for="btnradio1" class="form-label">Tipo do arquivo:*</label>
+        <label for="csv" class="form-label">Tipo do arquivo:*</label>
         <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
         <input type="radio" class="btn-check" name="btnradio" id="csv"
         autocomplete="off" ${(template.extensao == "csv") ? "checked" : ""} required>
@@ -212,7 +212,7 @@ async function alterarTemplate(id) {
     try {
         let form = document.querySelector("form");
         if (!form.checkValidity()) {
-            // Se o formulário não for válido, mostre um alerta ou algum feedback ao usuário.
+            showFeedbackToast("Erro!", "Preencha todos os campos obrigatórios.", "danger", "../icons/ban.png");
             return false;
         }
         const formData = getFormData();

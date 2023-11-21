@@ -183,7 +183,7 @@ async function enviarTemplate() {
     try {
         let form = document.querySelector("form");
         if (!form.checkValidity()) {
-            // Se o formulário não for válido, mostre um alerta ou algum feedback ao usuário.
+            showFeedbackToast("Erro ao criar o template!", "Preencha todos os campos obrigatórios.", "danger", "../icons/ban.png");
             return false;
         }
 
