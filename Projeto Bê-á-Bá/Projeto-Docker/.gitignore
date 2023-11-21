@@ -7,3 +7,4 @@ bucket-name.txt
 mail-service.json
 config.json
 __pycache__/
+data-backup/
