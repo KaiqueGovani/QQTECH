@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const segredo = 'segredo';
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
     const token = req.cookies.token;
 
     if (token) {
@@ -18,9 +18,12 @@ module.exports = (req, res, next) => {
             next();
         } catch(error){
             res.clearCookie('token');
-            res.status(403).redirect('/login');
+            if (req.method === 'GET') {
+                res.redirect('/login');
+            } else {
+                res.status(403).json({ mensagem: 'Você não está logado' });
+            }
         }
-        
     } else {
         if (req.method === 'GET') {
             res.redirect('/login');

@@ -17,5 +17,5 @@ ENV FLASK_ENV=development
 # Definindo a variável de ambiente para evitar a criação da pasta __pycache__
 ENV PYTHONDONTWRITEBYTECODE 1
 
-# Executando a aplicação em modo de desenvolvimento
-CMD ["flask", "run", "--host=0.0.0.0", "--debug"]
+# Executando a configuração inicial da aplicação em modo de desenvolvimento
+CMD ["sh", "-c", "python setup-gcs.py && flask run --host=0.0.0.0 --debug"]

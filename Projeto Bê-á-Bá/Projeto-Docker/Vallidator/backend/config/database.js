@@ -1,12 +1,11 @@
 // Em /config/database.js
-const { Pool } = require('pg');
+import pg from 'pg';
 
-const pool = new Pool({
-    user: 'kapouser',
-    host: 'postgres',
-    database: 'vallidatordb',
-    password: 'senhakapo',
-    port: 5432,
-});
+//abre as informações do banco em /config/config.json
+import config from '/config/config.json' assert { type: "json" }; 
 
-module.exports = pool;
+//cria um pool de conexões
+const pool = new pg.Pool(config);
+
+
+export default pool;
